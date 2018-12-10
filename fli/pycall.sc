@@ -35,7 +35,7 @@
     (import
         (scheme))
 
-(define lib (load-shared-object "../pycall.so"))
+(define lib (load-shared-object "../py.so"))
 
 (define py-initialize
     (foreign-procedure "Py_Initialize" () int))
