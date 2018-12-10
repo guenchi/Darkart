@@ -8,4 +8,11 @@ For now, I have successfully call the Python's library Numpy in the ugly way. Th
 
 Implementation priority: Python > Julia > Javascript > OCaml
 
+
+Sources:
+
 https://github.com/JuliaPy/PyCall.jl/blob/master/src/PyCall.jl
+
+http://www.linux-nantes.org/~fmonnier/OCaml/ocaml-wrapping-c.html
+
+http://caml.inria.fr/pub/docs/manual-ocaml-4.00/manual033.html#htoc281
