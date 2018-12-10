@@ -13,6 +13,8 @@ Sources:
 
 https://github.com/JuliaPy/PyCall.jl/blob/master/src/PyCall.jl
 
+https://docs.python.org/2.5/ext/callingPython.html
+
 http://www.linux-nantes.org/~fmonnier/OCaml/ocaml-wrapping-c.html
 
 http://caml.inria.fr/pub/docs/manual-ocaml-4.00/manual033.html#htoc281
