@@ -88,14 +88,29 @@
 (define py/int-from-long
     (foreign-procedure "PyInt_FromLong" (long) uptr))
 
-(define py/string-from-string
-    (foreign-procedure "PyString_FromString" (string) uptr))
+(define py/long-from-long
+    (foreign-procedure "PyLong_FromLong" (long) uptr))
+
+(define py/long-from-unsigned-long
+    (foreign-procedure "PyLong_FromUnsignedLong" (unsigned-long) uptr))
+
+(define py/long-from-double
+    (foreign-procedure "PyLong_FromDouble" (double) uptr))
+
+(define py/long-from-size_t
+    (foreign-procedure "PyLong_FromSize_t" (size_t) uptr))
+
+(define py/long-from-ssize_t
+    (foreign-procedure "PyLong_FromSsize_t" (ssize_t) uptr))
 
 (define py/long-as-long
     (foreign-procedure "PyLong_AsLong" (uptr) long))
 
 (define py/long-as-double
     (foreign-procedure "PyLong_AsDouble" (uptr) double))
+
+(define py/string-from-string
+    (foreign-procedure "PyString_FromString" (string) uptr))
 
 (define py/tulpe-new
     (foreign-procedure "PyTulpe_New" (int) uptr))
