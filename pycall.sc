@@ -37,6 +37,8 @@
 
 (define lib (load-shared-object "py.so"))
 
+(define py-eval-input 258)
+
 (define py-initialize
     (foreign-procedure "Py_Initialize" () int))
 
@@ -45,6 +47,19 @@
 
 (define pyrun-simplestring
     (foreign-procedure "PyRun_SimpleString" (string) int))
+
+(define pyrun-string
+    (foreign-procedure "PyRun_String" (string uptr uptr uptr) uptr))
+
+(define pyimport-importmodule
+    (foreign-procedure "PyImport_ImportModule" (string) uptr))
+
+(define pymodule-getdict
+    (foreign-procedure "PyModule_GetDict" (uptr) uptr))
+
+(define pylong-aslong
+    (foreign-procedure "PyLong_AsLong" (uptr) int))
+
 
 (define-syntax py-import
     (syntax-rules (as)
