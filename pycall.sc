@@ -36,15 +36,20 @@
         py-new-interpreter
         py-end-interpreter
 
+        py/run-simple-file
+        py/run-file
+        py/run-file-exflags
         py/run-simple-string
         py/run-string
+        py/run-string-flags
 
         py/import-import-module
         py/module-get-dict
         py/long-as-long
 
         py-import
-        py-from)
+        py-from
+        py-define)
     (import
         (scheme))
 
@@ -105,5 +110,18 @@
     (syntax-rules (import)
         ((_ e import k)
             (py/run-simple-string (string-append "from " (symbol->string e) " import " (symbol->string k))))))
+
+
+(define any->string
+    (lambda (a)
+        (cond
+            ((number? a) (number->string a))
+            ((symbol? a) (symbol->string a))
+            ((string? a) a)
+            (else (display "input must be number, symbol or string")))))            
+
+(define py-define 
+    (lambda (x y)
+        (py/run-simple-string (string-append (symbol->string x) " = " (any->string y)))))
 
 )
