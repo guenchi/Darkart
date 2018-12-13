@@ -169,8 +169,20 @@
 (define py/import-exec-code-module
     (foreign-procedure "PyImport_ExecCodeModule" (string uptr) uptr))
 
+(define py/module-new
+    (foreign-procedure "PyModule_New" (string) uptr))
+
 (define py/module-get-dict
     (foreign-procedure "PyModule_GetDict" (uptr) uptr))
+
+(define py/module-get-name
+    (foreign-procedure "PyModule_GetName" (uptr) string))
+
+(define py/module-get-filename
+    (foreign-procedure "PyModule_GetFileName" (uptr) string))
+
+(define py/module-clear
+    (foreign-procedure "PyModule_Clear" (uptr) void))
 
 (define py/object-get-attr-string
     (foreign-procedure "PyObject_GetAttrString" (uptr string) uptr))
