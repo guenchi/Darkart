@@ -76,8 +76,12 @@
 (define py/run-string
     (foreign-procedure "PyRun_String" (string int uptr uptr) uptr))
 
-(define run-string-flags
+;; (py/run-string string int {PyObject *} {PyObject *}) => {PyObject *}
+
+(define py/run-string-flags
     (foreign-procedure "PyRun_StringFlags" (string int uptr uptr uptr) uptr))
+
+;; (py/run-string-flags string int {PyObject *} {PyObject *} {PyCompilerFlags *}) => {PyObject *}
     
 (define py/import-import-module
     (foreign-procedure "PyImport_ImportModule" (string) uptr))
