@@ -124,4 +124,9 @@
     (lambda (x y)
         (py/run-simple-string (string-append (symbol->string x) " = " (any->string y)))))
 
+
+(define py-decorater
+    (lambda (x)
+        (py/run-simple-string (string-append  "@" (symbol->string x)))))
+
 )
