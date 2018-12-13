@@ -66,6 +66,15 @@
 (define py-end-interpreter
     (foreign-procedure "Py_EndInterpreter" (uptr) void))
 
+(define py/run-simple-file
+    (foreign-procedure "PyRun_SimpleFile" (uptr string) int))
+
+(define py/run-file
+    (foreign-procedure "PyRun_File" (uptr string int uptr uptr) uptr))
+
+(define py/run-file-exflags
+    (foreign-procedure "PyRun_FileExFlags" (uptr string int uptr uptr int uptr) uptr))
+
 (define py/run-simple-string
     (foreign-procedure "PyRun_SimpleString" (string) int))
 
