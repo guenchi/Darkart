@@ -71,12 +71,6 @@
 (define py-end-interpreter
     (foreign-procedure "Py_EndInterpreter" (uptr) void))
 
-(define py/tulpe-new
-    (foreign-procedure "PyTulpe_New" (int) uptr))
-
-(define py/tulpe-set-item
-    (foreign-procedure "PyTulpe_SetItem" (uptr int uptr) void))
-
 (define py/int-from-long
     (foreign-procedure "PyInt_FromLong" (long) uptr))
 
@@ -85,6 +79,12 @@
 
 (define py/long-as-double
     (foreign-procedure "PyLong_AsDouble" (uptr) double))
+
+(define py/tulpe-new
+    (foreign-procedure "PyTulpe_New" (int) uptr))
+
+(define py/tulpe-set-item
+    (foreign-procedure "PyTulpe_SetItem" (uptr int uptr) void))
 
 (define py/run-simple-file
     (foreign-procedure "PyRun_SimpleFile" (uptr string) int))
