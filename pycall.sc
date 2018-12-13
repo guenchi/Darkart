@@ -173,4 +173,17 @@
     (lambda (x)
         (py/run-simple-string (string-append  "@" (symbol->string x)))))
 
+(define list->*tulpe
+    (lambda (lst
+        (define len (length lst))
+        (define *p (py/tulpe-new len))
+        (let loop ((n 0)(lst lst))
+            (py/tulpe-set-item *p n (py/int-from-long (car lst)))
+            (if (< n len)
+                (loop (+ n 1) (cdr lst))
+                *p)))))
+
+
+
+
 )
