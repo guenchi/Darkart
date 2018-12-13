@@ -92,11 +92,23 @@
 (define py/import-import-module
     (foreign-procedure "PyImport_ImportModule" (string) uptr))
 
+(define py/import-exec-code-module
+    (foreign-procedure "PyImport_ExecCodeModule" (string uptr) uptr))
+
 (define py/module-get-dict
     (foreign-procedure "PyModule_GetDict" (uptr) uptr))
 
+(define py-compile-string
+    (foreign-procedure "Py_CompileString" (string string int) uptr))
+
+(define py/object-get-attr-string
+    (foreign-procedure "PyObject_GetAttrString" (uptr string) uptr))
+
 (define py/long-as-long
-    (foreign-procedure "PyLong_AsLong" (uptr) int))
+    (foreign-procedure "PyLong_AsLong" (uptr) long))
+
+(define py/long-as-double
+    (foreign-procedure "PyLong_AsDouble" (uptr) double))
 
 
 (define-syntax py-import
