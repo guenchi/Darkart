@@ -27,13 +27,20 @@
 
 (library (fli pycall)
     (export
+        py-sigle-input
+        py-file-input
+        py-eval-input
+
         py-initialize
         py-finalize
+
         py/run-simple-string
         py/run-string
+
         py/import-import-module
         py/module-get-dict
         py/long-as-long
+        
         py-import
         py-from)
     (import
@@ -41,6 +48,8 @@
 
 (define lib (load-shared-object "py.so"))
 
+(define py-sigle-input 256)
+(define py-file-input 257)
 (define py-eval-input 258)
 
 (define py-initialize
