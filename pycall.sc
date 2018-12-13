@@ -40,7 +40,7 @@
         py/import-import-module
         py/module-get-dict
         py/long-as-long
-        
+
         py-import
         py-from)
     (import
@@ -53,10 +53,10 @@
 (define py-eval-input 258)
 
 (define py-initialize
-    (foreign-procedure "Py_Initialize" () int))
+    (foreign-procedure "Py_Initialize" () void))
 
 (define py-finalize
-    (foreign-procedure "Py_Finalize" () int))
+    (foreign-procedure "Py_Finalize" () void))
 
 (define py/run-simple-string
     (foreign-procedure "PyRun_SimpleString" (string) int))
