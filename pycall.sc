@@ -33,6 +33,8 @@
 
         py-initialize
         py-finalize
+        py-new-interpreter
+        py-end-interpreter
 
         py/run-simple-string
         py/run-string
@@ -57,6 +59,16 @@
 
 (define py-finalize
     (foreign-procedure "Py_Finalize" () void))
+
+(define py-new-interpreter
+    (foreign-procedure "Py_NewInterpreter" () uptr))
+
+;; (py-new-interpreter) => {PyThreadState *}
+
+(define py-end-interpreter
+    (foreign-procedure "Py_EndInterpreter" (uptr) void))
+
+;; (py-end-interpreter {PyThreadState *})
 
 (define py/run-simple-string
     (foreign-procedure "PyRun_SimpleString" (string) int))
