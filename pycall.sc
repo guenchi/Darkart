@@ -80,6 +80,9 @@
 (define py/long-as-double
     (foreign-procedure "PyLong_AsDouble" (uptr) double))
 
+(define py/string-from-string
+    (foreign-procedure "PyString_FromString" (string) uptr))
+
 (define py/tulpe-new
     (foreign-procedure "PyTulpe_New" (int) uptr))
 
@@ -104,6 +107,9 @@
 (define py/run-string-flags
     (foreign-procedure "PyRun_StringFlags" (string int uptr uptr uptr) uptr))
     
+(define py/import-import
+    (foreign-procedure "PyImport_Import" (uptr) uptr))
+
 (define py/import-import-module
     (foreign-procedure "PyImport_ImportModule" (string) uptr))
 
