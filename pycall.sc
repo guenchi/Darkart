@@ -94,6 +94,12 @@
 (define py/long-from-unsigned-long
     (foreign-procedure "PyLong_FromUnsignedLong" (unsigned-long) uptr))
 
+(define py/long-from-longlong
+    (foreign-procedure "PyLong_FromLongLong" (long-long) uptr))
+
+(define py/long-from-unsigned-longlong
+    (foreign-procedure "PyLong_FromUnsignedLongLong" (unsigned-long-long) uptr))
+
 (define py/long-from-double
     (foreign-procedure "PyLong_FromDouble" (double) uptr))
 
@@ -106,6 +112,24 @@
 (define py/long-as-long
     (foreign-procedure "PyLong_AsLong" (uptr) long))
 
+(define py/long-as-unsigned-long
+    (foreign-procedure "PyLong_AsUnsignedLong" (uptr) unsigned-long))
+
+(define py/long-as-longlong
+    (foreign-procedure "PyLong_AsLongLong" (uptr) long-long))
+
+(define py/long-as-unsigned-longlong
+    (foreign-procedure "PyLong_AsUnsignedLongLong" (uptr) unsigned-long-long))
+
+(define py/long-as-double
+    (foreign-procedure "PyLong_AsDouble" (uptr) double))
+
+(define py/long-as-ssize_t
+    (foreign-procedure "PyLong_AsSsize_t" (uptr) ssize_t))
+
+(define py/float-from-double
+    (foreign-procedure "PyFloat_FromDouble" (double) uptr))
+    
 (define py/long-as-double
     (foreign-procedure "PyLong_AsDouble" (uptr) double))
 
