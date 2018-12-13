@@ -36,6 +36,13 @@
         py-new-interpreter
         py-end-interpreter
 
+        py/int-from-long
+        py/string-from-string
+        py/long-as-long
+        py/long-as-double
+        py/tulpe-new
+        py/tulpe-set-item
+        
         py/run-simple-file
         py/run-file
         py/run-file-exflags
@@ -43,9 +50,16 @@
         py/run-string
         py/run-string-flags
 
+        py/import-import
         py/import-import-module
+        py/import-exec-code-module
+
         py/module-get-dict
-        py/long-as-long
+
+        py/object-get-attr-string
+        py/object-call-object
+    
+        py-compile-string
 
         py-import
         py-from
@@ -74,14 +88,14 @@
 (define py/int-from-long
     (foreign-procedure "PyInt_FromLong" (long) uptr))
 
+(define py/string-from-string
+    (foreign-procedure "PyString_FromString" (string) uptr))
+
 (define py/long-as-long
     (foreign-procedure "PyLong_AsLong" (uptr) long))
 
 (define py/long-as-double
     (foreign-procedure "PyLong_AsDouble" (uptr) double))
-
-(define py/string-from-string
-    (foreign-procedure "PyString_FromString" (string) uptr))
 
 (define py/tulpe-new
     (foreign-procedure "PyTulpe_New" (int) uptr))
@@ -119,14 +133,14 @@
 (define py/module-get-dict
     (foreign-procedure "PyModule_GetDict" (uptr) uptr))
 
-(define py-compile-string
-    (foreign-procedure "Py_CompileString" (string string int) uptr))
-
 (define py/object-get-attr-string
     (foreign-procedure "PyObject_GetAttrString" (uptr string) uptr))
 
 (define py/object-call-object
     (foreign-procedure "PyObject_CallObject" (uptr uptr) uptr))
+
+(define py-compile-string
+    (foreign-procedure "Py_CompileString" (string string int) uptr))
 
 
 (define-syntax py-import
