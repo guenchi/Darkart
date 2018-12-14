@@ -254,7 +254,7 @@
         (define len (length lst))
         (define *p (py/tuple-new len))
         (let loop ((n 0)(lst lst))
-            (py/tuple-set-item *p n (py/int-from-long (car lst)))
+            (py/tuple-set-item! *p n (py/int-from-long (car lst)))
             (if (< n len)
                 (loop (+ n 1) (cdr lst))
                 *p))))
