@@ -179,6 +179,9 @@
 (define py/dict-set-item!
     (foreign-procedure "PyDict_SetItem" (uptr uptr uptr) int))
 
+(define py/dict-del-item!
+    (foreign-procedure "PyDict_DelItem" (uptr uptr) int))
+
 (define py/run-simple-file
     (foreign-procedure "PyRun_SimpleFile" (uptr string) int))
 
