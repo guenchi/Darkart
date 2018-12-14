@@ -37,12 +37,29 @@
         py-end-interpreter
 
         py/int-from-long
-        py/string-from-string
+
+        py/long-from-long
+        py/long-from-unsigned-long
+        py/long-from-longlong
+        py/long-from-unsigned-longlong
+        py/long-from-double
+        py/long-from-size_t
+        py/long-from-ssize_t
         py/long-as-long
+        py/long-as-unsigned-long
+        py/long-as-longlong
+        py/long-as-unsigned-longlong
         py/long-as-double
+        py/long-as-ssize_t
+
+        py/float-from-double
+        py/float-as-double
+        
+        py/string-from-string
+
         py/tuple-new
         py/tuple-set-item
-        
+
         py/run-simple-file
         py/run-file
         py/run-file-exflags
@@ -54,8 +71,11 @@
         py/import-import-module
         py/import-exec-code-module
 
+        py/module-new
         py/module-get-dict
-
+        py/module-get-name
+        py/module-get-filename
+        
         py/object-get-attr-string
         py/object-call-object
     
@@ -130,8 +150,8 @@
 (define py/float-from-double
     (foreign-procedure "PyFloat_FromDouble" (double) uptr))
     
-(define py/long-as-double
-    (foreign-procedure "PyLong_AsDouble" (uptr) double))
+(define py/float-as-double
+    (foreign-procedure "PyFloat_AsDouble" (uptr) double))
 
 (define py/string-from-string
     (foreign-procedure "PyString_FromString" (string) uptr))
