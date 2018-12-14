@@ -93,6 +93,7 @@
 (define py-file-input 257)
 (define py-eval-input 258)
 
+
 (define py-initialize
     (foreign-procedure "Py_Initialize" () void))
 
@@ -161,6 +162,9 @@
 
 (define py/tuple-set-item
     (foreign-procedure "PyTuple_SetItem" (uptr int uptr) void))
+
+(define py/tuple-get-item
+    (foreign-procedure "PyTuple_GetItem" (uptr int) uptr))
 
 (define py/run-simple-file
     (foreign-procedure "PyRun_SimpleFile" (uptr string) int))
