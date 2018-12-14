@@ -40,8 +40,8 @@
         py/string-from-string
         py/long-as-long
         py/long-as-double
-        py/tulpe-new
-        py/tulpe-set-item
+        py/tuple-new
+        py/tuple-set-item
         
         py/run-simple-file
         py/run-file
@@ -136,11 +136,11 @@
 (define py/string-from-string
     (foreign-procedure "PyString_FromString" (string) uptr))
 
-(define py/tulpe-new
-    (foreign-procedure "PyTulpe_New" (int) uptr))
+(define py/tuple-new
+    (foreign-procedure "PyTuple_New" (int) uptr))
 
-(define py/tulpe-set-item
-    (foreign-procedure "PyTulpe_SetItem" (uptr int uptr) void))
+(define py/tuple-set-item
+    (foreign-procedure "PyTuple_SetItem" (uptr int uptr) void))
 
 (define py/run-simple-file
     (foreign-procedure "PyRun_SimpleFile" (uptr string) int))
@@ -224,15 +224,15 @@
     (lambda (x)
         (py/run-simple-string (string-append  "@" (symbol->string x)))))
 
-(define list->*tulpe
-    (lambda (lst
+(define list->*tuple
+    (lambda (lst)
         (define len (length lst))
-        (define *p (py/tulpe-new len))
+        (define *p (py/tuple-new len))
         (let loop ((n 0)(lst lst))
-            (py/tulpe-set-item *p n (py/int-from-long (car lst)))
+            (py/tuple-set-item *p n (py/int-from-long (car lst)))
             (if (< n len)
                 (loop (+ n 1) (cdr lst))
-                *p)))))
+                *p))))
 
 
 
