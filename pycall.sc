@@ -59,7 +59,7 @@
 
         py/tuple-new
         py/tuple-set-item!
-        py/tuple-get-item!
+        py/tuple-get-item
 
         py/run-simple-file
         py/run-file
