@@ -1,5 +1,21 @@
 
 (import (fli pycall))
+
+
+;; test pass values
+
+(begin
+    (define x 9)
+    (py-initialize)
+    (py-define 'x x)
+    (define k (py/import-import-module "__main__"))
+    (define dic (py/module-get-dict k))
+    (define y (py/long-as-long (py/run-string "x * x" py-eval-input dic dic)))
+    (py-finalize)
+    (display (+ x 8))
+    (newline)
+    (exit))
+
 ;; test tuple pass and operate
 
 (begin
