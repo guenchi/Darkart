@@ -58,7 +58,8 @@
         py/string-from-string
 
         py/tuple-new
-        py/tuple-set-item
+        py/tuple-set-item!
+        py/tuple-get-item!
 
         py/run-simple-file
         py/run-file
@@ -160,7 +161,7 @@
 (define py/tuple-new
     (foreign-procedure "PyTuple_New" (int) uptr))
 
-(define py/tuple-set-item
+(define py/tuple-set-item!
     (foreign-procedure "PyTuple_SetItem" (uptr int uptr) void))
 
 (define py/tuple-get-item
