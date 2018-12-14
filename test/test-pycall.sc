@@ -1,5 +1,5 @@
 
-
+(import (fli pycall))
 ;; test tuple pass and operate
 
 (begin
