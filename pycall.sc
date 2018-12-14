@@ -161,11 +161,23 @@
 (define py/tuple-new
     (foreign-procedure "PyTuple_New" (int) uptr))
 
-(define py/tuple-set-item!
-    (foreign-procedure "PyTuple_SetItem" (uptr int uptr) void))
+(define py/tuple-size
+    (foreign-procedure "PyTuple_Size" (uptr) ssize_t))
 
 (define py/tuple-get-item
-    (foreign-procedure "PyTuple_GetItem" (uptr int) uptr))
+    (foreign-procedure "PyTuple_GetItem" (uptr ssize_t) uptr))
+
+(define py/tuple-set-item!
+    (foreign-procedure "PyTuple_SetItem" (uptr ssize_t uptr) int))
+
+(define py/dict-new
+    (foreign-procedure "PyDict_New" () uptr))
+
+(define py/dict-get-item
+    (foreign-procedure "PyDict_GetItem" (uptr uptr) uptr))
+
+(define py/dict-set-item!
+    (foreign-procedure "PyDict_SetItem" (uptr uptr uptr) int))
 
 (define py/run-simple-file
     (foreign-procedure "PyRun_SimpleFile" (uptr string) int))
