@@ -307,9 +307,6 @@
 (define py/module-get-filename
     (foreign-procedure "PyModule_GetFileName" (uptr) string))
 
-(define py/module-clear
-    (foreign-procedure "PyModule_Clear" (uptr) void))
-
 (define py/object-get-attr
     (foreign-procedure "PyObject_GetAttr" (uptr uptr) uptr))
 
