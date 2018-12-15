@@ -158,6 +158,30 @@
 (define py/string-from-string
     (foreign-procedure "PyString_FromString" (string) uptr))
 
+(define py/list-new
+    (foreign-procedure "PyList_New" (int) uptr))
+
+(define py/list-size
+    (foreign-procedure "PyList_Size" (uptr) ssize_t))
+
+(define py/list-get-item
+    (foreign-procedure "PyList_GetItem" (uptr ssize_t) uptr))
+
+(define py/list-set-item!
+    (foreign-procedure "PyList_SetItem" (uptr ssize_t uptr) int))
+
+(define py/list-insert!
+    (foreign-procedure "PyList_Insert" (uptr ssize_t uptr) int))
+
+(define py/list-append!
+    (foreign-procedure "PyList_Append" (uptr uptr) int))
+
+(define py/list-sort!
+    (foreign-procedure "PyList_Sort" (uptr) int))
+
+(define py/list-reverse!
+    (foreign-procedure "PyList_Reverse" (uptr) int))
+
 (define py/tuple-new
     (foreign-procedure "PyTuple_New" (int) uptr))
 
