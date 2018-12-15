@@ -37,7 +37,11 @@
         py-end-interpreter
 
         py/int-from-long
-
+        py/int-from-size_t
+        py/int-from-ssize_t
+        py/int-as-long
+        py/int-as-ssize_t
+        
         py/long-from-long
         py/long-from-unsigned-long
         py/long-from-longlong
@@ -57,9 +61,30 @@
         
         py/string-from-string
 
+        py/list-new
+        py/list-size
+        py/list-get-item
+        py/list-set-item!
+        py/list-insert!
+        py/list-append!
+        py/list-sort!
+        py/list-reverse!
+
         py/tuple-new
+        py/tuple-size
         py/tuple-set-item!
         py/tuple-get-item
+
+        py/dict-new
+        py/dict-size
+        py/dict-get-item
+        py/dict-set-item!
+        py/dict-del-item!
+        py/dict-clear
+        py/dict-copy
+        py/dict-keys
+        py/dict-values
+        py/dict-items
 
         py/run-simple-file
         py/run-file
@@ -333,18 +358,49 @@
     (lambda (x)
         (py/run-simple-string (string-append  "@" (symbol->string x)))))
 
-(define list->*tuple
+(define py/list->list
+    (lambda (lst)
+        (define len (length lst))
+        (define *p (py/list-new len))
+        (let loop ((n 0)(lst lst))
+            (if (< n len)
+                (begin
+                    (py/list-set-item! *p n (py/long-from-long (car lst)))
+                    (loop (+ n 1) (cdr lst)))
+                *p))))
+
+(define py/vector->list
+    (lambda (vct)
+        (define len (vector-length vct))
+        (define *p (py/list-new len))
+        (let loop ((n 0))
+            (if (< n len)
+                (begin
+                    (py/list-set-item! *p n (py/long-from-long (vector-ref vct n)))
+                    (loop (+ n 1)))
+                *p))))
+
+(define py/list->tuple
     (lambda (lst)
         (define len (length lst))
         (define *p (py/tuple-new len))
         (let loop ((n 0)(lst lst))
             (if (< n len)
                 (begin
-                    (py/tuple-set-item! *p n (py/int-from-long (car lst)))
+                    (py/tuple-set-item! *p n (py/long-from-long (car lst)))
                     (loop (+ n 1) (cdr lst)))
                 *p))))
 
-
+(define py/vector->tuple
+    (lambda (vct)
+        (define len (vector-length vct))
+        (define *p (py/tuple-new len))
+        (let loop ((n 0))
+            (if (< n len)
+                (begin
+                    (py/tuple-set-item! *p n (py/long-from-long (vector-ref vct n)))
+                    (loop (+ n 1)))
+                *p))))
 
 
 )
