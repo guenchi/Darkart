@@ -278,8 +278,23 @@
 (define py/module-clear
     (foreign-procedure "PyModule_Clear" (uptr) void))
 
+(define py/object-get-attr
+    (foreign-procedure "PyObject_GetAttr" (uptr uptr) uptr))
+
+(define py/object-set-attr!
+    (foreign-procedure "PyObject_SetAttr" (uptr uptr uptr) int))
+
+(define py/object-has-attr
+    (foreign-procedure "PyObject_HasAttr" (uptr uptr) int))
+
 (define py/object-get-attr-string
     (foreign-procedure "PyObject_GetAttrString" (uptr string) uptr))
+
+(define py/object-set-attr-string!
+    (foreign-procedure "PyObject_SetAttrString" (uptr string uptr) int))
+
+(define py/object-has-attr-string
+    (foreign-procedure "PyObject_HasAttrString" (uptr string) int))
 
 (define py/object-call-object
     (foreign-procedure "PyObject_CallObject" (uptr uptr) uptr))
