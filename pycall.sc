@@ -182,6 +182,24 @@
 (define py/dict-del-item!
     (foreign-procedure "PyDict_DelItem" (uptr uptr) int))
 
+(define py/dict-clear
+    (foreign-procedure "PyDict_Clear" (uptr) void))
+
+(define py/dict-size
+    (foreign-procedure "PyDict_Size" (uptr) ssize_t))
+
+(define py/dict-keys
+    (foreign-procedure "PyDict_Keys" (uptr) uptr))
+
+(define py/dict-values
+    (foreign-procedure "PyDict_Values" (uptr) uptr))
+
+(define py/dict-items
+    (foreign-procedure "PyDict_Items" (uptr) uptr))
+
+(define py/dict-copy
+    (foreign-procedure "PyDict_Copy" (uptr) uptr))
+
 (define py/run-simple-file
     (foreign-procedure "PyRun_SimpleFile" (uptr string) int))
 
