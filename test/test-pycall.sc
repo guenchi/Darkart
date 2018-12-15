@@ -40,6 +40,28 @@
     (py-finalize)
     (exit))
 
+
+(begin
+    (define x (vector 1 2 3 4 5))
+    (py-initialize)
+    (define t (py/vector->list x))
+    (define a (py/list-get-item t 0))
+    (define b (py/list-get-item t 1))
+    (define c (py/list-get-item t 2))
+    (define d (py/list-get-item t 3))
+    (define e (py/list-get-item t 4))
+    (display (py/long-as-long a))
+    (newline)
+    (display (py/long-as-long b))
+    (newline)
+    (display (py/long-as-long c))
+    (newline)
+    (display (py/long-as-long d))
+    (newline)
+    (display (py/long-as-long e))
+    (newline)
+    (py-finalize)
+    (exit))
     
 ;; test tuple pass and operate
 
