@@ -110,6 +110,18 @@
 (define py/int-from-long
     (foreign-procedure "PyInt_FromLong" (long) uptr))
 
+(define py/int-from-size_t
+    (foreign-procedure "PyInt_FromSize_t" (size_t) uptr))
+
+(define py/int-from-ssize_t
+    (foreign-procedure "PyInt_FromSsize_t" (ssize_t) uptr))
+
+(define py/int-as-long
+    (foreign-procedure "PyInt_AsLong" (uptr) long))
+
+(define py/int-as-ssize_t
+    (foreign-procedure "PyInt_AsSsize_t" (uptr) ssize_t))
+
 (define py/long-from-long
     (foreign-procedure "PyLong_FromLong" (long) uptr))
 
