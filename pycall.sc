@@ -109,7 +109,14 @@
 
         py-import
         py-from
-        py-define)
+        py-define
+        
+        py/list->list
+        py/vector->list
+        py/list->tuple
+        py/vector->tuple
+        py/alist->dict
+        )
     (import
         (scheme))
 
@@ -402,5 +409,13 @@
                     (loop (+ n 1)))
                 *p))))
 
+(define py/alist->dict
+    (lambda (lst)
+        (define *p (py/dict-new))
+        (let loop ((i (car lst))(r (cdr lst)))
+            (py/dict-set-item! *p (py/string-from-string (car i)) (py/long-from-long (cdr i)))
+            (if (null? r)
+                *p
+                (loop (car r)(cdr r))))))
 
 )
