@@ -202,6 +202,9 @@
 (define py/string-from-string
     (foreign-procedure "PyString_FromString" (string) uptr))
 
+(define py/string-as-string
+    (foreign-procedure "PyString_AsString" (uptr) string))
+
 (define py/list-new
     (foreign-procedure "PyList_New" (int) uptr))
 
@@ -327,6 +330,9 @@
 
 (define py/object-call-object
     (foreign-procedure "PyObject_CallObject" (uptr uptr) uptr))
+
+(define py/object-str 
+    (foreign-procedure "PyObject_Str" (uptr) uptr))
 
 (define py-compile-string
     (foreign-procedure "Py_CompileString" (string string int) uptr))
