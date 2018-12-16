@@ -136,6 +136,9 @@
 (define py-finalize
     (foreign-procedure "Py_Finalize" () void))
 
+(define py-decref
+    (foreign-procedure "Py_DECREF" (uptr) void))
+
 (define py-new-interpreter
     (foreign-procedure "Py_NewInterpreter" () uptr))
 
@@ -337,11 +340,13 @@
 (define py/object-str 
     (foreign-procedure "PyObject_Str" (uptr) uptr))
 
+(define py/callable-check
+    (foreign-procedure "PyCallable_Check" (uptr) int))
+
 (define py-compile-string
     (foreign-procedure "Py_CompileString" (string string int) uptr))
 
-(define py/callable-check
-    (foreign-procedure "PyCallable_Check" (uptr) int))
+
 
 
 (define-syntax py-import
