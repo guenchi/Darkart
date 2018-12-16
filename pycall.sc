@@ -60,6 +60,7 @@
         py/float-as-double
         
         py/string-from-string
+        py/string-as-string
 
         py/list-new
         py/list-size
@@ -104,6 +105,8 @@
         
         py/object-get-attr-string
         py/object-call-object
+        py/object-str
+        py/callable-check
     
         py-compile-string
 
@@ -336,6 +339,9 @@
 
 (define py-compile-string
     (foreign-procedure "Py_CompileString" (string string int) uptr))
+
+(define py/callable-check
+    (foreign-procedure "PyCallable_Check" (uptr) int))
 
 
 (define-syntax py-import
