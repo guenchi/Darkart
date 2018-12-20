@@ -15,5 +15,5 @@
                 (match x
                     (,s (guard (symbol? s)) s))))
         (match lst
-            ((import ,(Str -> lib)) `(define (string->symbol ,lib) (py/import-import-module ,lib)))
-            ((import ,(Str -> lib) as ,(Sym -> l)) `(define ,l (py/import-import-module ,lib))))))
+            ((import ,(Sym -> lib)) `(define ,lib (py/import-import-module (symbol->string ,lib))))
+            ((import ,(Sym -> lib) as ,(Sym -> l)) `(define ,l (py/import-import-module (symbol->string ,lib)))))))
