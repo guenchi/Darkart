@@ -6,6 +6,10 @@
 
 (define pycall
     (lambda (lst)
+        (define Num
+            (lambda (x)
+                (match x
+                    (,n (guard (number? n)) n))))
         (define Str
             (lambda (x)
                 (match x
