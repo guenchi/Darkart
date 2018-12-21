@@ -109,16 +109,6 @@
         py/callable-check
     
         py-compile-string
-
-        py-import
-        py-from
-        py-define
-        
-        py/list->list
-        py/vector->list
-        py/list->tuple
-        py/vector->tuple
-        py/alist->dict
         )
     (import
         (scheme))
@@ -347,89 +337,5 @@
     (foreign-procedure "Py_CompileString" (string string int) uptr))
 
 
-
-
-(define-syntax py-import
-    (syntax-rules (as)
-        ((_ e)
-            (py/run-simple-string (string-append "import " (symbol->string e))))
-        ((_ e as k)
-            (py/run-simple-string (string-append "import " (symbol->string e) " as " (symbol->string k))))))
-
-(define-syntax py-from
-    (syntax-rules (import)
-        ((_ e import k)
-            (py/run-simple-string (string-append "from " (symbol->string e) " import " (symbol->string k))))))
-
-
-(define any->string
-    (lambda (a)
-        (cond
-            ((number? a) (number->string a))
-            ((symbol? a) (symbol->string a))
-            ((string? a) a)
-            (else (display "input must be number, symbol or string")))))            
-
-(define py-define 
-    (lambda (x y)
-        (py/run-simple-string (string-append (symbol->string x) " = " (any->string y)))))
-
-
-(define py-decorater
-    (lambda (x)
-        (py/run-simple-string (string-append  "@" (symbol->string x)))))
-
-(define py/list->list
-    (lambda (lst)
-        (define len (length lst))
-        (define *p (py/list-new len))
-        (let loop ((n 0)(lst lst))
-            (if (< n len)
-                (begin
-                    (py/list-set-item! *p n (py/long-from-long (car lst)))
-                    (loop (+ n 1) (cdr lst)))
-                *p))))
-
-(define py/vector->list
-    (lambda (vct)
-        (define len (vector-length vct))
-        (define *p (py/list-new len))
-        (let loop ((n 0))
-            (if (< n len)
-                (begin
-                    (py/list-set-item! *p n (py/long-from-long (vector-ref vct n)))
-                    (loop (+ n 1)))
-                *p))))
-
-(define py/list->tuple
-    (lambda (lst)
-        (define len (length lst))
-        (define *p (py/tuple-new len))
-        (let loop ((n 0)(lst lst))
-            (if (< n len)
-                (begin
-                    (py/tuple-set-item! *p n (py/long-from-long (car lst)))
-                    (loop (+ n 1) (cdr lst)))
-                *p))))
-
-(define py/vector->tuple
-    (lambda (vct)
-        (define len (vector-length vct))
-        (define *p (py/tuple-new len))
-        (let loop ((n 0))
-            (if (< n len)
-                (begin
-                    (py/tuple-set-item! *p n (py/long-from-long (vector-ref vct n)))
-                    (loop (+ n 1)))
-                *p))))
-
-(define py/alist->dict
-    (lambda (lst)
-        (define *p (py/dict-new))
-        (let loop ((i (car lst))(r (cdr lst)))
-            (py/dict-set-item! *p (py/string-from-string (car i)) (py/long-from-long (cdr i)))
-            (if (null? r)
-                *p
-                (loop (car r)(cdr r))))))
 
 )
