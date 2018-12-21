@@ -25,10 +25,11 @@
 
 
 
-(library (fli lucall)
+(library (fli ml call)
     (export)
     (import
-        (scheme))
+        (scheme)
+        (fli ml ffi))
 
 
 )

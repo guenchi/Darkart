@@ -25,7 +25,7 @@
 
 
 
-(library (fli python py-ffi)
+(library (fli py ffi)
     (export
         py-sigle-input
         py-file-input

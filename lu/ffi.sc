@@ -25,40 +25,10 @@
 
 
 
-(library (fli python py-call)
-    (export
-        py-call
-    )
+(library (fli lu ffi)
+    (export)
     (import
-        (scheme)
-        (fli python py-ffi))
+        (scheme))
 
-    (define py-call
-        (lambda (lst)
-            (py-initialize)
-            (let l ((x (interpreter lst)))
-                (if (not (null? x))  
-                    (begin
-                        (eval (car x))
-                        (l (cdr x)))))
-            (Py_Finalize)))
-
-    (define interpreter
-        (lambda (lst)
-            (define Num
-                (lambda (x)
-                    (match x
-                        (,n (guard (number? n)) n))))
-            (define Str
-                (lambda (x)
-                    (match x
-                        (,s (guard (string? s)) s))))
-            (define Sym
-                (lambda (x)
-                    (match x
-                        (,s (guard (symbol? s)) s))))
-            (match lst
-                ((import ,(Sym -> lib)) `(define ,lib (py/import-import-module (symbol->string ,lib))))
-                ((import ,(Sym -> lib) as ,(Sym -> l)) `(define ,l (py/import-import-module (symbol->string ,lib)))))))
 
 )

@@ -25,10 +25,11 @@
 
 
 
-(library (fli gocall)
+(library (fli js call)
     (export)
     (import
-        (scheme))
+        (scheme)
+        (fli js ffi))
 
 
 )

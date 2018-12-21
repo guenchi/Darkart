@@ -25,10 +25,11 @@
 
 
 
-(library (fli jlcall)
+(library (fli rb call)
     (export)
     (import
-        (scheme))
+        (scheme)
+        (fli rb ffi))
 
 
 )

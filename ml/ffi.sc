@@ -25,7 +25,7 @@
 
 
 
-(library (fli jscall)
+(library (fli ml ffi)
     (export)
     (import
         (scheme))

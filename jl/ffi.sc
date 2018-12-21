@@ -25,7 +25,7 @@
 
 
 
-(library (fli mlcall)
+(library (fli julia jl-ffi)
     (export)
     (import
         (scheme))
