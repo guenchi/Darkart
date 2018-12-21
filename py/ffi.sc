@@ -113,7 +113,7 @@
     (import
         (scheme))
 
-(define lib (load-shared-object "py.so"))
+(define lib (load-shared-object "./lib/fli/py.so"))
 
 (define py-sigle-input 256)
 (define py-file-input 257)
@@ -126,8 +126,11 @@
 (define py-finalize
     (foreign-procedure "Py_Finalize" () void))
 
+(define py-incref
+    (foreign-procedure "Py_IncRef" (uptr) void))
+
 (define py-decref
-    (foreign-procedure "Py_DECREF" (uptr) void))
+    (foreign-procedure "Py_DecRef" (uptr) void))
 
 (define py-new-interpreter
     (foreign-procedure "Py_NewInterpreter" () uptr))
@@ -304,7 +307,7 @@
     (foreign-procedure "PyModule_GetName" (uptr) string))
 
 (define py/module-get-filename
-    (foreign-procedure "PyModule_GetFileName" (uptr) string))
+    (foreign-procedure "PyModule_GetFilename" (uptr) string))
 
 (define py/object-get-attr
     (foreign-procedure "PyObject_GetAttr" (uptr uptr) uptr))

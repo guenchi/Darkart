@@ -28,6 +28,10 @@
 (library (fli py call)
     (export
         py-call
+        list->py-list
+        list->py-tuple
+        vector->py-list
+        vector->py-tuple
     )
     (import
         (scheme)
@@ -37,14 +41,15 @@
     (define py-call
         (lambda (lst)
             (py-initialize)
-            (let l ((x (compiler lst)))
-                (if (not (null? x))  
+            (let l ((lst lst))
+                (if (not (null? lst))  
                     (begin
-                        (eval (car x))
-                        (l (cdr x)))))
-            (Py_Finalize)))
+                        (eval (parse (car lst)))
+                        (l (cdr lst)))))
+            (py-finalize)))
 
-    (define compiler
+            
+    (define parse
         (lambda (lst)
             (define Num
                 (lambda (x)
@@ -59,8 +64,9 @@
                     (match x
                         (,s (guard (symbol? s)) s))))
             (match lst
-                ((import ,(Sym -> lib)) `(define ,lib (py/import-import-module (symbol->string ,lib))))
-                ((import ,(Sym -> lib) as ,(Sym -> l)) `(define ,l (py/import-import-module (symbol->string ,lib)))))))
+                ((import ,(Sym -> lib)) `(define ,lib (py/import-import-module ,(symbol->string lib))))
+                ((import ,(Sym -> lib) as ,(Sym -> l)) `(define ,l (py/import-import-module ,(symbol->string lib))))
+                ((,x ...) `(,x ...)))))
 
     
     (define list->py-list
@@ -118,34 +124,3 @@
 
 )
 
-
-
-    ; (define-syntax py-import
-    ;     (syntax-rules (as)
-    ;         ((_ e)
-    ;             (py/run-simple-string (string-append "import " (symbol->string e))))
-    ;         ((_ e as k)
-    ;             (py/run-simple-string (string-append "import " (symbol->string e) " as " (symbol->string k))))))
-    
-    ; (define-syntax py-from
-    ;     (syntax-rules (import)
-    ;         ((_ e import k)
-    ;             (py/run-simple-string (string-append "from " (symbol->string e) " import " (symbol->string k))))))
-    
-    
-    ; (define any->string
-    ;     (lambda (a)
-    ;         (cond
-    ;             ((number? a) (number->string a))
-    ;             ((symbol? a) (symbol->string a))
-    ;             ((string? a) a)
-    ;             (else (display "input must be number, symbol or string")))))            
-    
-    ; (define py-define 
-    ;     (lambda (x y)
-    ;         (py/run-simple-string (string-append (symbol->string x) " = " (any->string y)))))
-    
-    
-    ; (define py-decorater
-    ;     (lambda (x)
-    ;         (py/run-simple-string (string-append  "@" (symbol->string x)))))
