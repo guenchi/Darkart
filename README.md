@@ -8,7 +8,7 @@ For now, PyCall is runnable. The next step is to do further packaging work, maki
 
 Implementation priority: Python > Julia > Javascript > OCaml
 
-![image](https://github.com/guenchi/FLI/img/pycall.png)
+![image](https://github.com/guenchi/FLI/blob/master/img/pycall.png)
 
 Sources:
 
