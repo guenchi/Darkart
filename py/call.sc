@@ -28,6 +28,7 @@
 (library (fli py call)
     (export
         py-call
+        py-args
         list->py-list
         list->py-tuple
         vector->py-list
@@ -67,6 +68,18 @@
                 ((import ,(Sym -> lib)) `(define ,lib (py/import-import-module ,(symbol->string lib))))
                 ((import ,(Sym -> lib) as ,(Sym -> l)) `(define ,l (py/import-import-module ,(symbol->string lib))))
                 ((,x ...) `(,x ...)))))
+
+
+    (define py-args
+        (lambda args 
+            (define len (length args))
+            (define *p (py/tuple-new len))
+            (let l ((n 0)(args args))
+                (if (< n len)
+                    (begin 
+                        (py/tuple-set-item! *p n (car args))
+                        (l (+ n 1) (cdr args))
+                    *p)))))
 
     
     (define list->py-list
