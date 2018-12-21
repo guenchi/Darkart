@@ -10,7 +10,7 @@ Implementation priority: Python > Julia > Javascript > OCaml
 
 It will work like this:
 
-![image](https://github.com/guenchi/FLI/blob/master/img/pycall.png)
+![image](https://github.com/guenchi/FLI/blob/master/img/python.png)
 
 Sources:
 
