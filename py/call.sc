@@ -31,6 +31,7 @@
     )
     (import
         (scheme)
+        (match match)
         (fli py ffi))
 
     (define py-call
