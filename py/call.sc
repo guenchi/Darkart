@@ -55,20 +55,34 @@
             
     (define parse
         (lambda (lst)
-            (define Num
-                (lambda (x)
-                    (match x
-                        (,n (guard (number? n)) n))))
-            (define Str
-                (lambda (x)
-                    (match x
-                        (,s (guard (string? s)) s))))
             (define Sym
                 (lambda (x)
                     (match x
                         (,s (guard (symbol? s)) s))))
+            (define Var
+                (lambda (x)
+                    (match x
+                        (,s (guard (symbol? s)) s)
+                        (,(Pycl -> f) f))))
+            (define Func
+                (lambda (x)
+                    (match x
+                        (list->py-list list->py-list)
+                        (list->py-tuple list->py-tuple)
+                        (vector->py-list vector->py-list)
+                        (vector->py-tuple vector->py-tuple)
+                        (py-list->list py-list->list)
+                        (py-tuple->list py-tuple->list))))
+            (define Pycl 
+                (lambda (x)
+                    (match x
+                        ((,(Sym -> f) ,(Var -> x) ...) `(py/object-call-object ,f (py-args ,x ...))))))
+            (define Expr
+                (lambda (x)
+                    (match x
+                        ((,(Func -> f) ,(Var -> x) ...) `(,f ,x ...)))))
             (match lst
-                ((define ,x ,y) `(define ,x ,(parse y)))
+                ((define ,(Sym -> x) ,(Var -> y)) `(define ,x ,y))
                 ((import ,(Sym -> lib)) 
                     `(define ,lib (py/import-import-module ,(symbol->string lib))))
                 ((import ,(Sym -> lib) as ,(Sym -> l)) 
@@ -77,7 +91,8 @@
                     `(define ,x (py/object-get-attr-string ,o ,(symbol->string x))))
                 ((get ,(Sym -> o) ,(Sym -> x) as ,(Sym -> k))
                     `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
-                ((,(Sym -> f) ,(Sym -> x) ...) `(py/object-call-object ,f (py-args ,x ...))))))
+                (,(Expr -> f) f)
+                (,(Pycl -> f) f))))
 
 
     (define py-args
