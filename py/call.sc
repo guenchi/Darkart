@@ -43,13 +43,14 @@
 
     (define py-call
         (lambda (lst)
-            (py-initialize)
+            ;(py-initialize)
             (let l ((lst lst))
                 (if (not (null? lst))  
                     (begin
                         (eval (parse (car lst)))
                         (l (cdr lst)))))
-            (py-finalize)))
+            ;(py-finalize)
+            ))
 
             
     (define parse
@@ -67,9 +68,16 @@
                     (match x
                         (,s (guard (symbol? s)) s))))
             (match lst
-                ((import ,(Sym -> lib)) `(define ,lib (py/import-import-module ,(symbol->string lib))))
-                ((import ,(Sym -> lib) as ,(Sym -> l)) `(define ,l (py/import-import-module ,(symbol->string lib))))
-                ((,x ...) `(,x ...)))))
+                ((define ,x ,y) `(define ,x ,(parse y)))
+                ((import ,(Sym -> lib)) 
+                    `(define ,lib (py/import-import-module ,(symbol->string lib))))
+                ((import ,(Sym -> lib) as ,(Sym -> l)) 
+                    `(define ,l (py/import-import-module ,(symbol->string lib))))
+                ((get ,(Sym -> o) ,(Sym -> x))
+                    `(define ,x (py/object-get-attr-string ,o ,(symbol->string x))))
+                ((get ,(Sym -> o) ,(Sym -> x) as ,(Sym -> k))
+                    `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
+                ((,f ,x ...) `(py/object-call-object ,f (py-args ,x ...))))))
 
 
     (define py-args
