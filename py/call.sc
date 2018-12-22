@@ -31,10 +31,10 @@
         py-args
         list->py-list
         list->py-tuple
-        vector->py-list
-        vector->py-tuple
         py-list->list
         py-tuple->list
+        vector->py-list
+        vector->py-tuple
     )
     (import
         (scheme)
@@ -43,14 +43,13 @@
 
     (define py-call
         (lambda (lst)
-            ;(py-initialize)
+            (py-initialize)
             (let l ((lst lst))
                 (if (not (null? lst))  
                     (begin
                         (eval (parse (car lst)))
                         (l (cdr lst)))))
-            ;(py-finalize)
-            ))
+            (py-finalize)))
 
             
     (define parse
@@ -64,25 +63,22 @@
                     (match x
                         (,s (guard (symbol? s)) s)
                         (,(Pycl -> f) f))))
-            (define Func
-                (lambda (x)
-                    (match x
-                        (list->py-list list->py-list)
-                        (list->py-tuple list->py-tuple)
-                        (vector->py-list vector->py-list)
-                        (vector->py-tuple vector->py-tuple)
-                        (py-list->list py-list->list)
-                        (py-tuple->list py-tuple->list))))
             (define Pycl 
                 (lambda (x)
                     (match x
                         ((,(Sym -> f) ,(Var -> x) ...) `(py/object-call-object ,f (py-args ,x ...))))))
-            (define Expr
-                (lambda (x)
-                    (match x
-                        ((,(Func -> f) ,(Var -> x) ...) `(,f ,x ...)))))
+            ; (define Expr
+            ;     (lambda (x)
+            ;         (match x
+            ;             ((,(Func -> f) ,(Var -> x) ...) `(,f ,x ...)))))
             (match lst
-                ((define ,(Sym -> x) ,(Var -> y)) `(define ,x ,y))
+                ((define ,(Sym -> x) ,y) `(define ,x ,(parse y)))
+                ((list->py-list ,t ,(Var -> x)) `(list->py-list ,t ,x))
+                ((list->py-tuple ,t ,(Var -> x)) `(list->py-tuple ,t ,x))
+                ((py-list->list ,t ,(Var -> x)) `(py-list->list ,t ,x))
+                ((py-tuple->list ,t ,(Var -> x)) `(py-tuple->list ,t ,x))
+                ((vector->py-list ,t ,(Var -> x)) `(vector->py-list ,t ,x))
+                ((vector->py-tuple ,t ,(Var -> x)) `(vector->py-tuple ,t ,x))
                 ((import ,(Sym -> lib)) 
                     `(define ,lib (py/import-import-module ,(symbol->string lib))))
                 ((import ,(Sym -> lib) as ,(Sym -> l)) 
@@ -91,7 +87,6 @@
                     `(define ,x (py/object-get-attr-string ,o ,(symbol->string x))))
                 ((get ,(Sym -> o) ,(Sym -> x) as ,(Sym -> k))
                     `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
-                (,(Expr -> f) f)
                 (,(Pycl -> f) f))))
 
 
@@ -206,9 +201,3 @@
 
 
 )
-
-; ((get ,(Sym -> o) ,(Sym -> x))
-; `(define ,x (py/object-get-attr-string ,o ,(symbol->string x))))
-; ((get ,(Sym -> o) ,(Sym -> x) as ,(Sym -> k))
-; `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
-; ((,f ,x ...) `(py/object-call-object ,f (py-args ,x ...))))))
