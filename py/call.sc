@@ -62,15 +62,11 @@
                 (lambda (x)
                     (match x
                         (,s (guard (symbol? s)) s)
-                        (,(Pycl -> f) f))))
-            (define Pycl 
+                        (,(Expr -> f) f))))
+            (define Expr 
                 (lambda (x)
                     (match x
                         ((,(Sym -> f) ,(Var -> x) ...) `(py/object-call-object ,f (py-args ,x ...))))))
-            ; (define Expr
-            ;     (lambda (x)
-            ;         (match x
-            ;             ((,(Func -> f) ,(Var -> x) ...) `(,f ,x ...)))))
             (match lst
                 ((define ,(Sym -> x) ,y) `(define ,x ,(parse y)))
                 ((list->py-list ,t ,(Var -> x)) `(list->py-list ,t ,x))
@@ -87,7 +83,7 @@
                     `(define ,x (py/object-get-attr-string ,o ,(symbol->string x))))
                 ((get ,(Sym -> o) ,(Sym -> x) as ,(Sym -> k))
                     `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
-                (,(Pycl -> f) f))))
+                (,(Expr -> f) f))))
 
 
     (define py-args
