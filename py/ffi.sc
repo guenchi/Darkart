@@ -36,6 +36,21 @@
         py-new-interpreter
         py-end-interpreter
 
+        py/number-add
+        py/number-subtract
+        py/number-multiply
+        py/number-divide
+        py/number-floor-divide
+        py/number-divmod
+        py/number-lshift
+        py/number-rshift
+        py/number-and
+        py/number-or
+        py/number-xor
+        py/number-invert
+        py/number-absolute
+        py/number-negative
+
         py/int-from-long
         py/int-from-size_t
         py/int-from-ssize_t
@@ -137,6 +152,48 @@
 
 (define py-end-interpreter
     (foreign-procedure "Py_EndInterpreter" (uptr) void))
+
+(define py/number-add
+    (foreign-procedure "PyNumber_Add" (uptr uptr) uptr))
+
+(define py/number-subtract
+    (foreign-procedure "PyNumber_Subtract" (uptr uptr) uptr))
+
+(define py/number-multiply
+    (foreign-procedure "PyNumber_Multiply" (uptr uptr) uptr))
+
+(define py/number-divide
+    (foreign-procedure "PyNumber_Divide" (uptr uptr) uptr))
+
+(define py/number-floor-divide
+    (foreign-procedure "PyNumber_FloorDivide" (uptr uptr) uptr))
+
+(define py/number-divmod
+    (foreign-procedure "PyNumber_Divmod" (uptr uptr) uptr))
+
+(define py/number-lshift
+    (foreign-procedure "PyNumber_Lshift" (uptr uptr) uptr))
+
+(define py/number-rshift
+    (foreign-procedure "PyNumber_Rshift" (uptr uptr) uptr))
+
+(define py/number-and
+    (foreign-procedure "PyNumber_And" (uptr uptr) uptr))
+
+(define py/number-or
+    (foreign-procedure "PyNumber_Or" (uptr uptr) uptr))
+
+(define py/number-xor
+    (foreign-procedure "PyNumber_Xor" (uptr uptr) uptr))
+
+(define py/number-invert
+    (foreign-procedure "PyNumber_Invert" (uptr) uptr))
+
+(define py/number-absolute
+    (foreign-procedure "PyNumber_Absolute" (uptr) uptr))
+
+(define py/number-negative
+    (foreign-procedure "PyNumber_Negative" (uptr) uptr))
 
 (define py/int-from-long
     (foreign-procedure "PyInt_FromLong" (long) uptr))
