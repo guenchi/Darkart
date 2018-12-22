@@ -77,7 +77,7 @@
                     `(define ,x (py/object-get-attr-string ,o ,(symbol->string x))))
                 ((get ,(Sym -> o) ,(Sym -> x) as ,(Sym -> k))
                     `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
-                ((,f ,x ...) `(py/object-call-object ,f (py-args ,x ...))))))
+                ((,(Sym -> f) ,(Sym -> x) ...) `(py/object-call-object ,f (py-args ,x ...))))))
 
 
     (define py-args
@@ -192,3 +192,8 @@
 
 )
 
+; ((get ,(Sym -> o) ,(Sym -> x))
+; `(define ,x (py/object-get-attr-string ,o ,(symbol->string x))))
+; ((get ,(Sym -> o) ,(Sym -> x) as ,(Sym -> k))
+; `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
+; ((,f ,x ...) `(py/object-call-object ,f (py-args ,x ...))))))
