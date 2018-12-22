@@ -33,6 +33,8 @@
         list->py-tuple
         vector->py-list
         vector->py-tuple
+        py-list->list
+        py-tuple->list
     )
     (import
         (scheme)
@@ -83,57 +85,102 @@
 
     
     (define list->py-list
-        (lambda (lst)
+        (lambda (t lst)
             (define len (length lst))
             (define *p (py/list-new len))
-            (let loop ((n 0)(lst lst))
+            (define f
+                (case t
+                    ('int py/long-from-long)
+                    ('float py/float-from-double)))
+            (let l ((n 0)(lst lst))
                 (if (< n len)
                     (begin
-                        (py/list-set-item! *p n (py/long-from-long (car lst)))
-                        (loop (+ n 1) (cdr lst)))
+                        (py/list-set-item! *p n (f (car lst)))
+                        (l (+ n 1) (cdr lst)))
                     *p))))
-    
-    (define vector->py-list
-        (lambda (vct)
-            (define len (vector-length vct))
-            (define *p (py/list-new len))
-            (let loop ((n 0))
-                (if (< n len)
-                    (begin
-                        (py/list-set-item! *p n (py/long-from-long (vector-ref vct n)))
-                        (loop (+ n 1)))
-                    *p))))
-    
+
     (define list->py-tuple
-        (lambda (lst)
+        (lambda (t lst)
             (define len (length lst))
             (define *p (py/tuple-new len))
-            (let loop ((n 0)(lst lst))
+            (define f
+                (case t
+                    ('int py/long-from-long)
+                    ('float py/float-from-double)))
+            (let l ((n 0)(lst lst))
                 (if (< n len)
                     (begin
-                        (py/tuple-set-item! *p n (py/long-from-long (car lst)))
-                        (loop (+ n 1) (cdr lst)))
+                        (py/tuple-set-item! *p n (f (car lst)))
+                        (l (+ n 1) (cdr lst)))
+                    *p))))
+    
+    (define py-list->list
+        (lambda (t *p)
+            (define len (py/list-size *p))
+            (define f
+                (case t
+                    ('int py/long-as-long)
+                    ('float py/float-as-double)))
+            (let l ((n 0))
+                (if (< n len)
+                    (cons (f (py/list-get-item *p n)) (l (+ n 1)))
+                    '()))))
+
+
+    (define py-tuple->list
+        (lambda (t *p)
+            (define len (py/tuple-size *p))
+            (define f
+                (case t
+                    ('int py/long-as-long)
+                    ('float py/float-as-double)))
+            (let l ((n 0))
+                (if (< n len)
+                    (cons (f (py/tuple-get-item *p n)) (l (+ n 1)))
+                    '()))))
+
+
+
+    (define vector->py-list
+        (lambda (t vct)
+            (define len (vector-length vct))
+            (define *p (py/list-new len))
+            (define f
+                (case t
+                    ('int py/long-from-long)
+                    ('float py/float-from-double)))
+            (let l ((n 0))
+                (if (< n len)
+                    (begin
+                        (py/list-set-item! *p n (f (vector-ref vct n)))
+                        (l (+ n 1)))
                     *p))))
     
     (define vector->py-tuple
-        (lambda (vct)
+        (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/tuple-new len))
-            (let loop ((n 0))
+            (define f
+                (case t
+                    ('int py/long-from-long)
+                    ('float py/float-from-double)))
+            (let l ((n 0))
                 (if (< n len)
                     (begin
-                        (py/tuple-set-item! *p n (py/long-from-long (vector-ref vct n)))
-                        (loop (+ n 1)))
+                        (py/tuple-set-item! *p n (f (vector-ref vct n)))
+                        (l (+ n 1)))
                     *p))))
     
     (define alist->py-dict
         (lambda (lst)
             (define *p (py/dict-new))
-            (let loop ((i (car lst))(r (cdr lst)))
+            (let l ((i (car lst))(r (cdr lst)))
                 (py/dict-set-item! *p (py/string-from-string (car i)) (py/long-from-long (cdr i)))
                 (if (null? r)
                     *p
-                    (loop (car r)(cdr r))))))    
+                    (l (car r)(cdr r))))))    
+
+
 
 )
 
