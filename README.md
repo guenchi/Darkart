@@ -4,16 +4,9 @@ A binary interface let Scheme use Python, Lua, Ruby etc's Library
 
 This project is inspired by the Julia language. The FFI interface provided by Chez is used to embed the interpreter or JIT compiler of other languages into the Scheme program (CPython, Luajit etc) or to link the compiled object code with the C binary interface. (OCaml, Golang etc).
 
-For now, PyCall is runnable. The next step is to do further packaging work, making cross-language library calls more convenient and simple.
-
 Implementation priority: Python > Julia > Javascript > OCaml
 
-It will work like this:
-
-![image](https://github.com/guenchi/FLI/blob/master/img/pycall.png)
-
-
-Easily and lispist symtax:
+*** Call foreign language libraries with a Easily and lispist syntax: ***
 
 ```
 (define x '(1 2 3 4 5 6 7 8))
@@ -27,7 +20,17 @@ Easily and lispist symtax:
             (define lst (list->py-list 'int x))
             (define cosin-lst (py-list->list 'float (tolist (cosin (array lst)))))))
     (display cosin-lst)
+
+=> 
+
+(0.5403023058681398 -0.4161468365471424 -0.9899924966004454 -0.6536436208636119 0.2836621854632263 0.9601702866503661 0.7539022543433046 -0.14550003380861354)    
 ```
+
+
+![image](https://github.com/guenchi/FLI/blob/master/img/pycall.png)
+
+
+
 
 Sources:
 
