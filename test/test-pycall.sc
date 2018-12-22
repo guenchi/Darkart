@@ -1,5 +1,6 @@
 
-(import (fli pycall))
+(import (fli py ffi)
+        (fli py call))
 
 (py-initialize)
 
@@ -100,5 +101,22 @@
     (newline)
     (exit))
 
+
+;test call numpy     
+
+(begin
+    (define x '(1 2 3 4 5 6 7 8))
+    (define t (list->py-list 'int x))
+    (define np (py/import-import-module "numpy"))
+    (define array (py/object-get-attr-string np "array"))
+    (define cosin (py/object-get-attr-string np "cos"))
+    (define ndarray (py/object-get-attr-string np "ndarray"))
+    (define tolist (py/object-get-attr-string ndarray "tolist"))
+    (define arr (py/object-call-object array (py-args t)))
+    (define lst (py/object-call-object cosin (py-args arr)))
+    (define pylst (py/object-call-object tolist (py-args lst)))
+    (display (py-list->list 'float pylst))
+    (newline)
+    (exit))
 
 (py-finalize)
