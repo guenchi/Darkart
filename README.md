@@ -8,6 +8,8 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
 ***Call foreign language libraries with a easily and lispist syntax:***
 
+![image](https://github.com/guenchi/FLI/blob/master/img/pycall.png)
+
 ```
 (define x '(1 2 3 4 5 6 7 8))
 (py-call '(
@@ -24,11 +26,6 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
 (0.5403023058681398 -0.4161468365471424 -0.9899924966004454 -0.6536436208636119 0.2836621854632263 0.9601702866503661 0.7539022543433046 -0.14550003380861354)    
 ```
-
-
-![image](https://github.com/guenchi/FLI/blob/master/img/pycall.png)
-
-
 
 
 Sources:
