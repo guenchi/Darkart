@@ -10,16 +10,16 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
 ```
 (define x '(1 2 3 4 5 6 7 8))
-    (py-call 
-        '(
-            (import numpy as np)
-            (get np array)
-            (get np ndarray)
-            (get np cos as cosin)
-            (get ndarray tolist)
-            (define lst (list->py-list 'int x))
-            (define cosin-lst (py-list->list 'float (tolist (cosin (array lst)))))))
-    (display cosin-lst)
+(py-call 
+    '(
+        (import numpy as np)
+        (get np array)
+        (get np ndarray)
+        (get np cos as cosin)
+        (get ndarray tolist)
+        (define lst (list->py-list 'int x))
+        (define cosin-lst (py-list->list 'float (tolist (cosin (array lst)))))))
+(display cosin-lst)
 
 => 
 
