@@ -6,7 +6,7 @@ This project is inspired by the Julia language. The FFI interface provided by Ch
 
 Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
-*** Call foreign language libraries with a Easily and lispist syntax: ***
+***Call foreign language libraries with a easily and lispist syntax:***
 
 ```
 (define x '(1 2 3 4 5 6 7 8))
