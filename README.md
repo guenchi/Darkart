@@ -12,6 +12,23 @@ It will work like this:
 
 ![image](https://github.com/guenchi/FLI/blob/master/img/pycall.png)
 
+
+Easily and lispist symtax:
+
+```
+(define x '(1 2 3 4 5 6 7 8))
+    (py-call 
+        '(
+            (import numpy as np)
+            (get np array)
+            (get np ndarray)
+            (get np cos as cosin)
+            (get ndarray tolist)
+            (define lst (list->py-list 'int x))
+            (define cosin-lst (py-list->list 'float (tolist (cosin (array lst)))))))
+    (display cosin-lst)
+```
+
 Sources:
 
 https://github.com/JuliaPy/PyCall.jl/blob/master/src/PyCall.jl
