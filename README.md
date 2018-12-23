@@ -45,7 +45,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 0.08748866202592445 0.10510423345961667 0.1227845587874379 0.1405408322735788) 
 ```
 
-***User's Guide***
+##User's Guide##
 
 **Py-call's Scope:**
 
