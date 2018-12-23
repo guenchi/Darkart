@@ -139,4 +139,19 @@
     (exit))
 
 
+(begin
+    (py-call '(
+        (import numpy as np)
+        (get np array)
+        (get np ndarray)
+        (get np cos as cosin)
+        (get ndarray tolist)
+        (define cosin-lst (py-list->list 'float (tolist (cosin (array (list->py-list 'int '(1 2 3 4 5 6 7 8)))))))
+        (define x (long (* (+ (int 2) (int 3)) (int 7))))))
+    (display cosin-lst)
+    (newline)
+    (display x)
+    (newline)
+    (exit))
+
 
