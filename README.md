@@ -47,11 +47,11 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
 ***User's Guide***
 
-*Py-call's Scope:*
+**Py-call's Scope:**
 
 In and out of the Py-call's Scope shared a same Lexical Scope.
 
-*Cross Scope Procedure:*
+**Cross Scope Procedure:**
 
 Some procedure is cross scope, that means it use in the same way in and out of the Py-call's Scope.
 
