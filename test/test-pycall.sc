@@ -149,7 +149,7 @@
                     (array 
                         (list->py-list 'int '(1 2 3 4 5 6 7 8)))))))
     (define x 
-        (long 
+        (py->int 
             (* (+ (int 2) (int 3)) (int 7))))))
 (display cosin-lst)
 (newline)
