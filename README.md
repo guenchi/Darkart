@@ -11,26 +11,29 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 ***Call foreign language libraries with a easily and lispist syntax:***
 
 ```
-(define x '(1 2 3 4 5 6 7 8))
+(define lst '(1 2 3 4 5 6 7 8))
 (py-call 
   '((import numpy as np)
     (get np array)
     (get np ndarray)
-    (get np cos as cosin)
+    (get np sin)
+    (get np cos)
+    (get np tan)
     (get ndarray tolist)
-    (define lst 
-        (list->py-list 'int x))
-    (define cosin-lst 
-        (py-list->list 'float 
-            (tolist 
-                (cosin 
-                    (array lst)))))))
-(display cosin-lst)
+    (define x (list->py-list 'int lst))
+    (define y (/ (* (float 3.1415926) (array x)) (int 180)))
+    (define sin-lst (py-list->list 'float (tolist (sin y))))
+    (define cos-lst (py-list->list 'float (tolist (cos y))))
+    (define tan-lst (py-list->list 'float (tolist (tan y))))))
 
 => 
 
-(0.5403023058681398 -0.4161468365471424 -0.9899924966004454 -0.6536436208636119
- 0.2836621854632263 0.9601702866503661 0.7539022543433046 -0.14550003380861354)    
+(0.017452406139607784 0.03489949610742155 0.052335955351004666 0.06975647255614194
+0.0871557412647174 0.10452846149111272 0.12186934133663416 0.13917309860147606)
+(0.9998476951615872 0.9993908270398764 0.9986295348013184 0.9975640503428962
+0.996194698221486 0.9945218955549953 0.9925461518953035 0.9902680690730484)
+(0.017455064630405803 0.03492076889557947 0.052407778387424844 0.06992681074680297
+0.08748866202592445 0.10510423345961667 0.1227845587874379 0.1405408322735788) 
 ```
 
 
