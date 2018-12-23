@@ -45,6 +45,17 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 0.08748866202592445 0.10510423345961667 0.1227845587874379 0.1405408322735788) 
 ```
 
+***User's Guide***
+
+Py-call's Scope:
+
+In and out of the Py-call's Scope shared a same Lexical Scope.
+
+Cross Scope Procedure:
+
+Some procedure is cross scope, that means it use in the same way in and out of the Py-call's Scope.
+
+
 Enchantment is dependented https://github.com/guenchi/match, a pioneering work by Dan Friedman, Erik Hilsdale and Kent Dybvig.
 
 
