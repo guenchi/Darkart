@@ -21,11 +21,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
     (get np tan)
     (get ndarray tolist)
     (define x (list->py-list 'int lst))
-    (define y 
-        (/ 
-            (*  (float 3.1415926) 
-                (array x)) 
-            (int 180)))
+    (define y (/ (*  (float 3.1415926) (array x)) (int 180)))
     (define sin-lst 
         (py-list->list 'float 
             (tolist 
