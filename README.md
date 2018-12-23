@@ -18,8 +18,13 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
     (get np ndarray)
     (get np cos as cosin)
     (get ndarray tolist)
-    (define lst (list->py-list 'int x))
-    (define cosin-lst (py-list->list 'float (tolist (cosin (array lst)))))))
+    (define lst 
+        (list->py-list 'int x))
+    (define cosin-lst 
+        (py-list->list 'float 
+            (tolist 
+                (cosin 
+                    (array lst)))))))
 (display cosin-lst)
 
 => 
