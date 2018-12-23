@@ -6,7 +6,7 @@ This project is inspired by the Julia language. The FFI interface provided by Ch
 
 Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
-![image](https://github.com/guenchi/FLI/blob/master/img/py-call.png)
+![image](https://github.com/guenchi/Enchantment/blob/master/img/py-call.png)
 
 ***Call foreign language libraries with a easily and lispist syntax:***
 
@@ -49,7 +49,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 0.08748866202592445 0.10510423345961667 0.1227845587874379 0.1405408322735788) 
 ```
 
-FLI is dependented https://github.com/guenchi/match, a pioneering work by Dan Friedman, Erik Hilsdale and Kent Dybvig.
+Enchantment is dependented https://github.com/guenchi/match, a pioneering work by Dan Friedman, Erik Hilsdale and Kent Dybvig.
 
 
 Sources:
