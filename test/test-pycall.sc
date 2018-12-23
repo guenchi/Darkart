@@ -173,3 +173,23 @@
 (newline)
 
 
+
+(py-call 
+    '((import numpy as np)
+      (get np array)
+      (get np ndarray)
+      (get np sin)
+      (get np cos)
+      (get np tan)
+      (get ndarray tolist)
+      (define x (list->py-list 'int '(1 2 3 4 5 6 7 8)))
+      (define y (/ (* (float 3.1415926) (array x)) (int 180)))
+      (define sin-x (py-list->list 'float (tolist (sin y))))
+      (define cos-x (py-list->list 'float (tolist (cos y))))
+      (define tan-x (py-list->list 'float (tolist (tan y))))))
+  (display sin-x)
+  (newline)
+  (display cos-x)
+  (newline)
+  (display tan-x)
+  (newline)
