@@ -90,9 +90,9 @@
             (match lst
                 ((define ,(Sym -> x) ,y) `(define ,x ,(parse y)))
                 ((int ,x) `(py/long-from-long ,x))
-                ((long ,(Var -> x)) `(py/long-as-long ,x))
+                ((py->int ,(Var -> x)) `(py/long-as-long ,x))
                 ((float ,x) `(py/float-from-double ,x))
-                ((double ,(Var -> x)) `(py/float-as-double ,x))
+                ((py->float ,(Var -> x)) `(py/float-as-double ,x))
                 ((list->py-list ,t ,x) `(list->py-list ,t ,x))
                 ((list->py-tuple ,t ,x) `(list->py-tuple ,t ,x))
                 ((py-list->list ,t ,(Var -> x)) `(py-list->list ,t ,x))
