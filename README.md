@@ -8,7 +8,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
 ![image](https://github.com/guenchi/Enchantment/blob/master/img/py-call.png)
 
-***Call foreign language libraries with a easily and lispist syntax:***
+### Call foreign language libraries with a easily and lispist syntax: ###
 
 ```
 (define lst '(1 2 3 4 5 6 7 8))
