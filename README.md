@@ -36,6 +36,8 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 0.08748866202592445 0.10510423345961667 0.1227845587874379 0.1405408322735788) 
 ```
 
+FLI is dependented https://github.com/guenchi/match, a pioneering work by Dan Friedman, Erik Hilsdale and Kent Dybvig.
+
 
 Sources:
 
