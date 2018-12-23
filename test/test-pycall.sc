@@ -158,3 +158,18 @@
 
 
 
+(py-call 
+  '((import numpy as np)
+    (get np array)
+    (get np ndarray)
+    (get ndarray tolist)
+    (define lst (list->py-list 'int '(1 2 3 4 5 6 7 8)))
+    (define arr (array lst))
+    (define x (py-list->list 'int (tolist (+ arr arr))))
+    (define y (py-list->list 'int (tolist (* (int 7) arr))))))
+(display x)
+(newline)
+(display y)
+(newline)
+(exit)
+
