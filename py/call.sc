@@ -58,6 +58,10 @@
                 (lambda (x)
                     (match x
                         (,s (guard (symbol? s)) s))))
+            (define Str
+                (lambda (x)
+                    (match x
+                        (,s (guard (string? s)) s))))
             (define Var
                 (lambda (x)
                     (match x
@@ -87,6 +91,15 @@
                         ((abs ,(Var -> x)) `(py/number-absolute ,x))
                         ((- ,(Var -> x)) `(py/number-negative ,x))
                         ((,(Sym -> f) ,(Var -> x) ...) `(py/object-call-object ,f (py-args ,x ...))))))
+            (define Svar
+                (lambda (x)
+                    (match x
+                        (,s (guard (atom? s)) s)
+                        (,(Sexpr -> e) e))))
+            (define Sexpr
+                (lambda (x)
+                    (match x
+                        ((,(Str -> f) ,(Svar -> a) ...) `(,(string->symbol f) ,a ...)))))
             (match lst
                 ((define ,(Sym -> x) ,y) `(define ,x ,(parse y)))
                 ((int ,x) `(py/long-from-long ,x))
@@ -107,7 +120,29 @@
                     `(define ,x (py/object-get-attr-string ,o ,(symbol->string x))))
                 ((get ,(Sym -> o) ,(Sym -> x) as ,(Sym -> k))
                     `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
-                (,(Expr -> f) f))))
+                ((int ,x) `(py/long-from-long ,x))
+                ((float ,x) `(py/float-from-double ,x))
+                ((list->py-list ,t ,x) `(list->py-list ,t ,x))
+                ((list->py-tuple ,t ,x) `(list->py-tuple ,t ,x))
+                ((vector->py-list ,t ,x) `(vector->py-list ,t ,x))
+                ((vector->py-tuple ,t ,x) `(vector->py-tuple ,t ,x))
+                ((+ ,(Var -> x) ,(Var -> y)) `(py/number-add ,x ,y))
+                ((- ,(Var -> x) ,(Var -> y)) `(py/number-subtract ,x ,y))
+                ((* ,(Var -> x) ,(Var -> y)) `(py/number-multiply ,x ,y))
+                ((/ ,(Var -> x) ,(Var -> y)) `(py/number-divide ,x ,y))
+                ((// ,(Var -> x) ,(Var -> y)) `(py/number-floor-divide ,x ,y))
+                ((mod ,(Var -> x) ,(Var -> y)) `(py/number-divmod ,x ,y))
+                ((<< ,(Var -> x) ,(Var -> y)) `(py/number-lshift ,x ,y))
+                ((>> ,(Var -> x) ,(Var -> y)) `(py/number-rshift ,x ,y))
+                ((and ,(Var -> x) ,(Var -> y)) `(py/number-and ,x ,y))
+                ((or ,(Var -> x) ,(Var -> y)) `(py/number-or ,x ,y))
+                ((xor ,(Var -> x) ,(Var -> y)) `(py/number-xor ,x ,y))
+                ((~ ,(Var -> x)) `(py/number-invert ,x))
+                ((abs ,(Var -> x)) `(py/number-absolute ,x))
+                ((- ,(Var -> x)) `(py/number-negative ,x))
+                ((,(Str -> f) ,(Svar -> a) ...) `(,(string->symbol f) ,a ...))
+                ((,(Sym -> f) ,(Var -> x) ...) `(py/object-call-object ,f (py-args ,x ...)))
+                )))
 
 
     (define py-args
@@ -221,3 +256,13 @@
 
 
 )
+
+
+; ((import ,(a ...)  from ,(Sym -> lib) as ,(Sym -> l)) 
+;     `(begin
+;         (define ,l (py/import-import-module ,(symbol->string lib)))
+;         ,(let loop ((k a))
+;             (if (not (null? k))
+;                 (begin 
+;                     `(define (car a) (py/object-get-attr-string ,l ,(symbol->string lib)))
+;                     (loop (cdr a)))))))
