@@ -25,7 +25,7 @@
 
 
 
-(library (fli julia jl-ffi)
+(library (enchantment julia jl-ffi)
     (export)
     (import
         (scheme))

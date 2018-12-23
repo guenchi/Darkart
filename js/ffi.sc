@@ -25,7 +25,7 @@
 
 
 
-(library (fli js ffi)
+(library (enchantment js ffi)
     (export)
     (import
         (scheme))

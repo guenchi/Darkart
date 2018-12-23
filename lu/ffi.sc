@@ -25,7 +25,7 @@
 
 
 
-(library (fli lu ffi)
+(library (enchantment lu ffi)
     (export)
     (import
         (scheme))

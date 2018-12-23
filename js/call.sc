@@ -25,11 +25,11 @@
 
 
 
-(library (fli js call)
+(library (enchantment js call)
     (export)
     (import
         (scheme)
-        (fli js ffi))
+        (enchantment js ffi))
 
 
 )

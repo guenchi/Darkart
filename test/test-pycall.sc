@@ -1,6 +1,6 @@
 
-(import (fli py ffi)
-        (fli py call))
+(import (enchantment py ffi)
+        (enchantment py call))
 
 (py-initialize)
 

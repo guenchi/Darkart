@@ -25,11 +25,11 @@
 
 
 
-(library (fli ml call)
+(library (enchantment ml call)
     (export)
     (import
         (scheme)
-        (fli ml ffi))
+        (enchantment ml ffi))
 
 
 )

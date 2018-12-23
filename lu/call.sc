@@ -25,11 +25,11 @@
 
 
 
-(library (fli lu call)
+(library (enchantment lu call)
     (export)
     (import
         (scheme)
-        (fli lu ffi))
+        (enchantment lu ffi))
 
 
 )

@@ -25,11 +25,11 @@
 
 
 
-(library (fli rb call)
+(library (enchantment rb call)
     (export)
     (import
         (scheme)
-        (fli rb ffi))
+        (enchantment rb ffi))
 
 
 )

@@ -25,7 +25,7 @@
 
 
 
-(library (fli py call)
+(library (enchantment py call)
     (export
         py-call
         py-args
@@ -39,7 +39,7 @@
     (import
         (scheme)
         (match match)
-        (fli py ffi))
+        (enchantment py ffi))
 
     (define py-call
         (lambda (lst)
