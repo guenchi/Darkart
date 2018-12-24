@@ -6,7 +6,7 @@ This project is inspired by the Julia language. The FFI interface provided by Ch
 
 Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
-![image](https://github.com/guenchi/Enchantment/blob/master/img/py-call.png)
+![image](https://github.com/guenchi/Enchantment/blob/master/img/py.png)
 
 ### Call foreign language libraries with a easily and lispist syntax: ###
 
