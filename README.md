@@ -6,8 +6,6 @@ This project is inspired by the Julia language. The FFI interface provided by Ch
 
 Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
-![image](https://github.com/guenchi/Enchantment/blob/master/img/py.png)
-
 ### Call foreign language libraries with a easily and lispist syntax: ###
 
 ```
@@ -16,33 +14,25 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
   '((import numpy as np)
     (get np array)
     (get np ndarray)
+    (get np pi)
     (get np sin)
     (get np cos)
     (get np tan)
     (get ndarray tolist)
     (define x (list->py-list 'int lst))
-    (define y (/ (*  (float 3.1415926) (array x)) (int 180)))
-    (define sin-lst 
-        (py-list->list 'float 
-            (tolist 
-                (sin y))))
-    (define cos-lst 
-        (py-list->list 'float 
-            (tolist 
-                (cos y))))
-    (define tan-lst 
-        (py-list->list 'float 
-            (tolist 
-                (tan y))))))
+    (define y (/ (*  pi (array x)) (int 180)))
+    (define sin-lst (py-list->list 'float (tolist (sin y))))
+    (define cos-lst (py-list->list 'float (tolist (cos y))))
+    (define tan-lst (py-list->list 'float (tolist (tan y))))))
 
 => 
 
-(0.017452406139607784 0.03489949610742155 0.052335955351004666 0.06975647255614194
-0.0871557412647174 0.10452846149111272 0.12186934133663416 0.13917309860147606)
-(0.9998476951615872 0.9993908270398764 0.9986295348013184 0.9975640503428962
-0.996194698221486 0.9945218955549953 0.9925461518953035 0.9902680690730484)
-(0.017455064630405803 0.03492076889557947 0.052407778387424844 0.06992681074680297
-0.08748866202592445 0.10510423345961667 0.1227845587874379 0.1405408322735788) 
+(0.01745240643728351 0.03489949670250097 0.05233595624294383 0.0697564737441253 
+0.08715574274765817 0.10452846326765346 0.12186934340514748 0.13917310096006544)
+(0.9998476951563913 0.9993908270190958 0.9986295347545738 0.9975640502598242 
+0.9961946980917455 0.9945218953682733 0.992546151641322 0.9902680687415704)
+(0.017455064928217585 0.03492076949174773 0.0524077792830412 0.06992681194351041 
+0.087488663525924 0.10510423526567646 0.1227845609029046 0.14054083470239143) 
 ```
 
 
