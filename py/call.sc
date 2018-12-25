@@ -67,13 +67,9 @@
                     (match x
                         (,s (guard (symbol? s)) s)
                         ((int ,x) `(py/long-from-long ,x))
-                        ((py->int ,(Var -> x)) `(py/long-as-long ,x))
                         ((float ,x) `(py/float-from-double ,x))
-                        ((py->float ,(Var -> x)) `(py/float-as-double ,x))
                         ((list->py-list ,t ,x) `(list->py-list ,t ,x))
                         ((list->py-tuple ,t ,x) `(list->py-tuple ,t ,x))
-                        ((py-list->list ,t ,(Var -> x)) `(py-list->list ,t ,x))
-                        ((py-tuple->list ,t ,(Var -> x)) `(py-tuple->list ,t ,x))
                         ((vector->py-list ,t ,x) `(vector->py-list ,t ,x))
                         ((vector->py-tuple ,t ,x) `(vector->py-tuple ,t ,x))
                         ((+ ,(Var -> x) ,(Var -> y)) `(py/number-add ,x ,y))
@@ -98,7 +94,9 @@
                         ((,(Str -> f) ,(Svar -> a) ...) `(,(string->symbol f) ,a ...)))))
             (match lst
                 ((define ,(Sym -> x) ,y) `(define ,x ,(parse y)))
-                ((display ,(Var -> x) ...) `(display ,x ...))
+                ((display ,x) `(display ,(parse x)))
+                ((write ,x) `(write ,(parse x)))
+                ((if ,k ,t ,f) `(if ,(parse k) ,(parse t) ,(parse f)))
                 ((newline) `(newline))
                 ((int ,x) `(py/long-from-long ,x))
                 ((py->int ,(Var -> x)) `(py/long-as-long ,x))
@@ -134,7 +132,7 @@
                     `(define ,k (py/object-get-attr-string ,o ,(symbol->string x))))
                 ((,(Str -> f) ,(Svar -> a) ...) `(,(string->symbol f) ,a ...))
                 ((,(Sym -> f) ,(Var -> x) ...) `(py/object-call-object ,f (py-args ,x ...)))
-                )))
+                (,s (guard (atom? s)) s))))
 
 
     (define py-args
