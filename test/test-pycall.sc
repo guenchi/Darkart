@@ -173,6 +173,7 @@
 (display y)
 (newline)
 
+
 (py-call
   '(("display" ("/" ("*" 60 60) 20))
     (newline)
@@ -180,7 +181,6 @@
     (newline)))
 
 
-(define x '(1 2 3 4 5 6 7 8))
 
 (py-call 
   '((import numpy as np)
@@ -193,12 +193,12 @@
     (get ndarray tolist)
     (display (py->float pi))
     (newline)
-    (define y (list->py-list 'int x))
-    (define z (/ (* pi (array y)) (int 180)))
-    (display (py-list->list 'float (tolist (sin z))))
+    (define x (list->py-list 'int '(1 2 3 4 5 6 7 8)))
+    (define y (/ (* pi (array x)) (int 180)))
+    (display (py-list->list 'float (tolist (sin y))))
     (newline)
-    (define cos-x (py-list->list 'float (tolist (cos z))))
-    (define tan-x (py-list->list 'float (tolist (tan z))))
+    (define cos-x (py-list->list 'float (tolist (cos y))))
+    (define tan-x (py-list->list 'float (tolist (tan y))))
     ("display" cos-x)))
 (newline)
 (display tan-x)
