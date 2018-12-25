@@ -1,6 +1,7 @@
 
 (import (enchantment py ffi)
-        (enchantment py call))
+        (enchantment py call)
+        (enchantment py eval))
 
 
 (py-init)
@@ -110,13 +111,13 @@
 (display (py-list->list 'float pylst))
 (newline)
 
+(py-fin)
 
-
-;test py-call parser
+;test py-eval parser
 
 
 (define x '(1 2 3 4 5 6 7 8))
-(py-call 
+(py-eval 
   '((import numpy as np)
     (get np array)
     (get np ndarray)
@@ -135,7 +136,7 @@
 
 
 
-(py-call 
+(py-eval 
   '((import numpy as np)
     (get np array)
     (get np ndarray)
@@ -157,7 +158,7 @@
 
 
 
-(py-call 
+(py-eval 
   '((import numpy as np)
     (get np array)
     (get np ndarray)
@@ -174,7 +175,7 @@
 
 
 
-(py-call 
+(py-eval 
   '((import numpy as np)
     (get np array)
     (get np ndarray)
@@ -198,4 +199,3 @@
 (display tan-x)
 (newline)
 
-(py-fin)
