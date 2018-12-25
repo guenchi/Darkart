@@ -36,8 +36,6 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 ```
 
 
-Enchantment is dependented https://github.com/guenchi/match, a pioneering work by Dan Friedman, Erik Hilsdale and Kent Dybvig.
-
 
 Sources:
 
