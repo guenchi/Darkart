@@ -3,7 +3,7 @@
         (enchantment py call))
 
 
-(py-initialize)
+(py-init)
 
 ;; test pass values
 
@@ -111,8 +111,6 @@
 (newline)
 
 
-(py-finalize)
-
 
 ;test py-call parser
 
@@ -174,12 +172,6 @@
 (newline)
 
 
-(py-call
-  '(("display" ("/" ("*" 60 60) 20))
-    (newline)
-    (if ("<" 1 2) (display ("+" 8 ("*" 5 5))) (display "no"))
-    (newline)))
-
 
 
 (py-call 
@@ -195,11 +187,15 @@
     (newline)
     (define x (list->py-list 'int '(1 2 3 4 5 6 7 8)))
     (define y (/ (* pi (array x)) (int 180)))
-    (display (py-list->list 'float (tolist (sin y))))
-    (newline)
+    (define sin-x (py-list->list 'float (tolist (sin y))))
     (define cos-x (py-list->list 'float (tolist (cos y))))
     (define tan-x (py-list->list 'float (tolist (tan y))))
-    ("display" cos-x)))
+    ))
+(display sin-x)
+(newline)
+(display cos-x)
 (newline)
 (display tan-x)
 (newline)
+
+(py-fin)
