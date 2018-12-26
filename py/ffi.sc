@@ -33,6 +33,8 @@
 
         py-initialize
         py-finalize
+        py-incref
+        py-decref
         py-new-interpreter
         py-end-interpreter
 
