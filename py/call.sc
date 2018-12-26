@@ -113,7 +113,9 @@
             
     (define-syntax py-call
         (syntax-rules ()
-            ((_ f a ...)(py/object-call-object f (py-args a ...)))))
+            ((_ f a ...)(let* ((*k (py-args a ...))(*r (py/object-call-object f *k)))
+                            (py-decref *k)
+                            *r))))
 
     (define py-func1
         (lambda (f)
