@@ -96,8 +96,11 @@
         py/dict-new
         py/dict-size
         py/dict-get-item
+        py/dict-get-item-string
         py/dict-set-item!
+        py/dict-set-item-string!
         py/dict-del-item!
+        py/dict-del-item-string!
         py/dict-clear
         py/dict-copy
         py/dict-keys
@@ -121,6 +124,7 @@
         py/module-get-filename
         
         py/object-get-attr-string
+        py/object-call
         py/object-call-object
         py/object-str
         py/callable-check
@@ -305,11 +309,20 @@
 (define py/dict-get-item
     (foreign-procedure "PyDict_GetItem" (uptr uptr) uptr))
 
+(define py/dict-get-item-string
+    (foreign-procedure "PyDict_GetItemString" (uptr string) uptr))
+
 (define py/dict-set-item!
     (foreign-procedure "PyDict_SetItem" (uptr uptr uptr) int))
 
+(define py/dict-set-item-string!
+    (foreign-procedure "PyDict_SetItemString" (uptr string uptr) int))
+
 (define py/dict-del-item!
     (foreign-procedure "PyDict_DelItem" (uptr uptr) int))
+
+(define py/dict-del-item-string!
+    (foreign-procedure "PyDict_DelItemString" (uptr string) uptr))
 
 (define py/dict-clear
     (foreign-procedure "PyDict_Clear" (uptr) void))
@@ -385,6 +398,9 @@
 
 (define py/object-has-attr-string
     (foreign-procedure "PyObject_HasAttrString" (uptr string) int))
+
+(define py/object-call
+    (foreign-procedure "PyObject_Call" (uptr uptr uptr) uptr))
 
 (define py/object-call-object
     (foreign-procedure "PyObject_CallObject" (uptr uptr) uptr))

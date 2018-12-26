@@ -34,8 +34,10 @@
 
         int
         float
+        str
         py->int
         py->float
+        py->str
         py-add
         py-sub
         py-mul
@@ -55,6 +57,7 @@
         py-get
         py-args
         py-call
+        py-call*
         py-func1
         py-func2
         py-func3
@@ -66,6 +69,7 @@
         vector->py-tuple
         py-list->vector
         py-tuple->vector
+        alist->py-dict
     )
     (import
         (scheme)
@@ -77,8 +81,10 @@
     (define py-fin py-finalize)
     (define int py/long-from-long)
     (define float py/float-from-double)
+    (define str py/string-from-string)
     (define py->int py/long-as-long)
     (define py->float py/float-as-double)
+    (define py->str py/string-as-string)
     (define py-add py/number-add)
     (define py-sub py/number-subtract)
     (define py-mul py/number-multiply)
@@ -119,6 +125,17 @@
                             (py-decref *k)
                             *r))))
 
+    (define-syntax py-call*
+        (syntax-rules ()
+            ((_ f a ...)(lambda (lst)
+                            (let* 
+                                ((*k (py-args a ...))
+                                (*d (alist->py-dict lst))
+                                (*r (py/object-call f *k *d)))
+                                (py-decref *k)
+                                (py-decref *d)
+                                 *r)))))
+
     (define py-func1
         (lambda (f)
             (lambda (x)
@@ -150,6 +167,7 @@
                         (l (+ n 1) (cdr lst)))
                     *p))))
 
+
     (define list->py-tuple
         (lambda (t lst)
             (define len (length lst))
@@ -165,6 +183,7 @@
                         (l (+ n 1) (cdr lst)))
                     *p))))
     
+
     (define py-list->list
         (lambda (t *p)
             (define len (py/list-size *p))
@@ -189,7 +208,6 @@
                 (if (< n len)
                     (cons (f (py/tuple-get-item *p n)) (l (+ n 1)))
                     '()))))
-
 
 
     (define vector->py-list
@@ -255,14 +273,31 @@
                     v))))
     
 
-    (define alist->py-dict
-        (lambda (lst)
-            (define *p (py/dict-new))
-            (let l ((i (car lst))(r (cdr lst)))
-                (py/dict-set-item! *p (py/string-from-string (car i)) (py/long-from-long (cdr i)))
-                (if (null? r)
-                    *p
-                    (l (car r)(cdr r))))))    
+    (define-syntax alist->py-dict
+        (syntax-rules ()
+            ((_ lst)
+                    (let l 
+                        ((*p (py/dict-new))
+                        (i (car lst))
+                        (r (cdr lst)))
+                        (py/dict-set-item-string! *p (car i) (cdr i))
+                        (if (null? r)
+                            *p
+                            (l *p (car r)(cdr r)))))
+            ((_ t lst)
+                    (let l 
+                        ((*p (py/dict-new))
+                        (f 
+                            (case t
+                                ('int py/long-from-long)
+                                ('float py/float-from-double)
+                                ('str py/string-from-string)))
+                        (i (car lst))
+                        (r (cdr lst)))
+                        (py/dict-set-item-string! *p (car i) (f (cdr i)))
+                        (if (null? r)
+                            *p
+                            (l *p f (car r)(cdr r)))))))    
 
    
 )
