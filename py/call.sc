@@ -64,6 +64,8 @@
         py-tuple->list
         vector->py-list
         vector->py-tuple
+        py-list->vector
+        py-tuple->vector
     )
     (import
         (scheme)
@@ -204,6 +206,7 @@
                         (py/list-set-item! *p n (f (vector-ref vct n)))
                         (l (+ n 1)))
                     *p))))
+
     
     (define vector->py-tuple
         (lambda (t vct)
@@ -219,7 +222,39 @@
                         (py/tuple-set-item! *p n (f (vector-ref vct n)))
                         (l (+ n 1)))
                     *p))))
+
+    (define py-list->vector
+        (lambda (t *p)
+            (define len (py/list-size *p))
+            (define v (make-vector len))
+            (define f
+                (case t
+                    ('int py/long-as-long)
+                    ('float py/float-as-double)))
+            (let l ((n 0))
+                (if (< n len)
+                    (begin 
+                        (vector-set! v n (f (py/list-get-item *p n)))
+                        (l (+ n 1)))
+                    v))))
+
+
+    (define py-tuple->vector
+        (lambda (t *p)
+            (define len (py/tuple-size *p))
+            (define v (make-vector len))
+            (define f
+                (case t
+                    ('int py/long-as-long)
+                    ('float py/float-as-double)))
+            (let l ((n 0))
+                (if (< n len)
+                    (begin 
+                        (vector-set! v n (f (py/tuple-get-item *p n)))
+                        (l (+ n 1)))
+                    v))))
     
+
     (define alist->py-dict
         (lambda (lst)
             (define *p (py/dict-new))
