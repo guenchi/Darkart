@@ -50,9 +50,12 @@
         py-neg
 
         py-import
-        py-obj
+        py-get
         py-args
-        py-func
+        py-call
+        py-func1
+        py-func2
+        py-func3
         list->py-list
         list->py-tuple
         py-list->list
@@ -91,7 +94,7 @@
         (lambda (x)
             (py/import-import-module (symbol->string x))))
 
-    (define py-obj
+    (define py-get
         (lambda (x y)
             (py/object-get-attr-string x (symbol->string y))))
 
@@ -105,10 +108,25 @@
                         (py/tuple-set-item! *p n (car args))
                         (l (+ n 1) (cdr args))
                     *p)))))
-
-    (define-syntax py-func
+            
+    (define-syntax py-call
         (syntax-rules ()
             ((_ f a ...)(py/object-call-object f (py-args a ...)))))
+
+    (define py-func1
+        (lambda (f)
+            (lambda (x)
+                (py-call f x))))
+
+    (define py-func2
+        (lambda (f)
+            (lambda (x y)
+                (py-call f x y))))
+
+    (define py-func3
+        (lambda (f)
+            (lambda (x y z)
+                (py-call f x y z))))
 
     
     (define list->py-list
