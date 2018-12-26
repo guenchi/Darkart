@@ -29,6 +29,8 @@
     (export
         py-init
         py-fin
+        py-incref
+        py-decref
 
         int
         float
