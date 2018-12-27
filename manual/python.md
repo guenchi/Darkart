@@ -92,8 +92,53 @@ This is the point syntax of Python.
 Like:
 
 ```
-(define np-array (py-get np array))       = numpy.array
-(define np-pi (py-get np pi))             = numpy.pi
+(define array (py-get np array))       = numpy.array
+(define pi (py-get np pi))             = numpy.pi
+```
+
+***Procedure***
+
+```
+procedure: (py-call *po args ...)
+return: *po
+```
+Exemple:
+```
+(py-call array (list->py-list '(1 2 3 4 5)))
+(define np-array
+    (lambda (x)
+        (py-call array x)))
+```
+
+There is three helpers to generate a procedure callable accept 1, 2 and 3 arguments:
+
+```
+procedure: (py-func1 *po)
+procedure: (py-func2 *po)
+procedure: (py-func3 *po)
+return: *po (function)
+```
+
+Exemple:
+```
+(define np-array (py-func1 array))
+```
+
+
+Some python function need named arguments, use:
+
+```
+procedure: ((py-call* *po args ...) alistOfNamedArgs)
+return: *po
+```
+
+Exemple:
+```
+((py-call* array (list->py-list '(1 2 3 4 5))) `("dtype" ,(str "float")))
+(define-syntax np-array
+    (syntax-rules ()
+        ((_ e)(py-call *array e))
+        ((_ e (k v) ...)((py-call* *array e) (list (cons k v) ...)))))
 ```
 
 ***Number and String***
