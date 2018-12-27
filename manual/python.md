@@ -50,6 +50,9 @@ This is also why the python library we call via the chez scheme is faster than v
 
 When you write a code with Py-call, keep all the values in type of *po, don't convert it into scheme data until get the final result.
 
+In this document *po may followed by types, like: *po<number>, *po<list,tuple> etc.
+
+
 ***Py-init and Py-fin***
 
 `(py-init)` and `(py-fin)` is the alias of `(py-initialize)` and `(py-finalize)`.
@@ -117,7 +120,7 @@ There is three helpers to generate a procedure callable accept 1, 2 and 3 argume
 procedure: (py-func1 *po)
 procedure: (py-func2 *po)
 procedure: (py-func3 *po)
-return: *po{function}
+return: *po<function>
 ```
 
 Exemple:
@@ -150,7 +153,7 @@ Exemple:
 procedure: (int number)
 procedure: (float number)
 procedure: (str number)
-return: *po{number,string}
+return: *po<number,string>
 ```
 
 Covert a Scheme data to Python data.
@@ -163,11 +166,11 @@ Exemple:
 ```
 
 ```
-procedure: (py->int *po)
-return: number(int)
-procedure: (py->float *po)
-return: number(float)
-procedure: (py->str *po)
+procedure: (py->int *po<number>)
+return: number<int>
+procedure: (py->float *po<number>)
+return: number<float>
+procedure: (py->str *po<string>)
 return: string
 ```
 
@@ -192,7 +195,7 @@ procedure: (list->py-list type list)
 procedure: (list->py-tuple type list)
 procedure: (vector->py-list type vector)
 procedure: (vector->py-tuple type vector)
-return: *po{list,tuple}
+return: *po<list,tuple>
 ```
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
@@ -209,16 +212,16 @@ Attention that if don't specific list / vector's type, you have to covert data t
 
 ```
 procedure: (py-list->list *po<tuple>)
-procedure: (py-tuple->list *po{tuple})
+procedure: (py-tuple->list *po<tuple>)
 return: list of *po
-procedure: (py-list->vector *po{list})
-procedure: (py-tuple->vector *po{tuple})
+procedure: (py-list->vector *po<list>)
+procedure: (py-tuple->vector *po<tuple>)
 return: vector of *po
-procedure: (py-list->list type *po{list})
-procedure: (py-tuple->list type *po{tuple})
+procedure: (py-list->list type *po<list>)
+procedure: (py-tuple->list type *po<tuple>)
 return: list
-procedure: (py-list->vector type *po{list})
-procedure: (py-tuple->vector type *po{tuple})
+procedure: (py-list->vector type *po<list>)
+procedure: (py-tuple->vector type *po<tuple>)
 return: vector
 ```
 
