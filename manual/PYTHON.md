@@ -65,11 +65,13 @@ If you want to write a library which wrap some Python Library, you don't have to
 
 ***Data conversion***
 
-`(int number) => *po`
+procedure: `(int number)` 
 
-`(float number) => *po`
+return: `*po`
 
-`(str number) => *po`
+procedure: `(float number)` => *po
+
+procedure: `(str number)` => *po`
 
 covert a Scheme data to Python data.
 
