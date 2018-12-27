@@ -160,13 +160,15 @@ Exemple:
 
 (define-syntax np-array
     (syntax-rules ()
-        ((_ e)(py-call array e))
-        ((_ e (k v) ...)((py-call* array e) (list (cons k v) ...)))))
+        ((_ e)(py-call *array e))
+        ((_ e (k v) ...)
+            ((py-call* *array e) 
+                (list (cons (symbol->string k) v) ...)))))
 
 (np-array (list->py-list 'int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 
-(np-array (list->py-list 'int '(1 2 3 4 5)) ("dtype" (str "float")))
+(np-array (list->py-list 'int '(1 2 3 4 5)) ('dtype (str "float")))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
 
@@ -182,7 +184,9 @@ Exemple:
 ```scheme
 (define np-array (py-func* array))
 
-((np-array (list->py-list 'int '(1 2 3 4 5))) `(("dtype" . ,(str "float"))))
+((np-array 
+    (list->py-list 'int '(1 2 3 4 5)))
+    `(("dtype" . ,(str "float"))))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
 
