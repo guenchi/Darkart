@@ -96,7 +96,7 @@ Like:
 (define pi (py-get np pi))             = numpy.pi
 ```
 
-***Procedure***
+***Function***
 
 ```
 procedure: (py-call *po args ...)
