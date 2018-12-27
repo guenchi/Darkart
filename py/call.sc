@@ -159,30 +159,26 @@
             ((_ lst)
                 (let ((len (length lst)))
                     (let l 
-                        ((*p (py/list-new len))
-                        (n 0)
-                        (lst lst))
+                        ((*p (py/list-new len))(n 0)(lst lst))
                         (if (< n len)
                             (begin
                                 (py/list-set-item! *p n  (car lst))
                                 (l *p (+ n 1) (cdr lst)))
                             *p))))
             ((_ t lst)
-                (let ((len (length lst)))
+                (let ((len (length lst))
+                    (f
+                        (case t
+                            ('int int)
+                            ('float float)
+                            ('str str))))
                     (let l 
-                        ((*p (py/list-new len))
-                        (f
-                            (case t
-                                ('int int)
-                                ('float float)
-                                ('str str)))
-                        (n 0)
-                        (lst lst))
+                        ((*p (py/list-new len))(n 0)(lst lst))
                         (if (< n len)
                             (begin
                                 (py/list-set-item! *p n (f (car lst)))
-                                (l  *p f (+ n 1) (cdr lst)))
-                        *p))))))
+                                (l  *p (+ n 1) (cdr lst)))
+                            *p))))))
 
 
 
@@ -219,7 +215,8 @@
             (define f
                 (case t
                     ('int py->int)
-                    ('float py->float)))
+                    ('float py->float)
+                    ('str str)))
             (let l ((n 0))
                 (if (< n len)
                     (cons (f (py/list-get-item *p n)) (l (+ n 1)))
@@ -232,7 +229,8 @@
             (define f
                 (case t
                     ('int py->int)
-                    ('float py->float)))
+                    ('float py->float)
+                    ('str str)))
             (let l ((n 0))
                 (if (< n len)
                     (cons (f (py/tuple-get-item *p n)) (l (+ n 1)))
@@ -263,20 +261,30 @@
                         *p))))))
 
     
-    (define vector->py-tuple
-        (lambda (t vct)
-            (define len (vector-length vct))
-            (define *p (py/tuple-new len))
-            (define f
-                (case t
-                    ('int int)
-                    ('float float)))
-            (let l ((n 0))
-                (if (< n len)
-                    (begin
-                        (py/tuple-set-item! *p n (f (vector-ref vct n)))
-                        (l (+ n 1)))
-                    *p))))
+    (define-syntax vector->py-tuple
+        (syntax-rules ()
+            ((_ vct)
+                (let ((len (vector-length vct)))
+                    (let l ((*p (py/tuple-new len))(n 0))
+                        (if (< n len)
+                            (begin
+                                (py/tuple-set-item! *p n (vector-ref vct n))
+                                (l *p (+ n 1)))
+                        *p))))
+            ((_ t vct)
+                (let ((len (vector-length vct))
+                    (f
+                        (case t
+                            ('int int)
+                            ('float float)
+                            ('str str))))
+                    (let l ((*p (py/tuple-new len))(n 0))
+                        (if (< n len)
+                            (begin
+                                (py/tuple-set-item! *p n (f (vector-ref vct n)))
+                                (l *p (+ n 1)))
+                        *p))))))
+
 
     (define py-list->vector
         (lambda (t *p)
@@ -285,7 +293,8 @@
             (define f
                 (case t
                     ('int py->int)
-                    ('float py->float)))
+                    ('float py->float)
+                    ('str py->str)))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
@@ -301,7 +310,8 @@
             (define f
                 (case t
                     ('int py->int)
-                    ('float py->float)))
+                    ('float py->float)
+                    ('str py->str)))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
