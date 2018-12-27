@@ -108,6 +108,7 @@
         (lambda (x y)
             (py/object-get-attr-string x (symbol->string y))))
 
+
     (define py-args
         (lambda args 
             (define len (length args))
@@ -118,36 +119,50 @@
                         (py/tuple-set-item! *p n (car args))
                         (l (+ n 1) (cdr args))
                     *p)))))
-            
-    (define-syntax py-call
-        (syntax-rules ()
-            ((_ f a ...)
-                (let* 
-                    ((*k (py-args a ...))
-                    (*r (py/object-call-object f *k)))
-                    (py-decref *k)
-                    *r))))
 
-    (define-syntax py-call*
-        (syntax-rules ()
-            ((_ f a ...)(lambda (lst)
-                (let* 
-                    ((*k (py-args a ...))
-                    (*d (alist->py-dict lst))
-                    (*r (py/object-call f *k *d)))
-                    (py-decref *k)
-                    (py-decref *d)
-                    *r)))))
+
+    (define py-args*
+        (lambda (args) 
+            (define len (length args))
+            (define *p (py/tuple-new len))
+            (let l ((n 0)(args args))
+                (if (< n len)
+                    (begin 
+                        (py/tuple-set-item! *p n (car args))
+                        (l (+ n 1) (cdr args))
+                    *p)))))
+            
+
+    (define py-call
+        (lambda (f . args)
+            (define *k (py-args* args))
+            (define *r (py/object-call-object f *k))
+            (py-decref *k)
+            *r))
+
+
+    (define py-call*
+        (lambda (f . args)
+            (lambda (lst)
+                (define *k (py-args* args))
+                (define *d (alist->py-dict lst))
+                (define *r (py/object-call f *k *d))
+                (py-decref *k)
+                (py-decref *d)
+                *r)))
+
 
     (define py-func1
         (lambda (f)
             (lambda (x)
                 (py-call f x))))
 
+
     (define py-func2
         (lambda (f)
             (lambda (x y)
                 (py-call f x y))))
+
 
     (define py-func3
         (lambda (f)
