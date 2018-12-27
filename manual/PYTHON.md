@@ -31,15 +31,28 @@ Note that python belongs to a framework on mac, so with `-framework` when run cc
 
 # Py-FFI
 
-(enchantment py ffi)
+Library `(enchantment py ffi)`
 
 This file is the wrapper for CPython C-API. For details, please refer to: https://docs.python.org/2/c-api/index.html
 
 
 # Py-call
 
-(enchantment py call)
+Library `(enchantment py call)`
 
 ***definition：***
 
 `*po`: Most of Py-call procedure accept or return a "*po", in scheme, it's a Memory Address which is pointer a specific Python Object.
+
+***Py-init and Py-fin***
+
+`(py-init)` and `(py-fin)` is the alias of `(py-initialize)` and `(py-finalize)`.
+ 
+The codes which manipulating the python library must between `(py-init)` and `(py-fin)`.
+
+Note that you can use it only on time, or you risk to get a 
+
+`Exception: invalid memory reference.  Some debugging context lost`
+
+If you want to write a library which wrap some Python Library, you don't have to use `(py-init)` and `(py-fin)` in the library code. like: https://github.com/guenchi/numpy/blob/master/numpy.sc
+
