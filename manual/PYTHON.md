@@ -27,3 +27,19 @@ or
 etc.
 
 Note that python belongs to a framework on mac, so with `-framework` when run cc command, in other cases, just: `cc -fPIC -shared Python -o ../py.so py.c`
+
+
+# Py-FFI
+
+(enchantment py ffi)
+
+This file is the wrapper for CPython C-API. For details, please refer to: https://docs.python.org/2/c-api/index.html
+
+
+# Py-call
+
+(enchantment py call)
+
+***definition：***
+
+`*po`: Most of Py-call procedure accept or return a "*po", in scheme, it's a Memory Address which is pointer a specific Python Object.
