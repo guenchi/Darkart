@@ -40,7 +40,7 @@ This file is the wrapper for CPython C-API. For details, please refer to: https:
 
 Library `(enchantment py call)`
 
-***definition：***
+### definition:
 
 `*po`: Most of Py-call procedure accept or return a "*po", in scheme, it's a Memory Address which is pointer a specific Python Object.
 
@@ -53,7 +53,7 @@ When you write a code with Py-call, keep all the values in type of *po, don't co
 In this document *po may followed by types, like: *po<number>, *po<list,tuple> etc.
 
 
-***Py-init and Py-fin***
+### Py-init and Py-fin
 
 `(py-init)` and `(py-fin)` is the alias of `(py-initialize)` and `(py-finalize)`.
  
@@ -66,7 +66,7 @@ Note that you can use it only on time, or you risk to get a
 If you want to write a library which wrap some Python Library, you don't have to use `(py-init)` and `(py-fin)` in the library code. like: https://github.com/guenchi/numpy/blob/master/numpy.sc
 
 
-***Python Library***
+### Python Library### 
 
 The library has to install, for exemple via Pip, before enchantment call it.
 
@@ -85,7 +85,7 @@ Don't forget store the memory addres that procedure return, like:
 To repackage a Library to Scheme, there is a Exemple:
 https://github.com/guenchi/numpy/blob/master/numpy.sc
 
-***Point***
+### Point### 
 
 ```
 procedure: (py-get *po Name)
@@ -99,10 +99,10 @@ Like:
 (define pi (py-get np pi))            = numpy.pi
 ```
 
-***Function***
+### Function### 
 
 ```
-procedure: (py-call *po args ...)
+procedure: (py-call *po<callable> args ...)
 return: *po
 ```
 Exemple:
@@ -117,9 +117,9 @@ Exemple:
 There is three helpers to generate a procedure callable accept 1, 2 and 3 arguments:
 
 ```
-procedure: (py-func1 *po)
-procedure: (py-func2 *po)
-procedure: (py-func3 *po)
+procedure: (py-func1 *po<callable>)
+procedure: (py-func2 *po<callable>)
+procedure: (py-func3 *po<callable>)
 return: *po<function>
 ```
 
@@ -132,7 +132,7 @@ Exemple:
 Some python function need named arguments, use:
 
 ```
-procedure: ((py-call* *po args ...) alistOfNamedArgs)
+procedure: ((py-call* *po<callable> args ...) alistOfNamedArgs)
 return: *po
 ```
 The alist is like: `'(("Name" . *po) ...)`
@@ -147,7 +147,14 @@ Exemple:
         ((_ e (k v) ...)((py-call* array e) (list (cons k v) ...)))))
 ```
 
-***Number and String***
+```
+procedure: (py-args *po ...)
+return: *po<tuple>
+```
+This procedure is use to prepare a tuple of arguments for Python's function. 
+It won't be used directly because it's included in `(py-call)` and `(py-call*)`
+
+### Number and String### 
 
 ```
 procedure: (int number)
@@ -183,7 +190,7 @@ Exemple:
 (py->str (str "foo"))            => "foo"
 ```
 
-***List and Tuple***
+### List and Tuple### 
 
 ```
 
@@ -243,3 +250,5 @@ Like:
 (py->str (caddr (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => "foo"
 ```
+
+### Numeric Operations### 
