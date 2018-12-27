@@ -208,7 +208,7 @@ Exemple:
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
 ```
-procedure: (py-list->list *po~~{tuple}~~)
+procedure: (py-list->list *po<tuple>)
 procedure: (py-tuple->list *po{tuple})
 return: list of *po
 procedure: (py-list->vector *po{list})
