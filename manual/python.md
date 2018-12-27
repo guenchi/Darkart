@@ -63,10 +63,38 @@ Note that you can use it only on time, or you risk to get a
 If you want to write a library which wrap some Python Library, you don't have to use `(py-init)` and `(py-fin)` in the library code. like: https://github.com/guenchi/numpy/blob/master/numpy.sc
 
 
+***Python Library***
+
+The library has to install, for exemple via Pip, before enchantment call it.
+
+You can go to python envirement do something like `import numpy` to test it.
+
+```
+procedure: (py-import libraryName)
+return: *po
+```
+
+Don't forget store the memory addres that procedure return, like:
+```
+(define np (py-import numpy))
+```
+
+To repackage a Library to Scheme, there is a Exemple:
+https://github.com/guenchi/numpy/blob/master/numpy.sc
+
 ***Point***
 
+```
+procedure: (py-get *po Name)
+return: *po
+```
+This is the point syntax of Python.
+Like:
 
-
+```
+(define np-array (py-get np array))       = numpy.array
+(define np-pi (py-get np pi))             = numpy.pi
+```
 
 ***Number and String***
 
