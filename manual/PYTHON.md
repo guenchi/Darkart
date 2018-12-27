@@ -150,7 +150,17 @@ Exemple:
 ```
 (py-list->list 'int (list->py-list 'int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
-(py-list->list (list->py-list 'int '(1 2 3 4 5 6 7 8)))
-=> (140581204937280 140581204937064 140581204936848 140581204936632 140581204936416 140581204944832 140581204944616 140581204944400)
+(py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))
+=> (140581204937280 140581204937064 140581204936848)
 ```
 In last case it return a list of Memory Adresse of *po. You can `(display)` it in Scheme or use (py->int), (py->float) or (py-str) to convert it to Scheme Data.
+
+Like:
+```
+(py->int (car (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+=> 1
+(py->float (cadr (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+=> 3.14159
+(py->str (caddr (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+=> "foo"
+```
