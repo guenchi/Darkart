@@ -52,6 +52,7 @@ When you write a code with Py-call, keep all the values in type of *po, don't co
 
 In this document *po may followed by types, like: *po<number>, *po<list,tuple> etc.
 
+And *po{value} means this *po point to this value.
 
 ### Py-init and Py-fin
 
@@ -66,7 +67,7 @@ Note that you can use it only on time, or you risk to get a
 If you want to write a library which wrap some Python Library, you don't have to use `(py-init)` and `(py-fin)` in the library code. like: https://github.com/guenchi/numpy/blob/master/numpy.sc
 
 
-### Python Library### 
+### Python Library
 
 The library has to install, for exemple via Pip, before enchantment call it.
 
@@ -85,7 +86,7 @@ Don't forget store the memory addres that procedure return, like:
 To repackage a Library to Scheme, there is a Exemple:
 https://github.com/guenchi/numpy/blob/master/numpy.sc
 
-### Point### 
+### Point
 
 ```
 procedure: (py-get *po Name)
@@ -99,7 +100,7 @@ Like:
 (define pi (py-get np pi))            = numpy.pi
 ```
 
-### Function### 
+### Function
 
 ```
 procedure: (py-call *po<callable> args ...)
@@ -154,7 +155,7 @@ return: *po<tuple>
 This procedure is use to prepare a tuple of arguments for Python's function. 
 It won't be used directly because it's included in `(py-call)` and `(py-call*)`
 
-### Number and String### 
+### Number and String
 
 ```
 procedure: (int number)
@@ -167,9 +168,9 @@ Covert a Scheme data to Python data.
 
 Exemple:
 ```
-(int 8)
-(float 3.1415926)
-(str "foo")
+(int 8)                       => *po{8}
+(float 3.1415926)             => *po{3.1415926}
+(str "foo")                   => *po{"foo"}
 ```
 
 ```
@@ -190,7 +191,7 @@ Exemple:
 (py->str (str "foo"))            => "foo"
 ```
 
-### List and Tuple### 
+### List and Tuple
 
 ```
 
@@ -237,9 +238,9 @@ Exemple:
 (py-list->list 'int (list->py-list 'int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
 (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))
-=> (140581204937280 140581204937064 140581204936848)
+=> (*po{1} *po{3.14159} *po{"foo"})
 ```
-In last case it return a list of Memory Adresse of *po. You can `(display)` it in Scheme or use (py->int), (py->float) or (py-str) to convert it to Scheme Data.
+In last case it return a list of Memory Adresse of *po. You can use (py->int), (py->float) or (py-str) to convert it to Scheme Data.
 
 Like:
 ```
@@ -251,4 +252,31 @@ Like:
 => "foo"
 ```
 
-### Numeric Operations### 
+### Numeric Operations
+
+```
+procedure: (py-add *po *po)
+procedure: (py-sub *po *po)
+procedure: (py-mul *po *po)
+procedure: (py-div *po *po)
+procedure: (py-fdiv *po *po)
+procedure: (py-mod *po *po)
+procedure: (py-lsh *po *po)
+procedure: (py-rsh *po *po)
+procedure: (py-and *po *po)
+procedure: (py-or *po *po)
+procedure: (py-xor *po *po)
+procedure: (py-inv *po)
+procedure: (py-abs *po)
+procedure: (py-neg *po)
+return: *po
+```
+
+*po in here may be a number or a list, tuple, array(numpy) of number.
+
+Exemple:
+```
+(py-add (int 3) (int 5))                            => *po{8}
+(py-mul (int 8) (list->py-list int' '(1 2 3 4 5)))  => *po{[8, 16, 24, 32, 40]}
+(py-abs (int -5))                                   => *po{5} 
+```
