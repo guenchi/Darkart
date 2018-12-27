@@ -118,7 +118,7 @@ Exemple:
 (define np-array
     (lambda (x)
         (py-call array x)))
-        
+
 (np-array (list->py-list 'int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 ```
@@ -144,7 +144,7 @@ return: *po
 The alist is like: `'(("Name" . *po) ...)`
 
 Exemple:
-```
+```scheme
 ((py-call* array (list->py-list 'int '(1 2 3 4 5))) `(("dtype" . ,(str "float"))))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 
