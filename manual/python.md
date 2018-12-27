@@ -137,8 +137,8 @@ Exemple:
 ((py-call* array (list->py-list '(1 2 3 4 5))) `("dtype" ,(str "float")))
 (define-syntax np-array
     (syntax-rules ()
-        ((_ e)(py-call *array e))
-        ((_ e (k v) ...)((py-call* *array e) (list (cons k v) ...)))))
+        ((_ e)(py-call array e))
+        ((_ e (k v) ...)((py-call* array e) (list (cons k v) ...)))))
 ```
 
 ***Number and String***
