@@ -26,7 +26,7 @@ or
 
 etc.
 
-Note that python belongs to a framework on mac, so with `-framework` when run cc command, in other cases, just: `cc -fPIC -shared Python -o ../py.so py.c`
+Note that python belongs to a framework on mac, so with `-framework` when run cc command, in other cases, just: `cc -fPIC -shared -o ../py.so py.c`
 
 
 # Py-FFI
