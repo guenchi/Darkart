@@ -121,7 +121,9 @@
             
     (define-syntax py-call
         (syntax-rules ()
-            ((_ f a ...)(let* ((*k (py-args a ...))(*r (py/object-call-object f *k)))
+            ((_ f a ...)(let* 
+                            ((*k (py-args a ...))
+                            (*r (py/object-call-object f *k)))
                             (py-decref *k)
                             *r))))
 
@@ -158,7 +160,7 @@
             (define *p (py/list-new len))
             (define f
                 (case t
-                    ('int py/long-from-long)
+                    ('int int)
                     ('float py/float-from-double)))
             (let l ((n 0)(lst lst))
                 (if (< n len)
@@ -174,7 +176,7 @@
             (define *p (py/tuple-new len))
             (define f
                 (case t
-                    ('int py/long-from-long)
+                    ('int int)
                     ('float py/float-from-double)))
             (let l ((n 0)(lst lst))
                 (if (< n len)
@@ -189,8 +191,8 @@
             (define len (py/list-size *p))
             (define f
                 (case t
-                    ('int py/long-as-long)
-                    ('float py/float-as-double)))
+                    ('int py->int)
+                    ('float py->float)))
             (let l ((n 0))
                 (if (< n len)
                     (cons (f (py/list-get-item *p n)) (l (+ n 1)))
@@ -202,8 +204,8 @@
             (define len (py/tuple-size *p))
             (define f
                 (case t
-                    ('int py/long-as-long)
-                    ('float py/float-as-double)))
+                    ('int py->int)
+                    ('float py->float)))
             (let l ((n 0))
                 (if (< n len)
                     (cons (f (py/tuple-get-item *p n)) (l (+ n 1)))
@@ -216,7 +218,7 @@
             (define *p (py/list-new len))
             (define f
                 (case t
-                    ('int py/long-from-long)
+                    ('int int)
                     ('float py/float-from-double)))
             (let l ((n 0))
                 (if (< n len)
@@ -232,7 +234,7 @@
             (define *p (py/tuple-new len))
             (define f
                 (case t
-                    ('int py/long-from-long)
+                    ('int int)
                     ('float py/float-from-double)))
             (let l ((n 0))
                 (if (< n len)
@@ -247,8 +249,8 @@
             (define v (make-vector len))
             (define f
                 (case t
-                    ('int py/long-as-long)
-                    ('float py/float-as-double)))
+                    ('int py->int)
+                    ('float py->float)))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
@@ -263,8 +265,8 @@
             (define v (make-vector len))
             (define f
                 (case t
-                    ('int py/long-as-long)
-                    ('float py/float-as-double)))
+                    ('int py->int)
+                    ('float py->float)))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
@@ -289,9 +291,9 @@
                         ((*p (py/dict-new))
                         (f 
                             (case t
-                                ('int py/long-from-long)
+                                ('int int)
                                 ('float py/float-from-double)
-                                ('str py/string-from-string)))
+                                ('str str)))
                         (i (car lst))
                         (r (cdr lst)))
                         (py/dict-set-item-string! *p (car i) (f (cdr i)))
