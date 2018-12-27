@@ -63,22 +63,47 @@ Note that you can use it only on time, or you risk to get a
 If you want to write a library which wrap some Python Library, you don't have to use `(py-init)` and `(py-fin)` in the library code. like: https://github.com/guenchi/numpy/blob/master/numpy.sc
 
 
-***Data conversion***
+***Point***
+
+
+
+
+***Number and String***
 
 procedure: `(int number)` 
 
+procedure: `(float number)`
+
+procedure: `(str number)`
+
 return: `*po`
 
-procedure: `(float number)` => *po
+Covert a Scheme data to Python data.
 
-procedure: `(str number)` => *po`
+procedure: `(py->int *po)`
 
-covert a Scheme data to Python data.
+return: `number(int)`
 
-`(py->int *po) => number(int)`
+procedure: `(py->float *po)`
 
-`(py->float *po) => number(float)`
+return: `number(float)`
 
-`(py->str *po) => string`
+procedure: `(py->str *po)` 
 
-covert a Python data to Scheme data.
+return: `string`
+
+Covert a Python data to Scheme data.
+
+
+***List and Tuple***
+
+procedure: `(list->py-list list)`
+procedure: `(list->py-list type list)`
+procedure: `(list->py-tuple list)`
+procedure: `(list->py-tuple type list)`
+procedure: `(vector->py-list list)`
+procedure: `(vector->py-list type list)`
+procedure: `(vector->py-tuple list)`
+procedure: `(vector->py-tuple type list)`
+
+Covert a Scheme's List and Vector to Python's List and Tuple.
