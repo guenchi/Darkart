@@ -56,11 +56,11 @@
         py-import
         py-get
         py-args
+        py-args*
         py-call
         py-call*
-        py-func1
-        py-func2
-        py-func3
+        py-func
+        py-func*
         list->py-list
         list->py-tuple
         py-list->list
@@ -152,22 +152,25 @@
                 *r)))
 
 
-    (define py-func1
+    (define py-func
         (lambda (f)
-            (lambda (x)
-                (py-call f x))))
+            (lambda args
+                (define *k (py-args* args))
+                (define *r (py/object-call-object f *k))
+                (py-decref *k)
+                *r)))
 
 
-    (define py-func2
+    (define py-func*
         (lambda (f)
-            (lambda (x y)
-                (py-call f x y))))
-
-
-    (define py-func3
-        (lambda (f)
-            (lambda (x y z)
-                (py-call f x y z))))
+            (lambda args
+                (lambda (lst)
+                    (define *k (py-args* args))
+                    (define *d (alist->py-dict lst))
+                    (define *r (py/object-call f *k *d))
+                    (py-decref *k)
+                    (py-decref *d)
+                    *r))))
 
     
     (define-syntax list->py-list

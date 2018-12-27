@@ -113,26 +113,27 @@ return: *po
 Exemple:
 ```
 (py-call array (list->py-list 'int '(1 2 3 4 5)))
+=> *op{[1, 2, 3, 4, 5]}
 
 (define np-array
     (lambda (x)
         (py-call array x)))
+        
+(np-array (list->py-list 'int '(1 2 3 4 5)))
+=> *op{[1, 2, 3, 4, 5]}
 ```
 
-There is three helpers to generate a procedure callable accept 1, 2 and 3 arguments:
+There is a helper to generate a procedure with *po<callable>:
 
 ```
-procedure: (py-func1 *po<callable>)
-procedure: (py-func2 *po<callable>)
-procedure: (py-func3 *po<callable>)
+procedure: (py-func *po<callable>)
 return: *po<function>
 ```
 
 Exemple:
 ```
-(define np-array (py-func1 array))
+(define np-array (py-func array))
 ```
-
 
 Some python function need named arguments, use:
 
@@ -145,19 +146,43 @@ The alist is like: `'(("Name" . *po) ...)`
 Exemple:
 ```
 ((py-call* array (list->py-list 'int '(1 2 3 4 5))) `(("dtype" . ,(str "float"))))
+=> *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 
 (define-syntax np-array
     (syntax-rules ()
         ((_ e)(py-call array e))
         ((_ e (k v) ...)((py-call* array e) (list (cons k v) ...)))))
+
+(np-array (list->py-list 'int '(1 2 3 4 5)))
+=> *op{[1, 2, 3, 4, 5]}
+
+(np-array (list->py-list 'int '(1 2 3 4 5)) ("dtype" (str "float")))
+=> *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
 
+There is also a helper to generate a procedure which need named argument with *po<callable>:
+
+```
+procedure: (py-func* *po<callable>)
+return: *po<function>
+```
+
+Exemple:
+```
+(define np-array (py-func* array))
+
+((np-array (list->py-list 'int '(1 2 3 4 5))) `(("dtype" . ,(str "float"))))
+=> *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
+```
+
+Args helpers:
 ```
 procedure: (py-args *po ...)
+procedure: (py-args* '(*po ...))
 return: *po<tuple>
 ```
 This procedure is use to prepare a tuple of arguments for Python's function. 
-It won't be used directly because it's included in `(py-call)` and `(py-call*)`
+It usually won't be used directly because it's included in `(py-call)`,`(py-call*)`,`(py-func)`and`(py-func*)`.
 
 ### Number and String
 
