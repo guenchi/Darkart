@@ -56,7 +56,7 @@ When you write a code with Py-call, keep all the values in type of *po, don't co
 
 In this document, *po may be followed by the type of Python object it points to, like: *po<number>, *po<list,tuple> etc.
 
-And *po{value} means this *po point to this value.
+And *po{value} means a `*po` point to this value.
 
 ### Py-init and Py-fin
 
