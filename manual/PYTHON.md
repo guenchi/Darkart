@@ -44,6 +44,12 @@ Library `(enchantment py call)`
 
 `*po`: Most of Py-call procedure accept or return a "*po", in scheme, it's a Memory Address which is pointer a specific Python Object.
 
+In the programme Py-call, the Class is a *po, the Method is a *po, the Number is a *po, all the Python Side is *po. in other words, we just pass the Memory Address in Scheme level. So, it's efficient and cheap.
+
+This is also why the python library we call via the chez scheme is faster than via the python：We just pass some pointer via binary interface, no extra overheadr.
+
+When you write a code with Py-call, keep all the values in type of *po, don't convert it into scheme data until get the final result.
+
 ***Py-init and Py-fin***
 
 `(py-init)` and `(py-fin)` is the alias of `(py-initialize)` and `(py-finalize)`.
@@ -56,3 +62,21 @@ Note that you can use it only on time, or you risk to get a
 
 If you want to write a library which wrap some Python Library, you don't have to use `(py-init)` and `(py-fin)` in the library code. like: https://github.com/guenchi/numpy/blob/master/numpy.sc
 
+
+***Data conversion***
+
+`(int number) => *po`
+
+`(float number) => *po`
+
+`(str number) => *po`
+
+covert a Scheme data to Python data.
+
+`(py->int *po) => number(int)`
+
+`(py->float *po) => number(float)`
+
+`(py->str *po) => string`
+
+covert a Python data to Scheme data.
