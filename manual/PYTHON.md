@@ -70,13 +70,13 @@ If you want to write a library which wrap some Python Library, you don't have to
 
 ***Number and String***
 
-procedure: `(int number)` 
+```
+procedure: (int number)
+procedure: (float number)
+procedure: (str number)
 
-procedure: `(float number)`
-
-procedure: `(str number)`
-
-return: `*po`
+return: *po
+```
 
 Covert a Scheme data to Python data.
 
