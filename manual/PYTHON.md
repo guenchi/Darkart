@@ -97,13 +97,32 @@ Covert a Python data to Scheme data.
 
 ***List and Tuple***
 
-procedure: `(list->py-list list)`
+procedure: `(list->py-list listOf*Po)`
+
 procedure: `(list->py-list type list)`
-procedure: `(list->py-tuple list)`
+
+procedure: `(list->py-tuple listOf*Po)`
+
 procedure: `(list->py-tuple type list)`
-procedure: `(vector->py-list list)`
-procedure: `(vector->py-list type list)`
-procedure: `(vector->py-tuple list)`
-procedure: `(vector->py-tuple type list)`
+
+procedure: `(vector->py-list vectorOf*Po)`
+
+procedure: `(vector->py-list type vector)`
+
+procedure: `(vector->py-tuple vectorOf*Po)`
+
+procedure: `(vector->py-tuple type vector)`
+
+return: `*po`
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
+
+The type will be: 'int 'float or 'str.
+
+Exemple:
+
+`(list->py-list 'int '(1 2 3 4 5 6 7 8))`
+
+``(list->py-list `((int 1) (int 2) (int 3)))``
+
+``(vector->py-list `#((int 1) (float 3.14159) (str "foo")))``
