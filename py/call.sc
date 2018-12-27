@@ -209,32 +209,51 @@
                             *p))))))
     
 
-    (define py-list->list
-        (lambda (t *p)
-            (define len (py/list-size *p))
-            (define f
-                (case t
-                    ('int py->int)
-                    ('float py->float)
-                    ('str str)))
-            (let l ((n 0))
-                (if (< n len)
-                    (cons (f (py/list-get-item *p n)) (l (+ n 1)))
-                    '()))))
+    (define-syntax py-list->list
+        (syntax-rules ()
+            ((_ *p)
+                (let 
+                    ((len (py/list-size *p)))
+                    (let l ((n 0))
+                        (if (< n len)
+                            (cons (py/list-get-item *p n) (l (+ n 1)))
+                        '()))))
+            ((_ t *p)
+                (let 
+                    ((len (py/list-size *p))
+                    (f
+                        (case t
+                            ('int py->int)
+                            ('float py->float)
+                            ('str str))))
+                    (let l ((n 0))
+                        (if (< n len)
+                            (cons (f (py/list-get-item *p n)) (l (+ n 1)))
+                        '()))))))
 
 
-    (define py-tuple->list
-        (lambda (t *p)
-            (define len (py/tuple-size *p))
-            (define f
-                (case t
-                    ('int py->int)
-                    ('float py->float)
-                    ('str str)))
-            (let l ((n 0))
-                (if (< n len)
-                    (cons (f (py/tuple-get-item *p n)) (l (+ n 1)))
-                    '()))))
+    (define-syntax py-tuple->list
+        (syntax-rules ()
+            ((_ *p)
+                (let 
+                    ((len (py/tuple-size *p)))
+                    (let l ((n 0))
+                        (if (< n len)
+                            (cons (py/tuple-get-item *p n) (l (+ n 1)))
+                        '()))))
+            ((_ t *p)
+                (let 
+                    ((len (py/tuple-size *p))
+                    (f
+                        (case t
+                            ('int py->int)
+                            ('float py->float)
+                            ('str str))))
+                    (let l ((n 0))
+                        (if (< n len)
+                            (cons (f (py/tuple-get-item *p n)) (l (+ n 1)))
+                        '()))))))
+
 
     (define-syntax vector->py-list
         (syntax-rules ()
@@ -286,38 +305,58 @@
                         *p))))))
 
 
-    (define py-list->vector
-        (lambda (t *p)
-            (define len (py/list-size *p))
-            (define v (make-vector len))
-            (define f
-                (case t
-                    ('int py->int)
-                    ('float py->float)
-                    ('str py->str)))
-            (let l ((n 0))
-                (if (< n len)
-                    (begin 
-                        (vector-set! v n (f (py/list-get-item *p n)))
-                        (l (+ n 1)))
-                    v))))
+    (define-syntax py-list->vector
+        (syntax-rules ()
+            ((_ *p)
+                (let 
+                    ((len (py/list-size *p)))
+                    (let l ((v (make-vector len))(n 0))
+                        (if (< n len)
+                            (begin 
+                                (vector-set! v n (py/list-get-item *p n))
+                                (l v (+ n 1)))
+                        v))))
+            ((_ t *p)
+                (let 
+                    ((len (py/list-size *p))
+                    (f
+                        (case t
+                            ('int py->int)
+                            ('float py->float)
+                            ('str py->str))))
+                    (let l ((v (make-vector len))(n 0))
+                        (if (< n len)
+                            (begin 
+                                (vector-set! v n (f (py/list-get-item *p n)))
+                                (l v (+ n 1)))
+                        v))))))
 
 
-    (define py-tuple->vector
-        (lambda (t *p)
-            (define len (py/tuple-size *p))
-            (define v (make-vector len))
-            (define f
-                (case t
-                    ('int py->int)
-                    ('float py->float)
-                    ('str py->str)))
-            (let l ((n 0))
-                (if (< n len)
-                    (begin 
-                        (vector-set! v n (f (py/tuple-get-item *p n)))
-                        (l (+ n 1)))
-                    v))))
+    (define-syntax py-tuple->vector
+        (syntax-rules ()
+            ((_ *p)
+                (let 
+                    ((len (py/tuple-size *p)))
+                    (let l ((v (make-vector len))(n 0))
+                        (if (< n len)
+                            (begin 
+                                (vector-set! v n (py/tuple-get-item *p n))
+                                (l v (+ n 1)))
+                        v))))
+            ((_ t *p)
+                (let 
+                    ((len (py/tuple-size *p))
+                    (f
+                        (case t
+                            ('int py->int)
+                            ('float py->float)
+                            ('str py->str))))
+                    (let l ((v (make-vector len))(n 0))
+                        (if (< n len)
+                            (begin 
+                                (vector-set! v n (f (py/tuple-get-item *p n)))
+                                (l v (+ n 1)))
+                        v))))))
     
 
     (define-syntax alist->py-dict
