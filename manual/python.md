@@ -46,7 +46,7 @@ Library `(enchantment py call)`
 
 Most of Py-call procedure accept or return a `*po`, in Scheme level, it's a memory address which is pointer a specific Python Object.
 
-In the programme Py-call, the Class, the Method, the Number, all of it is *po. In other words, we just pass the memory address in Scheme level. 
+In the programme Py-call, the Class, the Method, the Number, all of it is `*po`. In other words, we just pass the memory address in Scheme level. 
 
 This fits the philosophy of Scheme: "Parameter passing is by value, but the values are references."
 
