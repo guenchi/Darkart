@@ -40,17 +40,21 @@ This file is the wrapper for CPython C-API. For details, please refer to: https:
 
 Library `(enchantment py call)`
 
-### definition:
+### Definition:
 
-`*po`: Most of Py-call procedure accept or return a "*po", in scheme, it's a Memory Address which is pointer a specific Python Object.
+`*po` representing a pointer to a Python Object reference.
 
-In the programme Py-call, the Class is a *po, the Method is a *po, the Number is a *po, all the Python Side is *po. in other words, we just pass the Memory Address in Scheme level. So, it's efficient and cheap.
+Most of Py-call procedure accept or return a `*po`, in Scheme level, it's a memory address which is pointer a specific Python Object.
 
-This is also why the python library we call via the chez scheme is faster than via the python：We just pass some pointer via binary interface, no extra overheadr.
+In the programme Py-call, the Class, the Method, the Number, all of it is *po. In other words, we just pass the memory address in Scheme level. 
+
+This fits the philosophy of Scheme: "Parameter passing is by value, but the values are references."
+
+This is also why the python library we call via the chez scheme is efficient than via the python：We just pass some pointer via binary interface, no extra overheadr.
 
 When you write a code with Py-call, keep all the values in type of *po, don't convert it into scheme data until get the final result.
 
-In this document *po may followed by types, like: *po<number>, *po<list,tuple> etc.
+In this document, *po may be followed by the type of Python object it points to, like: *po<number>, *po<list,tuple> etc.
 
 And *po{value} means this *po point to this value.
 
