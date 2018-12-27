@@ -139,6 +139,9 @@ return: *po<function>
 Exemple:
 ```scheme
 (define np-array (py-func array))
+
+(np-array (list->py-list 'int '(1 2 3 4 5)))
+=> *op{[1, 2, 3, 4, 5]}
 ```
 
 Some python function need named arguments, use:
