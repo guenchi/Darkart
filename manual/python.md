@@ -77,13 +77,14 @@ The library has to install, for exemple via Pip, before enchantment call it.
 
 You can go to python envirement do something like `import numpy` to test it.
 
-```
+```scheme
 procedure: (py-import libraryName)
+
 return: *po
 ```
 
 Don't forget store the memory addres that procedure return, like:
-```
+```scheme
 (define np (py-import numpy))
 ```
 
@@ -92,26 +93,30 @@ https://github.com/guenchi/numpy/blob/master/numpy.sc
 
 ### Point
 
-```
+```scheme
 procedure: (py-get *po Name)
+
 return: *po
 ```
 This is the point syntax of Python.
 Like:
 
-```
+```scheme
 (define array (py-get np array))      = numpy.array
+
 (define pi (py-get np pi))            = numpy.pi
 ```
 
 ### Function
 
-```
+```scheme
 procedure: (py-call *po<callable> args ...)
+
 return: *po
 ```
+
 Exemple:
-```
+```scheme
 (py-call array (list->py-list 'int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 
@@ -125,20 +130,22 @@ Exemple:
 
 There is a helper to generate a procedure with *po<callable>:
 
-```
+```scheme
 procedure: (py-func *po<callable>)
+
 return: *po<function>
 ```
 
 Exemple:
-```
+```scheme
 (define np-array (py-func array))
 ```
 
 Some python function need named arguments, use:
 
-```
+```scheme
 procedure: ((py-call* *po<callable> args ...) alistOfNamedArgs)
+
 return: *po
 ```
 The alist is like: `'(("Name" . *po) ...)`
@@ -162,13 +169,14 @@ Exemple:
 
 There is also a helper to generate a procedure which need named argument with *po<callable>:
 
-```
+```scheme
 procedure: (py-func* *po<callable>)
+
 return: *po<function>
 ```
 
 Exemple:
-```
+```scheme
 (define np-array (py-func* array))
 
 ((np-array (list->py-list 'int '(1 2 3 4 5))) `(("dtype" . ,(str "float"))))
@@ -176,9 +184,11 @@ Exemple:
 ```
 
 Args helpers:
-```
+```scheme
 procedure: (py-args *po ...)
+
 procedure: (py-args* '(*po ...))
+
 return: *po<tuple>
 ```
 This procedure is use to prepare a tuple of arguments for Python's function. 
@@ -186,52 +196,71 @@ It usually won't be used directly because it's included in `(py-call)`,`(py-call
 
 ### Number and String
 
-```
+```scheme
 procedure: (int number)
+
 procedure: (float number)
+
 procedure: (str number)
+
 return: *po<number,string>
 ```
 
 Covert a Scheme data to Python data.
 
 Exemple:
-```
+```scheme
 (int 8)                       => *po{8}
+
 (float 3.1415926)             => *po{3.1415926}
+
 (str "foo")                   => *po{"foo"}
 ```
 
-```
+```scheme
 procedure: (py->int *po<number>)
+
 return: number<int>
+
 procedure: (py->float *po<number>)
+
 return: number<float>
+
 procedure: (py->str *po<string>)
+
 return: string
 ```
 
 Covert a Python data to Scheme data.
 
 Exemple:
-```
+```scheme
 (py->int (int 8))                => 8
+
 (py->float (float 3.1415926))    => 3.1415926
+
 (py->str (str "foo"))            => "foo"
 ```
 
 ### List and Tuple
 
-```
-
+```scheme
 procedure: (list->py-list listOf*Po)
+
 procedure: (list->py-tuple listOf*Po)
+
 procedure: (vector->py-list vectorOf*Po)
+
 procedure: (vector->py-tuple vectorOf*Po)
+
 procedure: (list->py-list type list)
+
 procedure: (list->py-tuple type list)
+
 procedure: (vector->py-list type vector)
+
 procedure: (vector->py-tuple type vector)
+
 return: *po<list,tuple>
 ```
 
@@ -240,72 +269,104 @@ Covert a Scheme's List and Vector to Python's List and Tuple.
 The type will be: 'int 'float or 'str.
 
 Exemple:
-```
+```scheme
 (list->py-list 'int '(1 2 3 4 5 6 7 8))
+
 (list->py-list `(,(int 1) ,(int 2) ,(int 3)))
+
 (vector->py-list `#(,(int 1) ,(float 3.14159) ,(str "foo")))
 ```
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
-```
+```scheme
 procedure: (py-list->list *po<tuple>)
+
 procedure: (py-tuple->list *po<tuple>)
+
 return: list of *po
+
 procedure: (py-list->vector *po<list>)
+
 procedure: (py-tuple->vector *po<tuple>)
+
 return: vector of *po
+
 procedure: (py-list->list type *po<list>)
+
 procedure: (py-tuple->list type *po<tuple>)
+
 return: list
+
 procedure: (py-list->vector type *po<list>)
+
 procedure: (py-tuple->vector type *po<tuple>)
+
 return: vector
 ```
 
 Exemple:
-```
+```scheme
 (py-list->list 'int (list->py-list 'int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
+
 (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))
 => (*po{1} *po{3.14159} *po{"foo"})
 ```
 In last case it return a list of Memory Adresse of *po. You can use (py->int), (py->float) or (py-str) to convert it to Scheme Data.
 
 Like:
-```
+```scheme
 (py->int (car (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 1
+
 (py->float (cadr (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 3.14159
+
 (py->str (caddr (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => "foo"
 ```
 
 ### Numeric Operations
 
-```
+```scheme
 procedure: (py-add *po *po)
+
 procedure: (py-sub *po *po)
+
 procedure: (py-mul *po *po)
+
 procedure: (py-div *po *po)
+
 procedure: (py-fdiv *po *po)
+
 procedure: (py-mod *po *po)
+
 procedure: (py-lsh *po *po)
+
 procedure: (py-rsh *po *po)
+
 procedure: (py-and *po *po)
+
 procedure: (py-or *po *po)
+
 procedure: (py-xor *po *po)
+
 procedure: (py-inv *po)
+
 procedure: (py-abs *po)
+
 procedure: (py-neg *po)
+
 return: *po
 ```
 
 *po in here may be a number or a list, tuple, array(numpy) of number.
 
 Exemple:
-```
+```scheme
 (py-add (int 3) (int 5))                            => *po{8}
+
 (py-mul (int 8) (list->py-list int' '(1 2 3 4 5)))  => *po{[8, 16, 24, 32, 40]}
+
 (py-abs (int -5))                                   => *po{5} 
 ```
