@@ -155,7 +155,8 @@ The alist is like: `'(("Name" . *po) ...)`
 
 Exemple:
 ```scheme
-((py-call* array (list->py-list 'int '(1 2 3 4 5))) `(("dtype" . ,(str "float"))))
+((py-call* array (list->py-list 'int '(1 2 3 4 5)))
+    `(("dtype" . ,(str "float"))))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 
 (define-syntax np-array
