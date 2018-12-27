@@ -132,10 +132,11 @@ Some python function need named arguments, use:
 procedure: ((py-call* *po args ...) alistOfNamedArgs)
 return: *po
 ```
+The alist is like: `'(("Name" . *po) ...)`
 
 Exemple:
 ```
-((py-call* array (list->py-list 'int '(1 2 3 4 5))) `("dtype" ,(str "float")))
+((py-call* array (list->py-list 'int '(1 2 3 4 5))) `(("dtype" . ,(str "float"))))
 
 (define-syntax np-array
     (syntax-rules ()
@@ -207,17 +208,17 @@ Exemple:
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
 ```
-procedure: (py-list->list *po)
-procedure: (py-tuple->list *po)
+procedure: (py-list->list *po[tuple])
+procedure: (py-tuple->list *po[tuple])
 return: list of *po
-procedure: (py-list->vector *po)
-procedure: (py-tuple->vector *po)
+procedure: (py-list->vector *po[list])
+procedure: (py-tuple->vector *po[tuple])
 return: vector of *po
-procedure: (py-list->list type *po)
-procedure: (py-tuple->list type *po)
+procedure: (py-list->list type *po[list])
+procedure: (py-tuple->list type *po[tuple])
 return: list
-procedure: (py-list->vector type *po)
-procedure: (py-tuple->vector type *po)
+procedure: (py-list->vector type *po[list])
+procedure: (py-tuple->vector type *po[tuple])
 return: vector
 ```
 
