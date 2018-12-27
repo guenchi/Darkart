@@ -121,22 +121,23 @@
             
     (define-syntax py-call
         (syntax-rules ()
-            ((_ f a ...)(let* 
-                            ((*k (py-args a ...))
-                            (*r (py/object-call-object f *k)))
-                            (py-decref *k)
-                            *r))))
+            ((_ f a ...)
+                (let* 
+                    ((*k (py-args a ...))
+                    (*r (py/object-call-object f *k)))
+                    (py-decref *k)
+                    *r))))
 
     (define-syntax py-call*
         (syntax-rules ()
             ((_ f a ...)(lambda (lst)
-                            (let* 
-                                ((*k (py-args a ...))
-                                (*d (alist->py-dict lst))
-                                (*r (py/object-call f *k *d)))
-                                (py-decref *k)
-                                (py-decref *d)
-                                 *r)))))
+                (let* 
+                    ((*k (py-args a ...))
+                    (*d (alist->py-dict lst))
+                    (*r (py/object-call f *k *d)))
+                    (py-decref *k)
+                    (py-decref *d)
+                    *r)))))
 
     (define py-func1
         (lambda (f)
