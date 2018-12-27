@@ -92,8 +92,8 @@ This is the point syntax of Python.
 Like:
 
 ```
-(define array (py-get np array))       = numpy.array
-(define pi (py-get np pi))             = numpy.pi
+(define array (py-get np array))      = numpy.array
+(define pi (py-get np pi))            = numpy.pi
 ```
 
 ***Function***
@@ -104,7 +104,8 @@ return: *po
 ```
 Exemple:
 ```
-(py-call array (list->py-list '(1 2 3 4 5)))
+(py-call array (list->py-list 'int '(1 2 3 4 5)))
+
 (define np-array
     (lambda (x)
         (py-call array x)))
@@ -116,7 +117,7 @@ There is three helpers to generate a procedure callable accept 1, 2 and 3 argume
 procedure: (py-func1 *po)
 procedure: (py-func2 *po)
 procedure: (py-func3 *po)
-return: *po (function)
+return: *po[function]
 ```
 
 Exemple:
@@ -134,7 +135,8 @@ return: *po
 
 Exemple:
 ```
-((py-call* array (list->py-list '(1 2 3 4 5))) `("dtype" ,(str "float")))
+((py-call* array (list->py-list 'int '(1 2 3 4 5))) `("dtype" ,(str "float")))
+
 (define-syntax np-array
     (syntax-rules ()
         ((_ e)(py-call array e))
@@ -147,7 +149,7 @@ Exemple:
 procedure: (int number)
 procedure: (float number)
 procedure: (str number)
-return: *po
+return: *po[number,string]
 ```
 
 Covert a Scheme data to Python data.
@@ -189,7 +191,7 @@ procedure: (list->py-list type list)
 procedure: (list->py-tuple type list)
 procedure: (vector->py-list type vector)
 procedure: (vector->py-tuple type vector)
-return: *po
+return: *po[list,tuple]
 ```
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
