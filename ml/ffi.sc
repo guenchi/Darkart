@@ -25,7 +25,7 @@
 
 
 
-(library (drakart ml ffi)
+(library (darkart ml ffi)
     (export)
     (import
         (scheme))

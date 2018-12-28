@@ -25,7 +25,7 @@
 
 
 
-(library (drakart go ffi)
+(library (darkart go ffi)
     (export)
     (import
         (scheme))

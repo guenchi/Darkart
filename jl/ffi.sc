@@ -25,7 +25,7 @@
 
 
 
-(library (drakart julia jl-ffi)
+(library (darkart julia jl-ffi)
     (export)
     (import
         (scheme))

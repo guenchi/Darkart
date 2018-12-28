@@ -25,7 +25,7 @@
 
 
 
-(library (drakart py ffi)
+(library (darkart py ffi)
     (export
         py-sigle-input
         py-file-input
@@ -134,7 +134,7 @@
     (import
         (scheme))
 
-(define lib (load-shared-object "./lib/drakart/py.so"))
+(define lib (load-shared-object "./lib/darkart/py.so"))
 
 (define py-sigle-input 256)
 (define py-file-input 257)

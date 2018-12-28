@@ -25,11 +25,11 @@
 
 
 
-(library (drakart lu call)
+(library (darkart lu call)
     (export)
     (import
         (scheme)
-        (drakart lu ffi))
+        (darkart lu ffi))
 
 
 )

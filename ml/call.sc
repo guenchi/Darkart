@@ -25,11 +25,11 @@
 
 
 
-(library (drakart ml call)
+(library (darkart ml call)
     (export)
     (import
         (scheme)
-        (drakart ml ffi))
+        (darkart ml ffi))
 
 
 )

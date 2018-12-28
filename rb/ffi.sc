@@ -25,7 +25,7 @@
 
 
 
-(library (drakart rb ffi)
+(library (darkart rb ffi)
     (export)
     (import
         (scheme))

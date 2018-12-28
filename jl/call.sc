@@ -25,11 +25,11 @@
 
 
 
-(library (drakart jl call)
+(library (darkart jl call)
     (export)
     (import
         (scheme)
-        (drakart jl ffi))
+        (darkart jl ffi))
 
 
 )

@@ -25,7 +25,7 @@
 
 
 
-(library (drakart py call)
+(library (darkart py call)
     (export
         py-init
         py-fin
@@ -84,7 +84,7 @@
     )
     (import
         (scheme)
-        (drakart py ffi))
+        (darkart py ffi))
 
 
 

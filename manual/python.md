@@ -1,4 +1,4 @@
-# Drakart: Python Interface User's Guide
+# darkart: Python Interface User's Guide
 
 # Build
 
@@ -49,7 +49,7 @@ And *po{value} means a `*po` point to this value.
 
 # Py-call
 
-Library `(drakart py call)`
+Library `(darkart py call)`
 
 ### Py-init and Py-fin
 
@@ -66,7 +66,7 @@ If you want to write a library which wrap some Python Library, you don't have to
 
 ### Python Library
 
-The library has to install, for exemple via Pip, before drakart call it.
+The library has to install, for exemple via Pip, before darkart call it.
 
 You can go to python envirement do something like `import numpy` to test it.
 
@@ -375,6 +375,6 @@ Exemple:
 
 # Py-FFI
 
-Library `(drakart py ffi)`
+Library `(darkart py ffi)`
 
 This file contain the base interface to Python.

@@ -25,11 +25,11 @@
 
 
 
-(library (drakart js call)
+(library (darkart js call)
     (export)
     (import
         (scheme)
-        (drakart js ffi))
+        (darkart js ffi))
 
 
 )

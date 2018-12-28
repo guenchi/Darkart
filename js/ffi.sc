@@ -25,7 +25,7 @@
 
 
 
-(library (drakart js ffi)
+(library (darkart js ffi)
     (export)
     (import
         (scheme))

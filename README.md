@@ -1,4 +1,4 @@
-# drakart: Chez Scheme's Forign Library Interface
+# darkart: Chez Scheme's Forign Library Interface
 
 A binary interface let Scheme use Python, Lua, Ruby etc's Library
 

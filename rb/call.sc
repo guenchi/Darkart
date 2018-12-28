@@ -25,11 +25,11 @@
 
 
 
-(library (drakart rb call)
+(library (darkart rb call)
     (export)
     (import
         (scheme)
-        (drakart rb ffi))
+        (darkart rb ffi))
 
 
 )

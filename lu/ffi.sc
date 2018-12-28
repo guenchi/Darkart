@@ -25,7 +25,7 @@
 
 
 
-(library (drakart lu ffi)
+(library (darkart lu ffi)
     (export)
     (import
         (scheme))
