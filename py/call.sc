@@ -121,10 +121,10 @@
             (define *p (py/tuple-new len))
             (let loop ((n 0)(args args))
                 (if (< n len)
-                    (begin 
-                        (py/tuple-set-item! *p n (car args))
+                    (if (zero? (py/tuple-set-item! *p n (car args)))
                         (loop (+ n 1) (cdr args))
-                    *p)))))
+                        (display "Procedure py-args: error when prepare arguments!\n"))
+                    *p))))
 
 
     (define py-args*
@@ -133,10 +133,10 @@
             (define *p (py/tuple-new len))
             (let loop ((n 0)(args args))
                 (if (< n len)
-                    (begin 
-                        (py/tuple-set-item! *p n (car args))
+                    (if (zero? (py/tuple-set-item! *p n (car args)))
                         (loop (+ n 1) (cdr args))
-                    *p)))))
+                        (display "Procedure py-args*: error when prepare arguments!\n"))
+                    *p))))
             
 
     (define py-call
@@ -195,9 +195,9 @@
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
-                    (begin
-                        (py/list-set-item! *p n (g (car lst)))
-                        (l (+ n 1) (cdr lst)))
+                    (if (zero? (py/list-set-item! *p n (g (car lst))))
+                        (l (+ n 1) (cdr lst))
+                        (display "Procedure list->py-list:error when set list's value!\n"))
                     *p))))
 
 
@@ -212,9 +212,9 @@
                         x)))
             (let l ((n 0)(lst lst))
                 (if (< n len)
-                    (begin
-                        (py/list-set-item! *p n (f (car lst)))
-                        (l (+ n 1) (cdr lst)))
+                    (if (zero? (py/list-set-item! *p n (f (car lst))))
+                        (l (+ n 1) (cdr lst))
+                        (display "Procedure list->py-list*: error when set list's value!\n"))
                     *p))))
 
 
@@ -234,9 +234,9 @@
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
-                    (begin
-                        (py/tuple-set-item! *p n (g (car lst)))
-                        (l (+ n 1) (cdr lst)))
+                    (if (zero? (py/tuple-set-item! *p n (g (car lst))))
+                        (l (+ n 1) (cdr lst))
+                        (display "Procedure list->py-tuple: error when set tuple's value!\n"))
                     *p))))
 
                     
@@ -251,9 +251,9 @@
                         x)))
             (let l ((n 0)(lst lst))
                 (if (< n len)
-                    (begin
-                        (py/tuple-set-item! *p n (f (car lst)))
-                        (l (+ n 1) (cdr lst)))
+                    (if (zero? (py/tuple-set-item! *p n (f (car lst))))
+                        (l (+ n 1) (cdr lst))
+                        (display "Procedure list->py-tuple*: error when set tuple's value!\n"))
                     *p))))
     
 
@@ -319,9 +319,9 @@
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (begin
-                        (py/list-set-item! *p n (g (vector-ref vct n)))
-                        (l (+ n 1)))
+                    (if (zero? (py/list-set-item! *p n (g (vector-ref vct n))))
+                        (l (+ n 1))
+                        (display "Procedure vector->py-list: error when set list's value!\n"))
                     *p))))
 
 
@@ -336,9 +336,9 @@
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (begin
-                        (py/list-set-item! *p n (f (vector-ref vct n)))
-                        (l (+ n 1)))
+                    (if (zero? (py/list-set-item! *p n (f (vector-ref vct n))))
+                        (l (+ n 1))
+                        (display "Procedure vector->py-list*: error when set list's value!\n"))
                     *p))))
 
 
@@ -358,10 +358,11 @@
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (begin
-                        (py/tuple-set-item! *p n (g (vector-ref vct n)))
-                        (l (+ n 1)))
+                    (if (zero? (py/tuple-set-item! *p n (g (vector-ref vct n))))
+                        (l (+ n 1))
+                        (display "Procedure vector->py-tuple: error when set tuple's value!\n"))
                     *p))))
+
 
     (define vector->py-tuple*
         (lambda (t vct)
@@ -374,9 +375,9 @@
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (begin
-                        (py/tuple-set-item! *p n (f (vector-ref vct n)))
-                        (l (+ n 1)))
+                    (if (zero? (py/tuple-set-item! *p n (f (vector-ref vct n))))
+                        (l (+ n 1))
+                        (display "Procedure vector->py-tuple*: error when set tuple's value!\n"))
                     *p))))
 
 
