@@ -383,6 +383,7 @@ This file contain the base interface to Python.
 
 ```scheme
 procedure: (py-initialize)
+
 procedure: (py-finalize)
 ```
 
@@ -390,54 +391,89 @@ See (py-init) and (py-fin) in `(darkart py call)`
 
 ```scheme
 procedure: (py-incref)
+
 procedure: (py-decref)
+
 procedure: (py-new-interpreter)
+
 procedure: (py-end-interpreter)
 ```
 
 ### Math
 
 ```scheme
-procedure: (py/number-add)
-procedure: (py/number-subtract)
-procedure: (py/number-multiply)
-procedure: (py/number-divide)
-procedure: (py/number-floor-divide)
-procedure: (py/number-divmod)
-procedure: (py/number-lshift)
-procedure: (py/number-rshift)
-procedure: (py/number-and)
-procedure: (py/number-or)
-procedure: (py/number-xor)
-procedure: (py/number-invert)
-procedure: (py/number-absolute)
-procedure: (py/number-negative)
+procedure: (py/number-add *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-subtract *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-multiply *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-divide *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-floor-divide *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-divmod *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-lshift *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-rshift *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-and *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-or *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-xor *po<number,list,tuple> *po<number,list,tuple>)
+
+procedure: (py/number-invert *po<number,list,tuple>)
+
+procedure: (py/number-absolute *po<number,list,tuple>)
+
+procedure: (py/number-negative *po<number,list,tuple>)
+
+return: *po
 ```
 
 ### Number
 
 ```scheme
 procedure: (py/int-from-long)
+
 procedure: (py/int-from-size_t)
+
 procedure: (py/int-from-ssize_t)
+
 procedure: (py/int-as-long)
+
 procedure: (py/int-as-ssize_t)
 
 procedure: (py/long-from-long)
+
 procedure: (py/long-from-unsigned-long)
+
 procedure: (py/long-from-longlong)
+
 procedure: (py/long-from-unsigned-longlong)
+
 procedure: (py/long-from-double)
+
 procedure: (py/long-from-size_t)
+
 procedure: (py/long-from-ssize_t)
+
 procedure: (py/long-as-long)
+
 procedure: (py/long-as-unsigned-long)
+
 procedure: (py/long-as-longlong)
+
 procedure: (py/long-as-unsigned-longlong)
+
 procedure: (py/long-as-double)
+
 procedure: (py/long-as-ssize_t)
 
 procedure: (py/float-from-double)
+
 procedure: (py/float-as-double)
 ```
 
@@ -445,6 +481,7 @@ procedure: (py/float-as-double)
 
 ```scheme
 procedure: (py/string-from-string)
+
 procedure: (py/string-as-string)
 ```
 
@@ -452,12 +489,19 @@ procedure: (py/string-as-string)
 
 ```scheme
 procedure: (py/list-new)
+
 procedure: (py/list-size)
+
 procedure: (py/list-get-item)
+
 procedure: (py/list-set-item!)
+
 procedure: (py/list-insert!)
+
 procedure: (py/list-append!)
+
 procedure: (py/list-sort!)
+
 procedure: (py/list-reverse!)
 ```
 
@@ -465,8 +509,11 @@ procedure: (py/list-reverse!)
 
 ```scheme
 procedure: (py/tuple-new)
+
 procedure: (py/tuple-size)
+
 procedure: (py/tuple-set-item!)
+
 procedure: (py/tuple-get-item)
 ```
 
@@ -474,17 +521,29 @@ procedure: (py/tuple-get-item)
 
 ```scheme
 procedure: (py/dict-new)
+
 procedure: (py/dict-size)
+
 procedure: (py/dict-get-item)
+
 procedure: (py/dict-get-item-string)
+
 procedure: (py/dict-set-item!)
+
 procedure: (py/dict-set-item-string!)
+
 procedure: (py/dict-del-item!)
+
 procedure: (py/dict-del-item-string!)
+
 procedure: (py/dict-clear)
+
 procedure: (py/dict-copy)
+
 procedure: (py/dict-keys)
+
 procedure: (py/dict-values)
+
 procedure: (py/dict-items)
 ```
 
@@ -492,10 +551,15 @@ procedure: (py/dict-items)
 
 ```scheme
 procedure: (py/run-simple-file)
+
 procedure: (py/run-file)
+
 procedure: (py/run-file-exflags)
+
 procedure: (py/run-simple-string)
+
 procedure: (py/run-string)
+
 procedure: (py/run-string-flags)
 ```
 
@@ -503,7 +567,9 @@ procedure: (py/run-string-flags)
 
 ```scheme
 procedure: (py/import-import)
+
 procedure: (py/import-import-module)
+
 procedure: (py/import-exec-code-module)
 ```
 
@@ -511,8 +577,11 @@ procedure: (py/import-exec-code-module)
 
 ```scheme
 procedure: (py/module-new)
+
 procedure: (py/module-get-dict)
+
 procedure: (py/module-get-name)
+
 procedure: (py/module-get-filename)
 ```
 
@@ -520,11 +589,16 @@ procedure: (py/module-get-filename)
 
 ```scheme
 procedure: (py/object-get-attr-string)
+
 procedure: (py/object-call)
+
 procedure: (py/object-call-object)
+
 procedure: (py/object-str)
+
 procedure: (py/callable-check)
 ```
+
 ###Compile
 
 ```scheme
