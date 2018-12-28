@@ -314,52 +314,88 @@
 
     (define-syntax vector->py-list
         (syntax-rules ()
-            ((_ vct)
-                (let ((len (vector-length vct)))
-                    (let loop ((*p (py/list-new len))(n 0))
-                        (if (< n len)
-                            (begin
-                                (py/list-set-item! *p n (vector-ref vct n))
-                                (loop *p (+ n 1)))
-                        *p))))
-            ((_ t vct)
-                (let ((len (vector-length vct))
-                    (f
-                        (case t
-                            ('int int)
-                            ('float float)
-                            ('str str))))
-                    (let loop ((*p (py/list-new len))(n 0))
-                        (if (< n len)
-                            (begin
-                                (py/list-set-item! *p n (f (vector-ref vct n)))
-                                (loop *p (+ n 1)))
-                        *p))))))
+            ((_ vct)(v->pl* vct))
+            ((_ t vct)(v->pl t vct))))
+
+    (define v->pl
+        (lambda (t vct)
+            (define len (vector-length vct))
+            (define *p (py/list-new len))
+            (define f
+                (case t
+                    ('int int)
+                    ('float float)
+                    ('str str)))
+            (define g
+                (lambda (x)
+                    (if (vector? x)
+                        (v->pl t x)
+                        (f x))))
+            (let l ((n 0))
+                (if (< n len)
+                    (begin
+                        (py/list-set-item! *p n (g (vector-ref vct n)))
+                        (l (+ n 1)))
+                    *p))))
+
+    (define v->pl*
+        (lambda (t vct)
+            (define len (vector-length vct))
+            (define *p (py/list-new len))
+            (define f
+                (lambda (x)
+                    (if (vector? x)
+                        (v->pl* t x)
+                        (f x))))
+            (let l ((n 0))
+                (if (< n len)
+                    (begin
+                        (py/list-set-item! *p n (f (vector-ref vct n)))
+                        (l (+ n 1)))
+                    *p))))
 
     
     (define-syntax vector->py-tuple
         (syntax-rules ()
-            ((_ vct)
-                (let ((len (vector-length vct)))
-                    (let loop ((*p (py/tuple-new len))(n 0))
-                        (if (< n len)
-                            (begin
-                                (py/tuple-set-item! *p n (vector-ref vct n))
-                                (loop *p (+ n 1)))
-                        *p))))
-            ((_ t vct)
-                (let ((len (vector-length vct))
-                    (f
-                        (case t
-                            ('int int)
-                            ('float float)
-                            ('str str))))
-                    (let loop ((*p (py/tuple-new len))(n 0))
-                        (if (< n len)
-                            (begin
-                                (py/tuple-set-item! *p n (f (vector-ref vct n)))
-                                (loop *p (+ n 1)))
-                        *p))))))
+            ((_ vct)(v->pl* vct))
+            ((_ t vct)(v->pl t vct))))
+
+    (define v->pt
+        (lambda (t vct)
+            (define len (vector-length vct))
+            (define *p (py/tuple-new len))
+            (define f
+                (case t
+                    ('int int)
+                    ('float float)
+                    ('str str)))
+            (define g
+                (lambda (x)
+                    (if (vector? x)
+                        (v->pt t x)
+                        (f x))))
+            (let l ((n 0))
+                (if (< n len)
+                    (begin
+                        (py/tuple-set-item! *p n (g (vector-ref vct n)))
+                        (l (+ n 1)))
+                    *p))))
+
+    (define v->pt*
+        (lambda (t vct)
+            (define len (vector-length vct))
+            (define *p (py/tuple-new len))
+            (define f
+                (lambda (x)
+                    (if (vector? x)
+                        (v->pt* t x)
+                        (f x))))
+            (let l ((n 0))
+                (if (< n len)
+                    (begin
+                        (py/tuple-set-item! *p n (f (vector-ref vct n)))
+                        (l (+ n 1)))
+                    *p))))
 
 
     (define-syntax py-list->vector
