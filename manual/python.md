@@ -457,7 +457,10 @@ procedure: (py/long-from-size_t number)
 procedure: (py/long-from-ssize_t number)
 
 procedure: (py/float-from-double number)
+```
 
+
+```scheme
 procedure: (py/int-as-long *po<long>)
 
 procedure: (py/int-as-ssize_t *po<long>)
@@ -480,9 +483,9 @@ procedure: (py/float-as-double *po<float>)
 ### String
 
 ```scheme
-procedure: (py/string-from-string)
+procedure: (py/string-from-string string)
 
-procedure: (py/string-as-string)
+procedure: (py/string-as-string *po<string>)
 ```
 
 ### List
