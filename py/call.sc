@@ -62,11 +62,15 @@
         py-func
         py-func*
         list->py-list
+        list->py-list*
         list->py-tuple
+        list->py-tuple*
         py-list->list
         py-tuple->list
         vector->py-list
+        vector->py-list*
         vector->py-tuple
+        vector->py-tuple*
         py-list->vector
         py-tuple->vector
         alist->py-dict
@@ -174,14 +178,8 @@
                     (py-decref *d)
                     *r))))
 
-    
-    (define-syntax list->py-list
-        (syntax-rules ()
-            ((_ lst)(l->pl* lst))
-            ((_ t lst)(l->pl t lst))))
 
-
-    (define l->pl
+    (define list->py-list
         (lambda (t lst)
             (define len (length lst))
             (define *p (py/list-new len))
@@ -193,7 +191,7 @@
             (define g
                 (lambda (x)
                     (if (list? x)
-                        (l->pl t x)
+                        (list->py-list t x)
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
@@ -203,14 +201,14 @@
                     *p))))
 
 
-    (define l->pl*
+    (define list->py-list*
         (lambda (lst)
             (define len (length lst))
             (define *p (py/list-new len))
             (define f
                 (lambda (x)
                     (if (list? x)
-                        (l->pl* x)
+                        (list->py-list* x)
                         x)))
             (let l ((n 0)(lst lst))
                 (if (< n len)
@@ -220,14 +218,7 @@
                     *p))))
 
 
-
-    (define-syntax list->py-tuple
-        (syntax-rules ()
-            ((_ lst)(l->pt* lst))
-            ((_ t lst)(l->pt t lst))))
-
-
-    (define l->pt
+    (define list->py-tuple
         (lambda (t lst)
             (define len (length lst))
             (define *p (py/tuple-new len))
@@ -239,7 +230,7 @@
             (define g
                 (lambda (x)
                     (if (list? x)
-                        (l->pt t x)
+                        (list->py-tuple t x)
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
@@ -249,14 +240,14 @@
                     *p))))
 
                     
-    (define l->pt*
+    (define list->py-tuple*
         (lambda (lst)
             (define len (length lst))
             (define *p (py/tuple-new len))
             (define f
                 (lambda (x)
                     (if (list? x)
-                        (l->pt* x)
+                        (list->py-tuple* x)
                         x)))
             (let l ((n 0)(lst lst))
                 (if (< n len)
@@ -312,12 +303,7 @@
                         '()))))))
 
 
-    (define-syntax vector->py-list
-        (syntax-rules ()
-            ((_ vct)(v->pl* vct))
-            ((_ t vct)(v->pl t vct))))
-
-    (define v->pl
+    (define vector->py-list
         (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/list-new len))
@@ -329,7 +315,7 @@
             (define g
                 (lambda (x)
                     (if (vector? x)
-                        (v->pl t x)
+                        (vector->py-list t x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
@@ -338,14 +324,15 @@
                         (l (+ n 1)))
                     *p))))
 
-    (define v->pl*
+
+    (define vector->py-list*
         (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/list-new len))
             (define f
                 (lambda (x)
                     (if (vector? x)
-                        (v->pl* t x)
+                        (vector->py-list* t x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
@@ -354,13 +341,8 @@
                         (l (+ n 1)))
                     *p))))
 
-    
-    (define-syntax vector->py-tuple
-        (syntax-rules ()
-            ((_ vct)(v->pl* vct))
-            ((_ t vct)(v->pl t vct))))
 
-    (define v->pt
+    (define vector->py-tuple
         (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/tuple-new len))
@@ -372,7 +354,7 @@
             (define g
                 (lambda (x)
                     (if (vector? x)
-                        (v->pt t x)
+                        (vector->py-tuple t x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
@@ -381,14 +363,14 @@
                         (l (+ n 1)))
                     *p))))
 
-    (define v->pt*
+    (define vector->py-tuple*
         (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/tuple-new len))
             (define f
                 (lambda (x)
                     (if (vector? x)
-                        (v->pt* t x)
+                        (vector->py-tuple* t x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
