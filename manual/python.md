@@ -384,6 +384,11 @@ This file contain the base interface to Python.
 ```scheme
 procedure: (py-initialize)
 procedure: (py-finalize)
+```
+
+See (py-init) and (py-fin) in `(darkart py call)`
+
+```scheme
 procedure: (py-incref)
 procedure: (py-decref)
 procedure: (py-new-interpreter)
