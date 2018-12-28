@@ -29,18 +29,7 @@ etc.
 Note that python belongs to a framework on mac, so with `-framework` when run cc command, in other cases, just: `cc -fPIC -shared -o ../py.so py.c`
 
 
-# Py-FFI
-
-Library `(enchantment py ffi)`
-
-This file is the wrapper for CPython C-API. For details, please refer to: https://docs.python.org/2/c-api/index.html
-
-
-# Py-call
-
-Library `(enchantment py call)`
-
-### Definition:
+# Definition:
 
 `*po` representing a pointer to a Python Object reference.
 
@@ -57,6 +46,10 @@ When you write a code with Py-call, keep all the values in type of *po, don't co
 In this document, *po may be followed by the type of Python object it points to, like: *po<number>, *po<list,tuple> etc.
 
 And *po{value} means a `*po` point to this value.
+
+# Py-call
+
+Library `(enchantment py call)`
 
 ### Py-init and Py-fin
 
@@ -378,3 +371,10 @@ Exemple:
 
 (py-abs (int -5))                                   => *po{5} 
 ```
+
+
+# Py-FFI
+
+Library `(enchantment py ffi)`
+
+This file contain the base interface to Python.
