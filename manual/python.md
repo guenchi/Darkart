@@ -246,13 +246,13 @@ Exemple:
 ### List and Tuple
 
 ```scheme
-procedure: (list->py-list listOf*Po)
+procedure: (list->py-list* listOf*Po)
 
-procedure: (list->py-tuple listOf*Po)
+procedure: (list->py-tuple* listOf*Po)
 
-procedure: (vector->py-list vectorOf*Po)
+procedure: (vector->py-list* vectorOf*Po)
 
-procedure: (vector->py-tuple vectorOf*Po)
+procedure: (vector->py-tuple* vectorOf*Po)
 
 procedure: (list->py-list type list)
 
@@ -273,9 +273,9 @@ Exemple:
 ```scheme
 (list->py-list 'int '(1 2 3 4 5 6 7 8))
 
-(list->py-list `(,(int 1) ,(int 2) ,(int 3)))
+(list->py-list* `(,(int 1) ,(int 2) ,(int 3)))
 
-(vector->py-list `#(,(int 1) ,(float 3.14159) ,(str "foo")))
+(vector->py-list* `#(,(int 1) ,(float 3.14159) ,(str "foo")))
 ```
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
@@ -310,20 +310,20 @@ Exemple:
 (py-list->list 'int (list->py-list 'int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
 
-(py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))
+(py-list->list (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
 => (*po{1} *po{3.14159} *po{"foo"})
 ```
 In last case it return a list of Memory Adresse of *po. You can use (py->int), (py->float) or (py-str) to convert it to Scheme Data.
 
 Like:
 ```scheme
-(py->int (car (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(py->int (car (py-list->list (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 1
 
-(py->float (cadr (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(py->float (cadr (py-list->list (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 3.14159
 
-(py->str (caddr (py-list->list (list->py-list `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(py->str (caddr (py-list->list (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => "foo"
 ```
 
