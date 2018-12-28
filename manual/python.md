@@ -14,7 +14,7 @@ Note that depending on the system, you may need to manually specify the path to 
 
 For me, with my mac it just:
 
-py.c: `<#include  <Python/Python.h>`
+`py.c`: `<#include  <Python/Python.h>`
 
 In other cases:
 
