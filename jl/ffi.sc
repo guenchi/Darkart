@@ -25,7 +25,7 @@
 
 
 
-(library (enchantment julia jl-ffi)
+(library (drakart julia jl-ffi)
     (export)
     (import
         (scheme))

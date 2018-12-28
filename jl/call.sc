@@ -25,11 +25,11 @@
 
 
 
-(library (enchantment jl call)
+(library (drakart jl call)
     (export)
     (import
         (scheme)
-        (enchantment jl ffi))
+        (drakart jl ffi))
 
 
 )

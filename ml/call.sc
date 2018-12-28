@@ -25,11 +25,11 @@
 
 
 
-(library (enchantment ml call)
+(library (drakart ml call)
     (export)
     (import
         (scheme)
-        (enchantment ml ffi))
+        (drakart ml ffi))
 
 
 )

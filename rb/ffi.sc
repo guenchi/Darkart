@@ -25,7 +25,7 @@
 
 
 
-(library (enchantment rb ffi)
+(library (drakart rb ffi)
     (export)
     (import
         (scheme))

@@ -25,7 +25,7 @@
 
 
 
-(library (enchantment js ffi)
+(library (drakart js ffi)
     (export)
     (import
         (scheme))

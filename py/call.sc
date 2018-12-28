@@ -25,7 +25,7 @@
 
 
 
-(library (enchantment py call)
+(library (drakart py call)
     (export
         py-init
         py-fin
@@ -84,7 +84,7 @@
     )
     (import
         (scheme)
-        (enchantment py ffi))
+        (drakart py ffi))
 
 
 

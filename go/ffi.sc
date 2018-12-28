@@ -25,7 +25,7 @@
 
 
 
-(library (enchantment go ffi)
+(library (drakart go ffi)
     (export)
     (import
         (scheme))

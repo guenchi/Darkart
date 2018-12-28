@@ -25,11 +25,11 @@
 
 
 
-(library (enchantment go call)
+(library (drakart go call)
     (export)
     (import
         (scheme)
-        (enchantment go ffi))
+        (drakart go ffi))
 
 
 )

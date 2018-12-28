@@ -25,11 +25,11 @@
 
 
 
-(library (enchantment rb call)
+(library (drakart rb call)
     (export)
     (import
         (scheme)
-        (enchantment rb ffi))
+        (drakart rb ffi))
 
 
 )

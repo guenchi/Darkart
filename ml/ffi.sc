@@ -25,7 +25,7 @@
 
 
 
-(library (enchantment ml ffi)
+(library (drakart ml ffi)
     (export)
     (import
         (scheme))

@@ -1,7 +1,7 @@
 
-(import (enchantment py ffi)
-        (enchantment py call)
-        (enchantment py eval))
+(import (drakart py ffi)
+        (drakart py call)
+        (drakart py eval))
 
 
 (py-init)

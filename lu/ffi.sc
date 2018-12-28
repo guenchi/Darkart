@@ -25,7 +25,7 @@
 
 
 
-(library (enchantment lu ffi)
+(library (drakart lu ffi)
     (export)
     (import
         (scheme))

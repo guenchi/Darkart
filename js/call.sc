@@ -25,11 +25,11 @@
 
 
 
-(library (enchantment js call)
+(library (drakart js call)
     (export)
     (import
         (scheme)
-        (enchantment js ffi))
+        (drakart js ffi))
 
 
 )
