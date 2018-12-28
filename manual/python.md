@@ -14,7 +14,7 @@ Note that depending on the system, you may need to manually specify the path to 
 
 For me, with my mac it just:
 
-py.c: `<#include  <Python/Python.h>`
+py.c: `[#include  [Python/Python.h]`
 
 In other cases:
 
@@ -43,7 +43,7 @@ This is also why the python library we call via the chez scheme is efficient tha
 
 When you write a code with Py-call, keep all the values in type of *po, don't convert it into scheme data until get the final result.
 
-In this document, *po may be followed by the type of Python object it points to, like: *po<number>, *po<list,tuple> etc.
+In this document, *po may be followed by the type of Python object it points to, like: *po[number], *po[list,tuple] etc.
 
 And *po{value} means a `*po` point to this value.
 
@@ -103,7 +103,7 @@ Like:
 ### Function
 
 ```scheme
-procedure: (py-call *po<callable> args ...)
+procedure: (py-call *po[callable] args ...)
 
 return: *po
 ```
@@ -111,22 +111,22 @@ return: *po
 Exemple:
 ```scheme
 (py-call array (list->py-list 'int '(1 2 3 4 5)))
-=> *op{[1, 2, 3, 4, 5]}
+=] *op{[1, 2, 3, 4, 5]}
 
 (define np-array
     (lambda (x)
         (py-call array x)))
 
 (np-array (list->py-list 'int '(1 2 3 4 5)))
-=> *op{[1, 2, 3, 4, 5]}
+=] *op{[1, 2, 3, 4, 5]}
 ```
 
-There is a helper to generate a procedure with *po<callable>:
+There is a helper to generate a procedure with *po[callable]:
 
 ```scheme
-procedure: (py-func *po<callable>)
+procedure: (py-func *po[callable])
 
-return: *po<function>
+return: *po[function]
 ```
 
 Exemple:
@@ -134,13 +134,13 @@ Exemple:
 (define np-array (py-func array))
 
 (np-array (list->py-list 'int '(1 2 3 4 5)))
-=> *op{[1, 2, 3, 4, 5]}
+=] *op{[1, 2, 3, 4, 5]}
 ```
 
 Some python function need named arguments, use:
 
 ```scheme
-procedure: ((py-call* *po<callable> args ...) alistOfNamedArgs)
+procedure: ((py-call* *po[callable] args ...) alistOfNamedArgs)
 
 return: *po
 ```
@@ -150,7 +150,7 @@ Exemple:
 ```scheme
 ((py-call* array (list->py-list 'int '(1 2 3 4 5)))
     `(('dtype . ,(str "float"))))
-=> *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
+=] *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 
 (define-syntax np-array
     (syntax-rules ()
@@ -160,18 +160,18 @@ Exemple:
                 (list (cons k v) ...)))))
 
 (np-array (list->py-list 'int '(1 2 3 4 5)))
-=> *op{[1, 2, 3, 4, 5]}
+=] *op{[1, 2, 3, 4, 5]}
 
 (np-array (list->py-list 'int '(1 2 3 4 5)) ('dtype (str "float")))
-=> *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
+=] *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
 
-There is also a helper to generate a procedure which need named argument with *po<callable>:
+There is also a helper to generate a procedure which need named argument with *po[callable]:
 
 ```scheme
-procedure: (py-func* *po<callable>)
+procedure: (py-func* *po[callable])
 
-return: *po<function>
+return: *po[function]
 ```
 
 Exemple:
@@ -181,7 +181,7 @@ Exemple:
 ((np-array 
     (list->py-list 'int '(1 2 3 4 5)))
     `(('dtype . ,(str "float"))))
-=> *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
+=] *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
 
 Args helpers:
@@ -190,7 +190,7 @@ procedure: (py-args *po ...)
 
 procedure: (py-args* '(*po ...))
 
-return: *po<tuple>
+return: *po[tuple]
 ```
 This procedure is use to prepare a tuple of arguments for Python's function. 
 It usually won't be used directly because it's included in `(py-call)`,`(py-call*)`,`(py-func)`and`(py-func*)`.
@@ -204,30 +204,30 @@ procedure: (float number)
 
 procedure: (str number)
 
-return: *po<number,string>
+return: *po[number,string]
 ```
 
 Covert a Scheme data to Python data.
 
 Exemple:
 ```scheme
-(int 8)                       => *po{8}
+(int 8)                       =] *po{8}
 
-(float 3.1415926)             => *po{3.1415926}
+(float 3.1415926)             =] *po{3.1415926}
 
-(str "foo")                   => *po{"foo"}
+(str "foo")                   =] *po{"foo"}
 ```
 
 ```scheme
-procedure: (py->int *po<number>)
+procedure: (py->int *po[number])
 
-return: number<int>
+return: number[int]
 
-procedure: (py->float *po<number>)
+procedure: (py->float *po[number])
 
-return: number<float>
+return: number[float]
 
-procedure: (py->str *po<string>)
+procedure: (py->str *po[string])
 
 return: string
 ```
@@ -236,11 +236,11 @@ Covert a Python data to Scheme data.
 
 Exemple:
 ```scheme
-(py->int (int 8))                => 8
+(py->int (int 8))                =] 8
 
-(py->float (float 3.1415926))    => 3.1415926
+(py->float (float 3.1415926))    =] 3.1415926
 
-(py->str (str "foo"))            => "foo"
+(py->str (str "foo"))            =] "foo"
 ```
 
 ### List and Tuple
@@ -262,7 +262,7 @@ procedure: (vector->py-list type vector)
 
 procedure: (vector->py-tuple type vector)
 
-return: *po<list,tuple>
+return: *po[list,tuple]
 ```
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
@@ -280,27 +280,27 @@ Exemple:
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
 ```scheme
-procedure: (py-list->list type *po<list>)
+procedure: (py-list->list type *po[list])
 
-procedure: (py-tuple->list type *po<tuple>)
+procedure: (py-tuple->list type *po[tuple])
 
 return: list
 
-procedure: (py-list->vector type *po<list>)
+procedure: (py-list->vector type *po[list])
 
-procedure: (py-tuple->vector type *po<tuple>)
+procedure: (py-tuple->vector type *po[tuple])
 
 return: vector
 
-procedure: (py-list->list* *po<tuple>)
+procedure: (py-list->list* *po[tuple])
 
-procedure: (py-tuple->list* *po<tuple>)
+procedure: (py-tuple->list* *po[tuple])
 
 return: list of *po
 
-procedure: (py-list->vector* *po<list>)
+procedure: (py-list->vector* *po[list])
 
-procedure: (py-tuple->vector* *po<tuple>)
+procedure: (py-tuple->vector* *po[tuple])
 
 return: vector of *po
 ```
@@ -308,23 +308,23 @@ return: vector of *po
 Exemple:
 ```scheme
 (py-list->list 'int (list->py-list 'int '(1 2 3 4 5 6 7 8)))
-=> (1 2 3 4 5 6 7 8)
+=] (1 2 3 4 5 6 7 8)
 
 (py-list->list* (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
-=> (*po{1} *po{3.14159} *po{"foo"})
+=] (*po{1} *po{3.14159} *po{"foo"})
 ```
 In last case it return a list of Memory Adresse of *po. You can use (py->int), (py->float) or (py-str) to convert it to Scheme Data.
 
 Like:
 ```scheme
 (py->int (car (py-list->list* (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
-=> 1
+=] 1
 
 (py->float (cadr (py-list->list* (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
-=> 3.14159
+=] 3.14159
 
 (py->str (caddr (py-list->list* (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
-=> "foo"
+=] "foo"
 ```
 
 ### Numeric Operations
@@ -365,11 +365,11 @@ return: *po
 
 Exemple:
 ```scheme
-(py-add (int 3) (int 5))                            => *po{8}
+(py-add (int 3) (int 5))                            =] *po{8}
 
-(py-mul (int 8) (list->py-list int' '(1 2 3 4 5)))  => *po{[8, 16, 24, 32, 40]}
+(py-mul (int 8) (list->py-list int' '(1 2 3 4 5)))  =] *po{[8, 16, 24, 32, 40]}
 
-(py-abs (int -5))                                   => *po{5} 
+(py-abs (int -5))                                   =] *po{5} 
 ```
 
 
@@ -402,33 +402,33 @@ procedure: (py-end-interpreter)
 ### Math
 
 ```scheme
-procedure: (py/number-add *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-add *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-subtract *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-subtract *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-multiply *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-multiply *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-divide *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-divide *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-floor-divide *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-floor-divide *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-divmod *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-divmod *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-lshift *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-lshift *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-rshift *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-rshift *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-and *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-and *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-or *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-or *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-xor *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-xor *po[number,list,tuple] *po[number,list,tuple])
 
-procedure: (py/number-invert *po<number,list,tuple>)
+procedure: (py/number-invert *po[number,list,tuple])
 
-procedure: (py/number-absolute *po<number,list,tuple>)
+procedure: (py/number-absolute *po[number,list,tuple])
 
-procedure: (py/number-negative *po<number,list,tuple>)
+procedure: (py/number-negative *po[number,list,tuple])
 
 return: *po
 ```
@@ -461,23 +461,23 @@ procedure: (py/float-from-double number)
 
 
 ```scheme
-procedure: (py/int-as-long *po<long>)
+procedure: (py/int-as-long *po[long])
 
-procedure: (py/int-as-ssize_t *po<long>)
+procedure: (py/int-as-ssize_t *po[long])
 
-procedure: (py/long-as-long *po<long>)
+procedure: (py/long-as-long *po[long])
 
-procedure: (py/long-as-unsigned-long *po<long>)
+procedure: (py/long-as-unsigned-long *po[long])
 
-procedure: (py/long-as-longlong *po<long>)
+procedure: (py/long-as-longlong *po[long])
 
-procedure: (py/long-as-unsigned-longlong *po<long>)
+procedure: (py/long-as-unsigned-longlong *po[long])
 
-procedure: (py/long-as-double *po<float>)
+procedure: (py/long-as-double *po[float])
 
-procedure: (py/long-as-ssize_t *po<float>)
+procedure: (py/long-as-ssize_t *po[float])
 
-procedure: (py/float-as-double *po<float>)
+procedure: (py/float-as-double *po[float])
 ```
 
 ### String
@@ -485,7 +485,7 @@ procedure: (py/float-as-double *po<float>)
 ```scheme
 procedure: (py/string-from-string string)
 
-procedure: (py/string-as-string *po<string>)
+procedure: (py/string-as-string *po[string])
 ```
 
 ### List
