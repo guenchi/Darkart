@@ -156,7 +156,7 @@
         (lambda (f . args)
             (lambda (lst)
                 (define *k (py-args* args))
-                (define *d (alist->py-dict lst))
+                (define *d (alist->py-dict* lst))
                 (define *r (py/object-call f *k *d))
                 (py-decref *k)
                 (py-decref *d)
@@ -177,7 +177,7 @@
             (lambda args
                 (lambda (lst)
                     (define *k (py-args* args))
-                    (define *d (alist->py-dict lst))
+                    (define *d (alist->py-dict* lst))
                     (define *r (py/object-call f *k *d))
                     (py-decref *k)
                     (py-decref *d)
