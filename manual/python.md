@@ -436,45 +436,45 @@ return: *po
 ### Number
 
 ```scheme
-procedure: (py/int-from-long)
+procedure: (py/int-from-long number)
 
-procedure: (py/int-from-size_t)
+procedure: (py/int-from-size_t number)
 
-procedure: (py/int-from-ssize_t)
+procedure: (py/int-from-ssize_t number)
 
-procedure: (py/int-as-long)
+procedure: (py/long-from-long number)
 
-procedure: (py/int-as-ssize_t)
+procedure: (py/long-from-unsigned-long number)
 
-procedure: (py/long-from-long)
+procedure: (py/long-from-longlong number)
 
-procedure: (py/long-from-unsigned-long)
+procedure: (py/long-from-unsigned-longlong number)
 
-procedure: (py/long-from-longlong)
+procedure: (py/long-from-double number)
 
-procedure: (py/long-from-unsigned-longlong)
+procedure: (py/long-from-size_t number)
 
-procedure: (py/long-from-double)
+procedure: (py/long-from-ssize_t number)
 
-procedure: (py/long-from-size_t)
+procedure: (py/float-from-double number)
 
-procedure: (py/long-from-ssize_t)
+procedure: (py/int-as-long *po<long>)
 
-procedure: (py/long-as-long)
+procedure: (py/int-as-ssize_t *po<long>)
 
-procedure: (py/long-as-unsigned-long)
+procedure: (py/long-as-long *po<long>)
 
-procedure: (py/long-as-longlong)
+procedure: (py/long-as-unsigned-long *po<long>)
 
-procedure: (py/long-as-unsigned-longlong)
+procedure: (py/long-as-longlong *po<long>)
 
-procedure: (py/long-as-double)
+procedure: (py/long-as-unsigned-longlong *po<long>)
 
-procedure: (py/long-as-ssize_t)
+procedure: (py/long-as-double *po<float>)
 
-procedure: (py/float-from-double)
+procedure: (py/long-as-ssize_t *po<float>)
 
-procedure: (py/float-as-double)
+procedure: (py/float-as-double *po<float>)
 ```
 
 ### String
