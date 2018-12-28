@@ -10,7 +10,7 @@ Just like in https://github.com/guenchi/Darkart/blob/master/c/py.c
 
 Compile with `cc -fPIC -shared -framework Python -o ../py.so py.c`
 
-Note Depending on the system, you may need to manually specify the path to python.h.
+Note that depending on the system, you may need to manually specify the path to `python.h`.
 
 For me, with my mac it just:
 
