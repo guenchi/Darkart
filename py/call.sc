@@ -70,6 +70,8 @@
         py-list->vector
         py-tuple->vector
         alist->py-dict
+
+        py-display
     )
     (import
         (scheme)
@@ -175,57 +177,93 @@
     
     (define-syntax list->py-list
         (syntax-rules ()
-            ((_ lst)
-                (let ((len (length lst)))
-                    (let loop 
-                        ((*p (py/list-new len))(n 0)(l lst))
-                        (if (< n len)
-                            (begin
-                                (py/list-set-item! *p n  (car l))
-                                (loop *p (+ n 1) (cdr l)))
-                            *p))))
-            ((_ t lst)
-                (let ((len (length lst))
-                    (f
-                        (case t
-                            ('int int)
-                            ('float float)
-                            ('str str))))
-                    (let loop 
-                        ((*p (py/list-new len))(n 0)(l lst))
-                        (if (< n len)
-                            (begin
-                                (py/list-set-item! *p n (f (car l)))
-                                (loop  *p (+ n 1) (cdr l)))
-                            *p))))))
+            ((_ lst)(l->pl* lst))
+            ((_ t lst)(l->pl t lst))))
+
+
+    (define l->pl
+        (lambda (t lst)
+            (define len (length lst))
+            (define *p (py/list-new len))
+            (define f
+                (case t
+                    ('int int)
+                    ('float float)
+                    ('str str)))
+            (define g
+                (lambda (x)
+                    (if (list? x)
+                        (l->pl t x)
+                        (f x))))
+            (let l ((n 0)(lst lst))
+                (if (< n len)
+                    (begin
+                        (py/list-set-item! *p n (g (car lst)))
+                        (l (+ n 1) (cdr lst)))
+                    *p))))
+
+
+    (define l->pl*
+        (lambda (lst)
+            (define len (length lst))
+            (define *p (py/list-new len))
+            (define f
+                (lambda (x)
+                    (if (list? x)
+                        (l->pl* x)
+                        x)))
+            (let l ((n 0)(lst lst))
+                (if (< n len)
+                    (begin
+                        (py/list-set-item! *p n (f (car lst)))
+                        (l (+ n 1) (cdr lst)))
+                    *p))))
 
 
 
     (define-syntax list->py-tuple
         (syntax-rules ()
-            ((_ lst)
-                (let ((len (length lst)))
-                    (let loop 
-                        ((*p (py/tuple-new len))(n 0)(l lst))
-                        (if (< n len)
-                            (begin
-                                (py/tuple-set-item! *p n  (car l))
-                                (loop *p (+ n 1) (cdr l)))
-                            *p))))
-            ((_ t lst)
-                (let ((len (length lst))
-                    (f
-                        (case t
-                            ('int int)
-                            ('float float)
-                            ('str str))))
-                    (let loop 
-                        ((*p (py/tuple-new len))(n 0)(l lst))
-                        (if (< n len)
-                            (begin
-                                (py/tuple-set-item! *p n (f (car l)))
-                                (loop  *p (+ n 1) (cdr l)))
-                            *p))))))
+            ((_ lst)(l->pt* lst))
+            ((_ t lst)(l->pt t lst))))
+
+
+    (define l->pt
+        (lambda (t lst)
+            (define len (length lst))
+            (define *p (py/tuple-new len))
+            (define f
+                (case t
+                    ('int int)
+                    ('float float)
+                    ('str str)))
+            (define g
+                (lambda (x)
+                    (if (list? x)
+                        (l->pt t x)
+                        (f x))))
+            (let l ((n 0)(lst lst))
+                (if (< n len)
+                    (begin
+                        (py/tuple-set-item! *p n (g (car lst)))
+                        (l (+ n 1) (cdr lst)))
+                    *p))))
+
+                    
+    (define l->pt*
+        (lambda (lst)
+            (define len (length lst))
+            (define *p (py/tuple-new len))
+            (define f
+                (lambda (x)
+                    (if (list? x)
+                        (l->pt* x)
+                        x)))
+            (let l ((n 0)(lst lst))
+                (if (< n len)
+                    (begin
+                        (py/tuple-set-item! *p n (f (car lst)))
+                        (l (+ n 1) (cdr lst)))
+                    *p))))
     
 
     (define-syntax py-list->list
@@ -405,6 +443,13 @@
                             (loop *p f (car r)(cdr r)))))))    
 
    
+(define py-display
+    (lambda (x)
+        (display 
+            (py->str
+                (py/object-str x)))))
+
+
 )
 
 
