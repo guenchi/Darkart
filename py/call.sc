@@ -113,11 +113,11 @@
         (lambda args 
             (define len (length args))
             (define *p (py/tuple-new len))
-            (let l ((n 0)(args args))
+            (let loop ((n 0)(args args))
                 (if (< n len)
                     (begin 
                         (py/tuple-set-item! *p n (car args))
-                        (l (+ n 1) (cdr args))
+                        (loop (+ n 1) (cdr args))
                     *p)))))
 
 
@@ -125,11 +125,11 @@
         (lambda (args) 
             (define len (length args))
             (define *p (py/tuple-new len))
-            (let l ((n 0)(args args))
+            (let loop ((n 0)(args args))
                 (if (< n len)
                     (begin 
                         (py/tuple-set-item! *p n (car args))
-                        (l (+ n 1) (cdr args))
+                        (loop (+ n 1) (cdr args))
                     *p)))))
             
 
@@ -177,12 +177,12 @@
         (syntax-rules ()
             ((_ lst)
                 (let ((len (length lst)))
-                    (let l 
-                        ((*p (py/list-new len))(n 0)(lst lst))
+                    (let loop 
+                        ((*p (py/list-new len))(n 0)(l lst))
                         (if (< n len)
                             (begin
-                                (py/list-set-item! *p n  (car lst))
-                                (l *p (+ n 1) (cdr lst)))
+                                (py/list-set-item! *p n  (car l))
+                                (loop *p (+ n 1) (cdr l)))
                             *p))))
             ((_ t lst)
                 (let ((len (length lst))
@@ -191,12 +191,12 @@
                             ('int int)
                             ('float float)
                             ('str str))))
-                    (let l 
-                        ((*p (py/list-new len))(n 0)(lst lst))
+                    (let loop 
+                        ((*p (py/list-new len))(n 0)(l lst))
                         (if (< n len)
                             (begin
-                                (py/list-set-item! *p n (f (car lst)))
-                                (l  *p (+ n 1) (cdr lst)))
+                                (py/list-set-item! *p n (f (car l)))
+                                (loop  *p (+ n 1) (cdr l)))
                             *p))))))
 
 
@@ -205,12 +205,12 @@
         (syntax-rules ()
             ((_ lst)
                 (let ((len (length lst)))
-                    (let l 
-                        ((*p (py/tuple-new len))(n 0)(lst lst))
+                    (let loop 
+                        ((*p (py/tuple-new len))(n 0)(l lst))
                         (if (< n len)
                             (begin
-                                (py/tuple-set-item! *p n  (car lst))
-                                (l *p (+ n 1) (cdr lst)))
+                                (py/tuple-set-item! *p n  (car l))
+                                (loop *p (+ n 1) (cdr l)))
                             *p))))
             ((_ t lst)
                 (let ((len (length lst))
@@ -219,12 +219,12 @@
                             ('int int)
                             ('float float)
                             ('str str))))
-                    (let l 
-                        ((*p (py/tuple-new len))(n 0)(lst lst))
+                    (let loop 
+                        ((*p (py/tuple-new len))(n 0)(l lst))
                         (if (< n len)
                             (begin
-                                (py/tuple-set-item! *p n (f (car lst)))
-                                (l  *p (+ n 1) (cdr lst)))
+                                (py/tuple-set-item! *p n (f (car l)))
+                                (loop  *p (+ n 1) (cdr l)))
                             *p))))))
     
 
@@ -233,9 +233,9 @@
             ((_ *p)
                 (let 
                     ((len (py/list-size *p)))
-                    (let l ((n 0))
+                    (let loop ((n 0))
                         (if (< n len)
-                            (cons (py/list-get-item *p n) (l (+ n 1)))
+                            (cons (py/list-get-item *p n) (loop (+ n 1)))
                         '()))))
             ((_ t *p)
                 (let 
@@ -245,9 +245,9 @@
                             ('int py->int)
                             ('float py->float)
                             ('str str))))
-                    (let l ((n 0))
+                    (let loop ((n 0))
                         (if (< n len)
-                            (cons (f (py/list-get-item *p n)) (l (+ n 1)))
+                            (cons (f (py/list-get-item *p n)) (loop (+ n 1)))
                         '()))))))
 
 
@@ -256,9 +256,9 @@
             ((_ *p)
                 (let 
                     ((len (py/tuple-size *p)))
-                    (let l ((n 0))
+                    (let loop ((n 0))
                         (if (< n len)
-                            (cons (py/tuple-get-item *p n) (l (+ n 1)))
+                            (cons (py/tuple-get-item *p n) (loop (+ n 1)))
                         '()))))
             ((_ t *p)
                 (let 
@@ -268,9 +268,9 @@
                             ('int py->int)
                             ('float py->float)
                             ('str str))))
-                    (let l ((n 0))
+                    (let loop ((n 0))
                         (if (< n len)
-                            (cons (f (py/tuple-get-item *p n)) (l (+ n 1)))
+                            (cons (f (py/tuple-get-item *p n)) (loop (+ n 1)))
                         '()))))))
 
 
@@ -278,11 +278,11 @@
         (syntax-rules ()
             ((_ vct)
                 (let ((len (vector-length vct)))
-                    (let l ((*p (py/list-new len))(n 0))
+                    (let loop ((*p (py/list-new len))(n 0))
                         (if (< n len)
                             (begin
                                 (py/list-set-item! *p n (vector-ref vct n))
-                                (l *p (+ n 1)))
+                                (loop *p (+ n 1)))
                         *p))))
             ((_ t vct)
                 (let ((len (vector-length vct))
@@ -291,11 +291,11 @@
                             ('int int)
                             ('float float)
                             ('str str))))
-                    (let l ((*p (py/list-new len))(n 0))
+                    (let loop ((*p (py/list-new len))(n 0))
                         (if (< n len)
                             (begin
                                 (py/list-set-item! *p n (f (vector-ref vct n)))
-                                (l *p (+ n 1)))
+                                (loop *p (+ n 1)))
                         *p))))))
 
     
@@ -303,11 +303,11 @@
         (syntax-rules ()
             ((_ vct)
                 (let ((len (vector-length vct)))
-                    (let l ((*p (py/tuple-new len))(n 0))
+                    (let loop ((*p (py/tuple-new len))(n 0))
                         (if (< n len)
                             (begin
                                 (py/tuple-set-item! *p n (vector-ref vct n))
-                                (l *p (+ n 1)))
+                                (loop *p (+ n 1)))
                         *p))))
             ((_ t vct)
                 (let ((len (vector-length vct))
@@ -316,11 +316,11 @@
                             ('int int)
                             ('float float)
                             ('str str))))
-                    (let l ((*p (py/tuple-new len))(n 0))
+                    (let loop ((*p (py/tuple-new len))(n 0))
                         (if (< n len)
                             (begin
                                 (py/tuple-set-item! *p n (f (vector-ref vct n)))
-                                (l *p (+ n 1)))
+                                (loop *p (+ n 1)))
                         *p))))))
 
 
@@ -329,11 +329,11 @@
             ((_ *p)
                 (let 
                     ((len (py/list-size *p)))
-                    (let l ((v (make-vector len))(n 0))
+                    (let loop ((v (make-vector len))(n 0))
                         (if (< n len)
                             (begin 
                                 (vector-set! v n (py/list-get-item *p n))
-                                (l v (+ n 1)))
+                                (loop v (+ n 1)))
                         v))))
             ((_ t *p)
                 (let 
@@ -343,11 +343,11 @@
                             ('int py->int)
                             ('float py->float)
                             ('str py->str))))
-                    (let l ((v (make-vector len))(n 0))
+                    (let loop ((v (make-vector len))(n 0))
                         (if (< n len)
                             (begin 
                                 (vector-set! v n (f (py/list-get-item *p n)))
-                                (l v (+ n 1)))
+                                (loop v (+ n 1)))
                         v))))))
 
 
@@ -356,11 +356,11 @@
             ((_ *p)
                 (let 
                     ((len (py/tuple-size *p)))
-                    (let l ((v (make-vector len))(n 0))
+                    (let loop ((v (make-vector len))(n 0))
                         (if (< n len)
                             (begin 
                                 (vector-set! v n (py/tuple-get-item *p n))
-                                (l v (+ n 1)))
+                                (loop v (+ n 1)))
                         v))))
             ((_ t *p)
                 (let 
@@ -370,27 +370,27 @@
                             ('int py->int)
                             ('float py->float)
                             ('str py->str))))
-                    (let l ((v (make-vector len))(n 0))
+                    (let loop ((v (make-vector len))(n 0))
                         (if (< n len)
                             (begin 
                                 (vector-set! v n (f (py/tuple-get-item *p n)))
-                                (l v (+ n 1)))
+                                (loop v (+ n 1)))
                         v))))))
     
 
     (define-syntax alist->py-dict
         (syntax-rules ()
             ((_ lst)
-                    (let l 
+                    (let loop 
                         ((*p (py/dict-new))
                         (i (car lst))
                         (r (cdr lst)))
                         (py/dict-set-item-string! *p (car i) (cdr i))
                         (if (null? r)
                             *p
-                            (l *p (car r)(cdr r)))))
+                            (loop *p (car r)(cdr r)))))
             ((_ t lst)
-                    (let l 
+                    (let loop 
                         ((*p (py/dict-new))
                         (f 
                             (case t
@@ -402,7 +402,7 @@
                         (py/dict-set-item-string! *p (car i) (f (cdr i)))
                         (if (null? r)
                             *p
-                            (l *p f (car r)(cdr r)))))))    
+                            (loop *p f (car r)(cdr r)))))))    
 
    
 )
