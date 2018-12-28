@@ -14,15 +14,15 @@ Note that depending on the system, you may need to manually specify the path to 
 
 For me, with my mac it just:
 
-`py.c`: `<#include  <Python/Python.h>`
+py.c: `<#include  <Python/Python.h>`
 
 In other cases:
 
-`#include "/Library/Frameworks/Python.framework/Versions/3.5/include/python3.5m/Python.h"`
+py.c: `#include "/Library/Frameworks/Python.framework/Versions/3.5/include/python3.5m/Python.h"`
 
 or
 
-`#include "/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/Python.h"`
+py.c: `#include "/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/Python.h"`
 
 etc.
 
