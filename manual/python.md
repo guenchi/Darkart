@@ -1,4 +1,4 @@
-# darkart: Python Interface User's Guide
+# Darkart: Python Interface User's Guide
 
 # Build
 
