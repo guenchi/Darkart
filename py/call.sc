@@ -83,7 +83,9 @@
         make-plist 
         plist-length 
         plist-ref 
-        plist-set! 
+        plist-set!
+        plist-sref
+        plist-sset!
         plist-insert! 
         plist-append! 
         plist-sort! 
@@ -92,7 +94,8 @@
         make-ptuple 
         ptuple-length 
         ptuple-ref 
-        ptuple-set! 
+        ptuple-set!
+        ptuple-sref 
         
         psequ->plist
         psequ->ptuple
@@ -102,13 +105,12 @@
         psequ-ref
         psequ-set!
         psequ-del!
+        psequ-sref
+        psequ-sset!
+        psequ-sdel!
         psequ-count
         psequ-contains
         psequ-index
-    
-        pslice-ref
-        pslice-set!
-        pslice-del!
     
         make-pdict 
         pdict-length 
@@ -183,7 +185,7 @@
     (define ptuple-length py/tuple-size)
     (define ptuple-ref py/tuple-get-item)
     (define ptuple-set! py/tuple-set-item!)
-    (define ptuple->sref py/tuple-get-slice)
+    (define ptuple-sref py/tuple-get-slice)
     
     (define psequ->plist py/sequence-list)
     (define psequ->ptuple py/sequence-tuple)
