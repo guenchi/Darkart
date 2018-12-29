@@ -144,7 +144,7 @@ procedure: ((py-call* *po<callable> args ...) alistOfNamedArgs)
 
 return: *po
 ```
-The alist is like: `'(("Name" . *po) ...)`
+The alist is like: `'((symbol<Name> . *po) ...)`
 
 Exemple:
 ```scheme
@@ -439,6 +439,66 @@ return: 0 for succes -1 for fail
 procedure: (ptuple-sref *po<tuple> int int)
 
 return: *po<tuple>
+```
+
+### Python's sequence
+
+```scheme
+procedure: (psequ->plist *po<sequence>)
+
+return: *po<list>
+
+procedure: (psequ->ptuple *po<sequence>)
+
+return: *po<tuple>
+
+procedure: (psequ-length *po<sequence>)
+
+return: int<size>
+
+procedure: (psequ-append *po<sequence> *po<sequence>)
+
+return: *po<sequence>
+
+procedure: (psequ-repeat *po<sequence> int)
+
+return: *po<sequence>
+
+procedure: (psequ-ref *po<sequence> int)
+
+return: *po
+
+procedure: (psequ-set! *po<sequence> int *po)
+
+return: 0 for succes -1 for fail
+
+procedure: (psequ-del! *po<sequence> int)
+
+return: 0 for succes -1 for fail
+
+procedure: (psequ-sref *po<sequence> int int)
+
+return: *po<sequence>
+
+procedure: (psequ-sset! *po<sequence> int int *po<sequence>)
+
+return: 0 for succes -1 for fail
+
+procedure: (psequ-sdel! *po<sequence> int int)
+
+return: 0 for succes -1 for fail
+
+procedure: (psequ-count *po<sequence> *po<value>)
+
+return: int
+
+procedure: (psequ-contains *po<sequence> *po<value>)
+
+return: 1 for true 0 for false -1 for fail
+
+procedure: (psequ-index *po<sequence> *po<value>)
+
+return: int
 ```
 
 ### Python's dict
