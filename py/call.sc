@@ -32,6 +32,9 @@
         py-incref
         py-decref
 
+        pint?
+        pfloat?
+        pstr?
         int
         float
         str
@@ -80,6 +83,7 @@
         alist->pdict
         alist->pdict*
 
+        plist?
         make-plist 
         plist-length 
         plist-ref 
@@ -91,12 +95,14 @@
         plist-sort! 
         plist-reverse! 
     
+        ptuple?
         make-ptuple 
         ptuple-length 
         ptuple-ref 
         ptuple-set!
         ptuple-sref 
 
+        pset?
         make-pset
         pset-length
         pset-contains?
@@ -105,6 +111,7 @@
         pset-pop!
         pset-clear!
         
+        psequ?
         psequ->plist
         psequ->ptuple
         psequ-length
@@ -120,6 +127,7 @@
         psequ-contains
         psequ-index
     
+        pdict?
         make-pdict 
         pdict-length 
         pdict-ref 
@@ -134,6 +142,7 @@
         pdict-values 
         pdict-items 
 
+        pmap?
         pmap-size
         pmap-has?
         pmap-has*?
@@ -151,6 +160,9 @@
     (define py-init py-initialize)
     (define py-fin py-finalize)
 
+    (define pint? py/long-check?)
+    (define pfloat? py/float-check?)
+    (define pstr? py/string-check?)
     (define int py/long-from-long)
     (define float py/float-from-double)
     (define str py/string-from-string)
@@ -173,6 +185,7 @@
     (define py-abs py/number-absolute)
     (define py-neg py/number-negative)
 
+    (define plist? py/list-check?)
     (define make-plist py/list-new)
     (define plist-length py/list-size)
     (define plist-ref py/list-get-item)
@@ -184,12 +197,14 @@
     (define plist-sort! py/list-sort!)
     (define plist-reverse! py/list-reverse!)
 
+    (define ptuple? py/tuple-check?)
     (define make-ptuple py/tuple-new)
     (define ptuple-length py/tuple-size)
     (define ptuple-ref py/tuple-get-item)
     (define ptuple-set! py/tuple-set-item!)
     (define ptuple-sref py/tuple-get-slice)
 
+    (define pset? py/set-check?)
     (define make-pset py/set-new)
     (define pset-length py/set-size)
     (define pset-contains? py/set-contains?)
@@ -198,6 +213,7 @@
     (define pset-pop! py/set-pop!)
     (define pset-clear! py/set-clear!)
     
+    (define psequ? py/sequence-check?)
     (define psequ->plist py/sequence-list)
     (define psequ->ptuple py/sequence-tuple)
     (define psequ-length py/sequence-size)
@@ -213,6 +229,7 @@
     (define psequ-contains py/sequence-contains)
     (define psequ-index py/sequence-index)
     
+    (define pdict? py/dict-check?)
     (define make-pdict py/dict-new)
     (define pdict-length py/dict-size)
     (define pdict-ref py/dict-get-item-string)
@@ -227,6 +244,7 @@
     (define pdict-values py/dict-values)
     (define pdict-items py/dict-items)
 
+    (define pmap? py/mapping-check?)
     (define pmap-size py/mapping-size)
     (define pmap-has? py/mapping-has-key-string?)
     (define pmap-has*? py/mapping-has-key?)
