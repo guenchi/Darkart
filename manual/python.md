@@ -519,41 +519,57 @@ Pass Python string to Scheme.
 ### List
 
 ```scheme
-procedure: (py/list-new ssize_t)
+procedure: (py/list-new number<size>)
 
 return: *po<list>
 
 procedure: (py/list-size *po<list>)
 
-return: ssize_t
+return: number<size>
 
-procedure: (py/list-get-item)
+procedure: (py/list-get-item *po<list> number{index})
 
-procedure: (py/list-set-item! *po<list> ssize_t *po)
+return: *po
+
+procedure: (py/list-set-item! *po<list> number{index} *po)
 
 return: 0 for succes -1 for fail
 
-procedure: (py/list-insert!)
+procedure: (py/list-insert! *po<list> number{index} *po)
 
-procedure: (py/list-append!)
+return: 0 for succes -1 for fail
+
+procedure: (py/list-append! *po<list-target> *po<list>)
+
+return: 0 for succes -1 for fail
 
 procedure: (py/list-sort!)
 
+return: 0 for succes -1 for fail
+
 procedure: (py/list-reverse!)
+
+return: 0 for succes -1 for fail
 ```
 
 ### Tuple
 
 ```scheme
-procedure: (py/tuple-new)
+procedure: (py/tuple-new number{index})
 
-procedure: (py/tuple-size)
+return: *po<tuple>
 
-procedure: (py/tuple-set-item!)
+procedure: (py/tuple-size *po<tuple>)
+
+return: number{index}
+
+procedure: (py/tuple-get-item *po<tuple> number{index})
+
+return: *po
+
+procedure: (py/tuple-set-item! *po<tuple> number{index} *po)
 
 return: 0 for succes -1 for fail
-
-procedure: (py/tuple-get-item)
 ```
 
 ### Dict
@@ -567,31 +583,39 @@ procedure: (py/dict-get-item)
 
 procedure: (py/dict-get-item-string)
 
-procedure: (py/dict-set-item!)
+procedure: (py/dict-set-item! *po<dict> *po{key} *po<value>)
 
 return: 0 for succes -1 for fail
 
-procedure: (py/dict-set-item-string!)
+procedure: (py/dict-set-item-string! *po<dict> string{key} *po<value>)
 
 return: 0 for succes -1 for fail
 
-procedure: (py/dict-del-item!)
+procedure: (py/dict-del-item! *po<dict> *po{key})
 
 return: 0 for succes -1 for fail
 
-procedure: (py/dict-del-item-string!)
+procedure: (py/dict-del-item-string! *po<dict> string{key})
 
 return: 0 for succes -1 for fail
 
 procedure: (py/dict-clear)
 
-procedure: (py/dict-copy)
+procedure: (py/dict-copy *po<dict>)
 
-procedure: (py/dict-keys)
+return: new *po<dict>
+
+procedure: (py/dict-keys *po<dict>)
+
+return: *po<list>{keys}
 
 procedure: (py/dict-values)
 
+return: *po<list>{values}
+
 procedure: (py/dict-items)
+
+return: *po<list>{keys+values}
 ```
 
 ### Run
