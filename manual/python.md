@@ -609,26 +609,6 @@ return: *po
 procedure: (pmap-set! *po<mapping> string<key> *po{value}) 
 
 return: 0 on success or -1 on failure.
-
-procedure: (pmap-del! *po<mapping> string<key>)
-
-return: 0 on success or -1 on failure.
-
-procedure: (pmap-del*! *po<mapping> *po{key})
-
-return: 0 on success or -1 on failure.
-
-procedure: (pmap-keys *po<mapping>)
-
-return: *po<list>{key...}
-
-procedure: (pmap-values *po<mapping>)
-
-return: *po<list>{value...}
-
-procedure: (pmap-items *po<mapping>)
-
-return: *po<list>{key...value...}
 ```
 
 ### Display
@@ -1019,26 +999,6 @@ return: *po
 procedure: (py/mapping-set-item-string! *po<mapping> string<key> *po{value}) 
 
 return: 0 on success or -1 on failure.
-
-procedure: (py/mapping-del-item-string! *po<mapping> string<key>)
-
-return: 0 on success or -1 on failure.
-
-procedure: (py/mapping-del-item! *po<mapping> *po{key})
-
-return: 0 on success or -1 on failure.
-
-procedure: (py/mapping-keys *po<mapping>)
-
-return: *po<list>{key...}
-
-procedure: (py/mapping-values *po<mapping>)
-
-return: *po<list>{value...}
-
-procedure: (py/mapping-items *po<mapping>)
-
-return: *po<list>{key...value...}
 ```
 
 ### Run
