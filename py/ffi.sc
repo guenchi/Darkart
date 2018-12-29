@@ -93,6 +93,21 @@
         py/tuple-set-item!
         py/tuple-get-item
 
+        py/sequence-size
+        py/sequence-concat
+        py/sequence-repeat
+        py/sequence-get-item
+        py/sequence-get-slice 
+        py/sequence-set-item!
+        py/sequence-del-item!
+        py/sequence-set-slice!
+        py/sequence-del-slice!
+        py/sequence-count
+        py/sequence-contains
+        py/sequence-index
+        py/sequence-list
+        py/sequence-tuple
+
         py/dict-new
         py/dict-size
         py/dict-get-item
@@ -106,6 +121,8 @@
         py/dict-keys
         py/dict-values
         py/dict-items
+
+        py/sequence-size
 
         py/run-simple-file
         py/run-file
@@ -271,16 +288,16 @@
     (foreign-procedure "PyList_New" (int) uptr))
 
 (define py/list-size
-    (foreign-procedure "PyList_Size" (uptr) ssize_t))
+    (foreign-procedure "PyList_Size" (uptr) int))
 
 (define py/list-get-item
-    (foreign-procedure "PyList_GetItem" (uptr ssize_t) uptr))
+    (foreign-procedure "PyList_GetItem" (uptr int) uptr))
 
 (define py/list-set-item!
-    (foreign-procedure "PyList_SetItem" (uptr ssize_t uptr) int))
+    (foreign-procedure "PyList_SetItem" (uptr int uptr) int))
 
 (define py/list-insert!
-    (foreign-procedure "PyList_Insert" (uptr ssize_t uptr) int))
+    (foreign-procedure "PyList_Insert" (uptr int uptr) int))
 
 (define py/list-append!
     (foreign-procedure "PyList_Append" (uptr uptr) int))
@@ -295,13 +312,55 @@
     (foreign-procedure "PyTuple_New" (int) uptr))
 
 (define py/tuple-size
-    (foreign-procedure "PyTuple_Size" (uptr) ssize_t))
+    (foreign-procedure "PyTuple_Size" (uptr) int))
 
 (define py/tuple-get-item
-    (foreign-procedure "PyTuple_GetItem" (uptr ssize_t) uptr))
+    (foreign-procedure "PyTuple_GetItem" (uptr int) uptr))
 
 (define py/tuple-set-item!
-    (foreign-procedure "PyTuple_SetItem" (uptr ssize_t uptr) int))
+    (foreign-procedure "PyTuple_SetItem" (uptr int uptr) int))
+
+(define py/sequence-size
+    (foreign-procedure "PySequence_Size" (uptr) int))
+
+(define py/sequence-concat
+    (foreign-procedure "PySequence_Concat" (uptr uptr) uptr))
+
+(define py/sequence-repeat
+    (foreign-procedure "PySequence_Repeat" (uptr int) uptr))
+
+(define py/sequence-get-item
+    (foreign-procedure "PySequence_GetItem" (uptr int) uptr))
+
+(define py/sequence-get-slice 
+    (foreign-procedure "PySequence_GetSlice" (uptr int int) uptr))
+
+(define py/sequence-set-item!
+    (foreign-procedure "PySequence_SetItem" (uptr int uptr) int))
+
+(define py/sequence-del-item!
+    (foreign-procedure "PySequence_DelItem" (uptr int) int))
+
+(define py/sequence-set-slice!
+    (foreign-procedure "PySequence_SetSlice" (uptr int int uptr) int))
+
+(define py/sequence-del-slice!
+    (foreign-procedure "PySequence_DelSlice" (uptr int int) int))
+
+(define py/sequence-count
+    (foreign-procedure "PySequence_Count" (uptr uptr) int))
+
+(define py/sequence-contains
+    (foreign-procedure "PySequence_Contains" (uptr uptr) int))
+
+(define py/sequence-index
+    (foreign-procedure "PySequence_Index" (uptr uptr) int))
+
+(define py/sequence-list
+    (foreign-procedure "PySequence_List" (uptr) uptr))
+
+(define py/sequence-tuple
+    (foreign-procedure "PySequence_Tuple" (uptr) uptr))
 
 (define py/dict-new
     (foreign-procedure "PyDict_New" () uptr))
@@ -328,7 +387,7 @@
     (foreign-procedure "PyDict_Clear" (uptr) void))
 
 (define py/dict-size
-    (foreign-procedure "PyDict_Size" (uptr) ssize_t))
+    (foreign-procedure "PyDict_Size" (uptr) int))
 
 (define py/dict-keys
     (foreign-procedure "PyDict_Keys" (uptr) uptr))
