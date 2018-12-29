@@ -96,6 +96,14 @@
         ptuple-ref 
         ptuple-set!
         ptuple-sref 
+
+        make-pset
+        pset-length
+        pset-contains
+        pset-add!
+        pset-del!
+        pset-pop!
+        pset-clear!
         
         psequ->plist
         psequ->ptuple
@@ -186,6 +194,14 @@
     (define ptuple-ref py/tuple-get-item)
     (define ptuple-set! py/tuple-set-item!)
     (define ptuple-sref py/tuple-get-slice)
+
+    (define make-pset py/set-new)
+    (define pset-length py/set-size)
+    (define pset-contains py/set-contains)
+    (define pset-add! py/set-add!)
+    (define pset-del! py/set-discard!)
+    (define pset-pop! py/set-pop!)
+    (define pset-clear! py/set-clear!)
     
     (define psequ->plist py/sequence-list)
     (define psequ->ptuple py/sequence-tuple)

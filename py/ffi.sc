@@ -96,6 +96,14 @@
         py/tuple-set-item!
         py/tuple-get-slice
 
+        py/set-new
+        py/set-size
+        py/set-contains
+        py/set-add!
+        py/set-discard!
+        py/set-pop!
+        py/set-clear!
+
         py/sequence-size
         py/sequence-concat
         py/sequence-repeat
@@ -340,6 +348,27 @@
 
 (define py/tuple-get-slice
     (foreign-procedure "PyTuple_GetSlice" (uptr int int) uptr))
+
+(define py/set-new
+    (foreign-procedure "PySet_New" (uptr) uptr))
+
+(define py/set-size
+    (foreign-procedure "PySet_Size" (uptr) int))
+    
+(define py/set-contains
+    (foreign-procedure "PySet_Contains" (uptr uptr) int))
+
+(define py/set-add!
+    (foreign-procedure "PySet_Add" (uptr uptr) int))
+
+(define py/set-discard!
+    (foreign-procedure "PySet_Discard" (uptr uptr) int))
+
+(define py/set-pop!
+    (foreign-procedure "PySet_Pop" (uptr) int))
+
+(define py/set-clear!
+    (foreign-procedure "PySet_Clear" (uptr) int))
 
 (define py/sequence-size
     (foreign-procedure "PySequence_Size" (uptr) int))
