@@ -392,6 +392,14 @@ procedure: (plist-set! *po<list> int<index> *po)
 
 return: 0 for succes -1 for fail
 
+procedure: (plist-sref *po<list> int int)
+
+return: *po<list>
+
+procedure: (plist-sset! *po<list> int int *po<list>)
+
+return: 0 for succes -1 for fail
+
 procedure: (plist-insert! *po<list> int<index> *po)
 
 return: 0 for succes -1 for fail
@@ -427,6 +435,10 @@ return: *po
 procedure: (ptuple-set! *po<tuple> int<index> *po)
 
 return: 0 for succes -1 for fail
+
+procedure: (ptuple-sref *po<tuple> int int)
+
+return: *po<tuple>
 ```
 
 ### Python's dict
@@ -655,6 +667,14 @@ procedure: (py/list-set-item! *po<list> int<index> *po)
 
 return: 0 for succes -1 for fail
 
+procedure: (py/list-get-slice *po<list> int int)
+
+return: *po<list>
+
+procedure: (py/list-set-slice! *po<list> int int *po<list>)
+
+return: 0 for succes -1 for fail
+
 procedure: (py/list-insert! *po<list> int<index> *po)
 
 return: 0 for succes -1 for fail
@@ -690,6 +710,10 @@ return: *po
 procedure: (py/tuple-set-item! *po<tuple> int<index> *po)
 
 return: 0 for succes -1 for fail
+
+procedure: (py/tuple-get-slice *po<tuple> int int)
+
+return: *po<tuple>
 ```
 
 ### Dict
