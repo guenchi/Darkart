@@ -599,7 +599,7 @@ procedure: (py/dict-del-item-string! *po<dict> string<key>)
 
 return: 0 for succes -1 for fail
 
-procedure: (py/dict-clear)
+procedure: (py/dict-clear! *po<dict>)
 
 return: <void>
 
@@ -641,7 +641,9 @@ procedure: (py/run-string-flags)
 ```scheme
 procedure: (py/import-import)
 
-procedure: (py/import-import-module)
+procedure: (py/import-import-module string<library>)
+
+return: *po<library>
 
 procedure: (py/import-exec-code-module)
 ```
@@ -661,15 +663,25 @@ procedure: (py/module-get-filename)
 ### Object
 
 ```scheme
-procedure: (py/object-get-attr-string)
+procedure: (py/object-get-attr-string *po string<keyword>)
 
-procedure: (py/object-call)
+return: *po<object,method>
 
-procedure: (py/object-call-object)
+procedure: (py/object-call *po<callable> *po<tulpe>{argument...} *po<dict>{name:argument...})
 
-procedure: (py/object-str)
+return: *po
 
-procedure: (py/callable-check)
+procedure: (py/object-call-object *po<callable> *po<tuple>{argument...)
+
+return: *po
+
+procedure: (py/object-str *po)
+
+return: *po<string>
+
+procedure: (py/callable-check *po)
+
+return: 1 true 0 false
 ```
 
 ###Compile
