@@ -485,6 +485,13 @@ procedure: (pdict-items)
 return: *po<list>{key...values...}
 ```
 
+### Display
+
+```scheme
+procedure: (py-display *po)
+```
+
+Display anything of Python Object.
 
 # Py-FFI
 
