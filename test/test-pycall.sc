@@ -99,7 +99,7 @@
 
 
 (define x '(1 2 3 4 5 6 7 8))
-(define t (list->py-list 'int x))
+(define t (list->plist 'int x))
 (define np (py/import-import-module "numpy"))
 (define array (py/object-get-attr-string np "array"))
 (define cosin (py/object-get-attr-string np "cos"))
@@ -108,7 +108,7 @@
 (define arr (py/object-call-object array (py-args t)))
 (define lst (py/object-call-object cosin (py-args arr)))
 (define pylst (py/object-call-object tolist (py-args lst)))
-(display (py-list->list 'float pylst))
+(display (plist->list 'float pylst))
 (newline)
 
 (py-fin)

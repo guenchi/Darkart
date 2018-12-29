@@ -110,14 +110,14 @@ return: *po
 
 Exemple:
 ```scheme
-(py-call array (list->py-list 'int '(1 2 3 4 5)))
+(py-call array (list->plist 'int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 
 (define np-array
     (lambda (x)
         (py-call array x)))
 
-(np-array (list->py-list 'int '(1 2 3 4 5)))
+(np-array (list->plist 'int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 ```
 
@@ -133,7 +133,7 @@ Exemple:
 ```scheme
 (define np-array (py-func array))
 
-(np-array (list->py-list 'int '(1 2 3 4 5)))
+(np-array (list->plist 'int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 ```
 
@@ -148,7 +148,7 @@ The alist is like: `'(("Name" . *po) ...)`
 
 Exemple:
 ```scheme
-((py-call* array (list->py-list 'int '(1 2 3 4 5)))
+((py-call* array (list->plist 'int '(1 2 3 4 5)))
     `(('dtype . ,(str "float"))))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 
@@ -159,10 +159,10 @@ Exemple:
             ((py-call* *array e) 
                 (list (cons k v) ...)))))
 
-(np-array (list->py-list 'int '(1 2 3 4 5)))
+(np-array (list->plist 'int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 
-(np-array (list->py-list 'int '(1 2 3 4 5)) ('dtype (str "float")))
+(np-array (list->plist 'int '(1 2 3 4 5)) ('dtype (str "float")))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
 
@@ -179,7 +179,7 @@ Exemple:
 (define np-array (py-func* array))
 
 ((np-array 
-    (list->py-list 'int '(1 2 3 4 5)))
+    (list->plist 'int '(1 2 3 4 5)))
     `(('dtype . ,(str "float"))))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
@@ -246,21 +246,21 @@ Exemple:
 ### List and Tuple
 
 ```scheme
-procedure: (list->py-list* listOf*Po)
+procedure: (list->plist* listOf*Po)
 
-procedure: (list->py-tuple* listOf*Po)
+procedure: (list->ptuple* listOf*Po)
 
-procedure: (vector->py-list* vectorOf*Po)
+procedure: (vector->plist* vectorOf*Po)
 
-procedure: (vector->py-tuple* vectorOf*Po)
+procedure: (vector->ptuple* vectorOf*Po)
 
-procedure: (list->py-list type list)
+procedure: (list->plist type list)
 
-procedure: (list->py-tuple type list)
+procedure: (list->ptuple type list)
 
-procedure: (vector->py-list type vector)
+procedure: (vector->plist type vector)
 
-procedure: (vector->py-tuple type vector)
+procedure: (vector->ptuple type vector)
 
 return: *po<list,tuple>
 ```
@@ -271,59 +271,59 @@ The type will be: 'int 'float or 'str.
 
 Exemple:
 ```scheme
-(list->py-list 'int '(1 2 3 4 5 6 7 8))
+(list->plist 'int '(1 2 3 4 5 6 7 8))
 
-(list->py-list* `(,(int 1) ,(int 2) ,(int 3)))
+(list->plist* `(,(int 1) ,(int 2) ,(int 3)))
 
-(vector->py-list* `#(,(int 1) ,(float 3.14159) ,(str "foo")))
+(vector->plist* `#(,(int 1) ,(float 3.14159) ,(str "foo")))
 ```
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
 ```scheme
-procedure: (py-list->list type *po<list>)
+procedure: (plist->list type *po<list>)
 
-procedure: (py-tuple->list type *po<tuple>)
+procedure: (ptuple->list type *po<tuple>)
 
 return: list
 
-procedure: (py-list->vector type *po<list>)
+procedure: (plist->vector type *po<list>)
 
-procedure: (py-tuple->vector type *po<tuple>)
+procedure: (ptuple->vector type *po<tuple>)
 
 return: vector
 
-procedure: (py-list->list* *po<tuple>)
+procedure: (plist->list* *po<tuple>)
 
-procedure: (py-tuple->list* *po<tuple>)
+procedure: (ptuple->list* *po<tuple>)
 
 return: list of *po
 
-procedure: (py-list->vector* *po<list>)
+procedure: (plist->vector* *po<list>)
 
-procedure: (py-tuple->vector* *po<tuple>)
+procedure: (ptuple->vector* *po<tuple>)
 
 return: vector of *po
 ```
 
 Exemple:
 ```scheme
-(py-list->list 'int (list->py-list 'int '(1 2 3 4 5 6 7 8)))
+(plist->list 'int (list->plist 'int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
 
-(py-list->list* (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
+(plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
 => (*po{1} *po{3.14159} *po{"foo"})
 ```
 In last case it return a list of Memory Adresse of *po. You can use (py->int), (py->float) or (py-str) to convert it to Scheme Data.
 
 Like:
 ```scheme
-(py->int (car (py-list->list* (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(py->int (car (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 1
 
-(py->float (cadr (py-list->list* (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(py->float (cadr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 3.14159
 
-(py->str (caddr (py-list->list* (list->py-list* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(py->str (caddr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => "foo"
 ```
 
@@ -367,7 +367,7 @@ Exemple:
 ```scheme
 (py-add (int 3) (int 5))                            => *po{8}
 
-(py-mul (int 8) (list->py-list int' '(1 2 3 4 5)))  => *po{[8, 16, 24, 32, 40]}
+(py-mul (int 8) (list->plist int' '(1 2 3 4 5)))  => *po{[8, 16, 24, 32, 40]}
 
 (py-abs (int -5))                                   => *po{5} 
 ```

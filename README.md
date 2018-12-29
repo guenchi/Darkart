@@ -18,13 +18,13 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
 (define get-sin
     (lambda (lst)
-        (py-list->list 'float
+        (plist->list 'float
             (py-call np-tolist
                 (py-call np-sin
                     (py-div
                         (py-mul pi 
                             (py-call np-array
-                                (list->py-list 'int lst)))
+                                (list->plist 'int lst)))
                         (int 180)))))))
 
 (get-sin '(1 2 3 4 5 6 7 8))
