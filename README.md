@@ -22,7 +22,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
             (py-call np-tolist
                 (py-call np-sin
                     (py-div
-                        (py-mul pi 
+                        (py-mul np-pi 
                             (py-call np-array
                                 (list->plist 'int lst)))
                         (int 180)))))))
