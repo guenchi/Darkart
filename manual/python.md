@@ -557,7 +557,7 @@ procedure: (pdict-items)
 return: *po<list>{key...values...}
 ```
 
-### Mapping
+### Python's mapping
 
 ```scheme
 procedure: (pmap-size *po<mapping>)
@@ -820,6 +820,67 @@ procedure: (py/tuple-get-slice *po<tuple> int int)
 return: *po<tuple>{slice}
 ```
 
+### Sequence  
+        
+```scheme
+procedure: (py/sequence-list *po<sequence>)
+
+return: *po<list>
+
+procedure: (py/sequence-tuple *po<sequence>)
+
+return: *po<tuple>
+
+procedure: (py/sequence-size *po<sequence>)
+
+return: int<size>
+
+procedure: (py/sequence-concat *po<sequence> *po<sequence>)
+
+return: *po<sequence>
+
+procedure: (py/sequence-repeat *po<sequence> int)
+
+return: *po<sequence>
+
+procedure: (py/sequence-get-item *po<sequence> int)
+
+return: *po
+
+procedure: (py/sequence-set-item! *po<sequence> int *po)
+
+return: 0 for succes -1 for fail
+
+procedure: (py/sequence-del-item! *po<sequence> int)
+
+return: 0 for succes -1 for fail
+
+procedure: (py/sequence-get-slice *po<sequence> int int)
+
+return: *po<sequence>{slice}
+
+procedure: (py/sequence-set-slice! *po<sequence> int int *po<sequence>)
+
+return: 0 for succes -1 for fail
+
+procedure: (py/sequence-del-slice! *po<sequence> int int)
+
+return: 0 for succes -1 for fail
+
+procedure: (py/sequence-count *po<sequence> *po<value>)
+
+return: int
+
+procedure: (py/sequence-contains *po<sequence> *po<value>)
+
+return: 1 for true 0 for false -1 for fail
+
+procedure: (py/sequence-index *po<sequence> *po<value>)
+
+return: int
+```
+
+
 ### Dictionary
 
 ```scheme
@@ -874,6 +935,50 @@ return: *po<list>{value...}
 procedure: (py/dict-items)
 
 return: *po<list>{key...values...}
+```
+
+### Python's mapping
+
+```scheme
+procedure: (py/mapping-size *po<mapping>)
+
+return: int
+
+procedure: (py/mapping-has-key-string? *po<mapping> string<key>)
+
+return: 1 for ture 0 for false
+
+procedure: (py/mapping-has-key? *po<mapping> *po{key})
+
+return: 1 for ture 0 for false
+
+procedure: (py/mapping-get-item-string *po<mapping> string<key>)
+
+return: *po
+
+procedure: (py/mapping-set-item-string! *po<mapping> string<key> *po{value}) 
+
+return: return: 0 for succes -1 for fail
+
+procedure: (py/mapping-del-item-string! *po<mapping> string<key>)
+
+return: 0 for succes -1 for fail
+
+procedure: (py/mapping-del-item! *po<mapping> *po{key})
+
+return: 0 for succes -1 for fail
+
+procedure: (py/mapping-keys *po<mapping>)
+
+return: *po<list>{key...}
+
+procedure: (py/mapping-values *po<mapping>)
+
+return: *po<list>{value...}
+
+procedure: (py/mapping-items *po<mapping>)
+
+return: *po<list>{key...value...}
 ```
 
 ### Run
