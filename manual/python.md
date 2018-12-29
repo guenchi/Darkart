@@ -376,23 +376,23 @@ Exemple:
 ### Python's list
 
 ```scheme
-procedure: (make-plist number<size>)
+procedure: (make-plist int<size>)
 
 return: *po<list>
 
 procedure: (plist-length *po<list>)
 
-return: number<size>
+return: int<size>
 
-procedure: (plist-ref *po<list> number<index>)
+procedure: (plist-ref *po<list> int<index>)
 
 return: *po
 
-procedure: (plist-set! *po<list> number<index> *po)
+procedure: (plist-set! *po<list> int<index> *po)
 
 return: 0 for succes -1 for fail
 
-procedure: (plist-insert! *po<list> number<index> *po)
+procedure: (plist-insert! *po<list> int<index> *po)
 
 return: 0 for succes -1 for fail
 
@@ -412,19 +412,19 @@ return: 0 for succes -1 for fail
 ### Python's tuple
 
 ```scheme
-procedure: (make-ptuple number<index>)
+procedure: (make-ptuple int<index>)
 
 return: *po<tuple>
 
 procedure: (ptuple-length *po<tuple>)
 
-return: number<index>
+return: int<index>
 
-procedure: (ptuple-ref *po<tuple> number<index>)
+procedure: (ptuple-ref *po<tuple> int<index>)
 
 return: *po
 
-procedure: (ptuple-set! *po<tuple> number<index> *po)
+procedure: (ptuple-set! *po<tuple> int<index> *po)
 
 return: 0 for succes -1 for fail
 ```
@@ -438,7 +438,7 @@ return: *po<dict>
 
 procedure: (pdict-length *po<dict>)
 
-return: number<size>
+return: int<size>
 
 procedure: (pdict-ref *po<dict> string<key)
 
@@ -639,23 +639,23 @@ Pass Python string to Scheme.
 ### List
 
 ```scheme
-procedure: (py/list-new number<size>)
+procedure: (py/list-new int<size>)
 
 return: *po<list>
 
 procedure: (py/list-size *po<list>)
 
-return: number<size>
+return: int<size>
 
-procedure: (py/list-get-item *po<list> number<index>)
+procedure: (py/list-get-item *po<list> int<index>)
 
 return: *po
 
-procedure: (py/list-set-item! *po<list> number<index> *po)
+procedure: (py/list-set-item! *po<list> int<index> *po)
 
 return: 0 for succes -1 for fail
 
-procedure: (py/list-insert! *po<list> number<index> *po)
+procedure: (py/list-insert! *po<list> int<index> *po)
 
 return: 0 for succes -1 for fail
 
@@ -675,19 +675,19 @@ return: 0 for succes -1 for fail
 ### Tuple
 
 ```scheme
-procedure: (py/tuple-new number<index>)
+procedure: (py/tuple-new int<index>)
 
 return: *po<tuple>
 
 procedure: (py/tuple-size *po<tuple>)
 
-return: number<index>
+return: int<index>
 
-procedure: (py/tuple-get-item *po<tuple> number<index>)
+procedure: (py/tuple-get-item *po<tuple> int<index>)
 
 return: *po
 
-procedure: (py/tuple-set-item! *po<tuple> number<index> *po)
+procedure: (py/tuple-set-item! *po<tuple> int<index> *po)
 
 return: 0 for succes -1 for fail
 ```
@@ -701,7 +701,7 @@ return: *po<dict>
 
 procedure: (py/dict-size *po<dict>)
 
-return: number<size>
+return: int<size>
 
 procedure: (py/dict-get-item *po<dict> *po{key})
 
