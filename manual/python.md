@@ -402,36 +402,39 @@ procedure: (py-end-interpreter)
 ### Math
 
 ```scheme
-procedure: (py/number-add *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-add *po *po)
 
-procedure: (py/number-subtract *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-subtract *po *po)
 
-procedure: (py/number-multiply *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-multiply *po *po)
 
-procedure: (py/number-divide *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-divide *po *po)
 
-procedure: (py/number-floor-divide *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-floor-divide *po *po)
 
-procedure: (py/number-divmod *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-divmod *po *po)
 
-procedure: (py/number-lshift *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-lshift *po *po)
 
-procedure: (py/number-rshift *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-rshift *po *po)
 
-procedure: (py/number-and *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-and *po *po)
 
-procedure: (py/number-or *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-or *po *po)
 
-procedure: (py/number-xor *po<number,list,tuple> *po<number,list,tuple>)
+procedure: (py/number-xor *po *po)
 
-procedure: (py/number-invert *po<number,list,tuple>)
+procedure: (py/number-invert *po)
 
-procedure: (py/number-absolute *po<number,list,tuple>)
+procedure: (py/number-absolute *po)
 
-procedure: (py/number-negative *po<number,list,tuple>)
+procedure: (py/number-negative *po)
 
 return: *po
 ```
+
+*po in here may be a number or a list, tuple, array(numpy) of number.
+
 
 ### Number
 
