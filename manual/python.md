@@ -937,7 +937,7 @@ procedure: (py/dict-items)
 return: *po<list>{key...values...}
 ```
 
-### Python's mapping
+### Mapping
 
 ```scheme
 procedure: (py/mapping-size *po<mapping>)
