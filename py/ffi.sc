@@ -81,6 +81,7 @@
 
         py/list-new
         py/list-size
+        py/list-check?
         py/list-get-item
         py/list-set-item!
         py/list-get-slice
@@ -98,7 +99,7 @@
 
         py/set-new
         py/set-size
-        py/set-contains
+        py/set-contains?
         py/set-add!
         py/set-discard!
         py/set-pop!
@@ -138,11 +139,6 @@
         py/mapping-has-key?
         py/mapping-get-item-string
         py/mapping-set-item-string!
-        py/mapping-del-item!
-        py/mapping-del-item-string!
-        py/mapping-keys
-        py/mapping-values
-        py/mapping-items
         
         py/run-simple-file
         py/run-file
@@ -176,8 +172,7 @@
 (define py-sigle-input 256)
 (define py-file-input 257)
 (define py-eval-input 258)
-
-
+    
 (define py-initialize
     (foreign-procedure "Py_Initialize" () void))
 
@@ -310,6 +305,9 @@
 (define py/list-size
     (foreign-procedure "PyList_Size" (uptr) int))
 
+(define py/list-check?
+    (foreign-procedure "_PyList_Check" (uptr) int))
+
 (define py/list-get-item
     (foreign-procedure "PyList_GetItem" (uptr int) uptr))
 
@@ -355,7 +353,7 @@
 (define py/set-size
     (foreign-procedure "PySet_Size" (uptr) int))
     
-(define py/set-contains
+(define py/set-contains?
     (foreign-procedure "PySet_Contains" (uptr uptr) int))
 
 (define py/set-add!
@@ -465,21 +463,6 @@
 
 (define py/mapping-set-item-string!
     (foreign-procedure "PyMapping_SetItemString" (uptr string uptr) int))
-
-(define py/mapping-del-item!
-    (foreign-procedure "PyMapping_DelItem" (uptr uptr) int))
-
-(define py/mapping-del-item-string!
-    (foreign-procedure "PyMapping_DelItemString" (uptr string) int))
-
-(define py/mapping-keys
-    (foreign-procedure "PyMapping_Keys" (uptr) uptr))
-
-(define py/mapping-values
-    (foreign-procedure "PyMapping_Values" (uptr) uptr))
-
-(define py/mapping-items
-    (foreign-procedure "PyMapping_Items" (uptr) uptr))
 
 (define py/run-simple-file
     (foreign-procedure "PyRun_SimpleFile" (uptr string) int))

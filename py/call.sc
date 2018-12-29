@@ -99,7 +99,7 @@
 
         make-pset
         pset-length
-        pset-contains
+        pset-contains?
         pset-add!
         pset-del!
         pset-pop!
@@ -139,11 +139,6 @@
         pmap-has*?
         pmap-ref
         pmap-set!
-        pmap-del!
-        pmap-del*!
-        pmap-keys
-        pmap-values
-        pmap-items
 
         py-display
     )
@@ -197,7 +192,7 @@
 
     (define make-pset py/set-new)
     (define pset-length py/set-size)
-    (define pset-contains py/set-contains)
+    (define pset-contains? py/set-contains?)
     (define pset-add! py/set-add!)
     (define pset-del! py/set-discard!)
     (define pset-pop! py/set-pop!)
@@ -237,12 +232,6 @@
     (define pmap-has*? py/mapping-has-key?)
     (define pmap-ref py/mapping-get-item-string)
     (define pmap-set! py/mapping-set-item-string!)
-    (define pmap-del! py/mapping-del-item-string!)
-    (define pmap-del*! py/mapping-del-item!)
-    (define pmap-keys py/mapping-keys)
-    (define pmap-values py/mapping-values)
-    (define pmap-items py/mapping-items)
-
 
     (define py-import
         (lambda (x)
