@@ -122,8 +122,17 @@
         py/dict-values
         py/dict-items
 
-        py/sequence-size
-
+        py/mapping-size
+        py/mapping-has-key-string?
+        py/mapping-has-key?
+        py/mapping-get-item-string
+        py/mapping-set-item-string!
+        py/mapping-del-item!
+        py/mapping-del-item-string!
+        py/mapping-keys
+        py/mapping-values
+        py/mapping-items
+        
         py/run-simple-file
         py/run-file
         py/run-file-exflags
@@ -381,7 +390,7 @@
     (foreign-procedure "PyDict_DelItem" (uptr uptr) int))
 
 (define py/dict-del-item-string!
-    (foreign-procedure "PyDict_DelItemString" (uptr string) uptr))
+    (foreign-procedure "PyDict_DelItemString" (uptr string) int))
 
 (define py/dict-clear!
     (foreign-procedure "PyDict_Clear" (uptr) void))
@@ -400,6 +409,36 @@
 
 (define py/dict-copy
     (foreign-procedure "PyDict_Copy" (uptr) uptr))
+
+(define py/mapping-size
+    (foreign-procedure "PyMapping_Size" (uptr) int))
+
+(define py/mapping-has-key-string?
+    (foreign-procedure "PyMapping_HasKeyString" (uptr string) int))
+
+(define py/mapping-has-key?
+    (foreign-procedure "PyMapping_HasKey" (uptr uptr) int))
+
+(define py/mapping-get-item-string
+    (foreign-procedure "PyMapping_GetItemString" (uptr string) uptr))
+
+(define py/mapping-set-item-string!
+    (foreign-procedure "PyMapping_SetItemString" (uptr string uptr) int))
+
+(define py/mapping-del-item!
+    (foreign-procedure "PyMapping_DelItem" (uptr uptr) int))
+
+(define py/mapping-del-item-string!
+    (foreign-procedure "PyMapping_DelItemString" (uptr string) int))
+
+(define py/mapping-keys
+    (foreign-procedure "PyMapping_Keys" (uptr) uptr))
+
+(define py/mapping-values
+    (foreign-procedure "PyMapping_Values" (uptr) uptr))
+
+(define py/mapping-items
+    (foreign-procedure "PyMapping_Items" (uptr) uptr))
 
 (define py/run-simple-file
     (foreign-procedure "PyRun_SimpleFile" (uptr string) int))
