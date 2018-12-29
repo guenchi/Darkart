@@ -519,7 +519,7 @@ procedure: (py-initialize)
 procedure: (py-finalize)
 ```
 
-See (py-init) and (py-fin) in `(darkart py call)`
+See `(py-init)` and `(py-fin)` in `(darkart py call)`
 
 ```scheme
 procedure: (py-incref)
