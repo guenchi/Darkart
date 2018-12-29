@@ -61,24 +61,53 @@
         py-call*
         py-func
         py-func*
-        list->py-list
-        list->py-list*
-        list->py-tuple
-        list->py-tuple*
-        py-list->list
-        py-list->list*
-        py-tuple->list
-        py-tuple->list*
-        vector->py-list
-        vector->py-list*
-        vector->py-tuple
-        vector->py-tuple*
-        py-list->vector
-        py-list->vector*
-        py-tuple->vector
-        py-tuple->vector*
-        alist->py-dict
-        alist->py-dict*
+        list->plist
+        list->plist*
+        list->ptuple
+        list->ptuple*
+        plist->list
+        plist->list*
+        ptuple->list
+        ptuple->list*
+        vector->plist
+        vector->plist*
+        vector->ptuple
+        vector->ptuple*
+        plist->vector
+        plist->vector*
+        ptuple->vector
+        ptuple->vector*
+        alist->pdict
+        alist->pdict*
+
+        make-plist 
+        plist-length 
+        plist-ref 
+        plist-set! 
+        plist-insert! 
+        plist-append! 
+        plist-sort! 
+        plist-reverse! 
+    
+        make-ptuple 
+        ptuple-length 
+        ptuple-ref 
+        ptuple-set! 
+        
+    
+        make-pdict 
+        pdict-length 
+        pdict-ref 
+        pdict-ref* 
+        pdict-set! 
+        pdict-set*! 
+        pdict-del! 
+        pdict-del*! 
+        pdict-clear!
+        pdict-copy 
+        pdict-keys 
+        pdict-values 
+        pdict-items 
 
         py-display
     )
@@ -90,12 +119,14 @@
 
     (define py-init py-initialize)
     (define py-fin py-finalize)
+
     (define int py/long-from-long)
     (define float py/float-from-double)
     (define str py/string-from-string)
     (define py->int py/long-as-long)
     (define py->float py/float-as-double)
     (define py->str py/string-as-string)
+
     (define py-add py/number-add)
     (define py-sub py/number-subtract)
     (define py-mul py/number-multiply)
@@ -110,6 +141,36 @@
     (define py-inv py/number-invert)
     (define py-abs py/number-absolute)
     (define py-neg py/number-negative)
+
+    (define make-plist py/list-new)
+    (define plist-length py/list-size)
+    (define plist-ref py/list-get-item)
+    (define plist-set! py/list-set-item!)
+    (define plist-insert! py/list-insert!)
+    (define plist-append! py/list-append!)
+    (define plist-sort! py/list-sort!)
+    (define plist-reverse! py/list-reverse!)
+
+    (define make-ptuple py/tuple-new)
+    (define ptuple-length py/tuple-size)
+    (define ptuple-ref py/tuple-get-item)
+    (define ptuple-set! py/tuple-set-item!)
+    
+
+    (define make-pdict py/dict-new)
+    (define pdict-length py/dict-size)
+    (define pdict-ref py/dict-get-item-string)
+    (define pdict-ref* py/dict-get-item)
+    (define pdict-set! py/dict-set-item-string!)
+    (define pdict-set*! py/dict-set-item!)
+    (define pdict-del! py/dict-del-item-string!)
+    (define pdict-del*! py/dict-del-item!)
+    (define pdict-clear! py/dict-clear!)
+    (define pdict-copy py/dict-copy)
+    (define pdict-keys py/dict-keys)
+    (define pdict-values py/dict-values)
+    (define pdict-items py/dict-items)
+
 
     (define py-import
         (lambda (x)
@@ -156,7 +217,7 @@
         (lambda (f . args)
             (lambda (lst)
                 (define *k (py-args* args))
-                (define *d (alist->py-dict* lst))
+                (define *d (alist->pdict* lst))
                 (define *r (py/object-call f *k *d))
                 (py-decref *k)
                 (py-decref *d)
@@ -177,14 +238,14 @@
             (lambda args
                 (lambda (lst)
                     (define *k (py-args* args))
-                    (define *d (alist->py-dict* lst))
+                    (define *d (alist->pdict* lst))
                     (define *r (py/object-call f *k *d))
                     (py-decref *k)
                     (py-decref *d)
                     *r))))
 
 
-    (define list->py-list
+    (define list->plist
         (lambda (t lst)
             (define len (length lst))
             (define *p (py/list-new len))
@@ -196,34 +257,34 @@
             (define g
                 (lambda (x)
                     (if (list? x)
-                        (list->py-list t x)
+                        (list->plist t x)
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
                     (if (zero? (py/list-set-item! *p n (g (car lst))))
                         (l (+ n 1) (cdr lst))
-                        (display "Procedure list->py-list:error when set list's value!\n"))
+                        (display "Procedure list->plist:error when set list's value!\n"))
                     *p))))
 
 
-    (define list->py-list*
+    (define list->plist*
         (lambda (lst)
             (define len (length lst))
             (define *p (py/list-new len))
             (define f
                 (lambda (x)
                     (if (list? x)
-                        (list->py-list* x)
+                        (list->plist* x)
                         x)))
             (let l ((n 0)(lst lst))
                 (if (< n len)
                     (if (zero? (py/list-set-item! *p n (f (car lst))))
                         (l (+ n 1) (cdr lst))
-                        (display "Procedure list->py-list*: error when set list's value!\n"))
+                        (display "Procedure list->plist*: error when set list's value!\n"))
                     *p))))
 
 
-    (define list->py-tuple
+    (define list->ptuple
         (lambda (t lst)
             (define len (length lst))
             (define *p (py/tuple-new len))
@@ -235,34 +296,34 @@
             (define g
                 (lambda (x)
                     (if (list? x)
-                        (list->py-tuple t x)
+                        (list->ptuple t x)
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
                     (if (zero? (py/tuple-set-item! *p n (g (car lst))))
                         (l (+ n 1) (cdr lst))
-                        (display "Procedure list->py-tuple: error when set tuple's value!\n"))
+                        (display "Procedure list->ptuple: error when set tuple's value!\n"))
                     *p))))
 
                     
-    (define list->py-tuple*
+    (define list->ptuple*
         (lambda (lst)
             (define len (length lst))
             (define *p (py/tuple-new len))
             (define f
                 (lambda (x)
                     (if (list? x)
-                        (list->py-tuple* x)
+                        (list->ptuple* x)
                         x)))
             (let l ((n 0)(lst lst))
                 (if (< n len)
                     (if (zero? (py/tuple-set-item! *p n (f (car lst))))
                         (l (+ n 1) (cdr lst))
-                        (display "Procedure list->py-tuple*: error when set tuple's value!\n"))
+                        (display "Procedure list->ptuple*: error when set tuple's value!\n"))
                     *p))))
     
     
-    (define py-list->list
+    (define plist->list
         (lambda (t *p)
             (define len (py/list-size *p))
             (define f
@@ -276,7 +337,7 @@
                     '()))))
 
 
-    (define py-list->list*
+    (define plist->list*
         (lambda (*p)
             (define len (py/list-size *p))
             (let l ((n 0))
@@ -285,7 +346,7 @@
                     '()))))
 
 
-    (define py-tuple->list
+    (define ptuple->list
         (lambda (t *p)
             (define len (py/tuple-size *p))
             (define f
@@ -299,7 +360,7 @@
                     '()))))
 
 
-    (define py-tuple->list*
+    (define ptuple->list*
         (lambda (*p)
             (define len (py/tuple-size *p))
             (let l ((n 0))
@@ -308,7 +369,7 @@
                     '()))))
 
 
-    (define vector->py-list
+    (define vector->plist
         (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/list-new len))
@@ -320,34 +381,34 @@
             (define g
                 (lambda (x)
                     (if (vector? x)
-                        (vector->py-list t x)
+                        (vector->plist t x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
                     (if (zero? (py/list-set-item! *p n (g (vector-ref vct n))))
                         (l (+ n 1))
-                        (display "Procedure vector->py-list: error when set list's value!\n"))
+                        (display "Procedure vector->plist: error when set list's value!\n"))
                     *p))))
 
 
-    (define vector->py-list*
+    (define vector->plist*
         (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/list-new len))
             (define f
                 (lambda (x)
                     (if (vector? x)
-                        (vector->py-list* t x)
+                        (vector->plist* t x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
                     (if (zero? (py/list-set-item! *p n (f (vector-ref vct n))))
                         (l (+ n 1))
-                        (display "Procedure vector->py-list*: error when set list's value!\n"))
+                        (display "Procedure vector->plist*: error when set list's value!\n"))
                     *p))))
 
 
-    (define vector->py-tuple
+    (define vector->ptuple
         (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/tuple-new len))
@@ -359,34 +420,34 @@
             (define g
                 (lambda (x)
                     (if (vector? x)
-                        (vector->py-tuple t x)
+                        (vector->ptuple t x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
                     (if (zero? (py/tuple-set-item! *p n (g (vector-ref vct n))))
                         (l (+ n 1))
-                        (display "Procedure vector->py-tuple: error when set tuple's value!\n"))
+                        (display "Procedure vector->ptuple: error when set tuple's value!\n"))
                     *p))))
 
 
-    (define vector->py-tuple*
+    (define vector->ptuple*
         (lambda (t vct)
             (define len (vector-length vct))
             (define *p (py/tuple-new len))
             (define f
                 (lambda (x)
                     (if (vector? x)
-                        (vector->py-tuple* t x)
+                        (vector->ptuple* t x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
                     (if (zero? (py/tuple-set-item! *p n (f (vector-ref vct n))))
                         (l (+ n 1))
-                        (display "Procedure vector->py-tuple*: error when set tuple's value!\n"))
+                        (display "Procedure vector->ptuple*: error when set tuple's value!\n"))
                     *p))))
 
 
-    (define py-list->vector
+    (define plist->vector
         (lambda (t *p)
             (define len (py/list-size *p))
             (define v (make-vector len))
@@ -403,7 +464,7 @@
                     v))))
 
                     
-    (define py-list->vector*
+    (define plist->vector*
         (lambda (*p)
             (define len (py/list-size *p))
             (define v (make-vector len))
@@ -416,7 +477,7 @@
  
 
 
-    (define py-tuple->vector
+    (define ptuple->vector
         (lambda (t *p)
             (define len (py/tuple-size *p))
             (define v (make-vector len))
@@ -433,7 +494,7 @@
                     v))))
 
                     
-    (define py-tuple->vector*
+    (define ptuple->vector*
         (lambda (*p)
             (define len (py/tuple-size *p))
             (define v (make-vector len))
@@ -445,7 +506,7 @@
                     v))))
 
 
-    (define alist->py-dict
+    (define alist->pdict
         (lambda (t lst)
             (define *p (py/dict-new))
             (define f
@@ -462,10 +523,10 @@
                     (if (null? r)
                         *p
                         (l (car r)(cdr r)))
-                    (display "Procedure alist->py-dict: error when set dict's value!\n"))))) 
+                    (display "Procedure alist->pdict: error when set dict's value!\n"))))) 
 
                     
-    (define alist->py-dict*
+    (define alist->pdict*
         (lambda (lst)
             (define *p (py/dict-new))
             (define f
@@ -477,7 +538,7 @@
                     (if (null? r)
                         *p
                         (l (car r)(cdr r)))
-                    (display "Procedure alist->py-dict*: error when set dict's value!\n")))))
+                    (display "Procedure alist->pdict*: error when set dict's value!\n")))))
  
 
    
