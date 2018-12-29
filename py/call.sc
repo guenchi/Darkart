@@ -94,6 +94,21 @@
         ptuple-ref 
         ptuple-set! 
         
+        psequ->plist
+        psequ->ptuple
+        psequ-length
+        psequ-append
+        psequ-repeat
+        psequ-ref
+        psequ-set!
+        psequ-del!
+        psequ-count
+        psequ-contains
+        psequ-index
+    
+        pslice-ref
+        pslice-set!
+        pslice-del!
     
         make-pdict 
         pdict-length 
@@ -156,7 +171,22 @@
     (define ptuple-ref py/tuple-get-item)
     (define ptuple-set! py/tuple-set-item!)
     
-
+    (define psequ->plist py/sequence-list)
+    (define psequ->ptuple py/sequence-tuple)
+    (define psequ-length py/sequence-size)
+    (define psequ-append py/sequence-concat)
+    (define psequ-repeat py/sequence-repeat)
+    (define psequ-ref py/sequence-get-item)
+    (define psequ-set! py/sequence-set-item!)
+    (define psequ-del! py/sequence-del-item!)
+    (define psequ-count py/sequence-count)
+    (define psequ-contains py/sequence-contains)
+    (define psequ-index py/sequence-index)
+    
+    (define pslice-ref py/sequence-get-slice)
+    (define pslice-set! py/sequence-set-slice!)
+    (define pslice-del! py/sequence-del-slice!)
+    
     (define make-pdict py/dict-new)
     (define pdict-length py/dict-size)
     (define pdict-ref py/dict-get-item-string)
