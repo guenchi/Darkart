@@ -716,7 +716,7 @@ procedure: (py/tuple-get-slice *po<tuple> int int)
 return: *po<tuple>
 ```
 
-### Dict
+### Dictionary
 
 ```scheme
 procedure: (py/dict-new)
@@ -836,7 +836,7 @@ procedure: (py/callable-check *po)
 return: 1 true 0 false
 ```
 
-###Compile
+### Compile
 
 ```scheme
 procedure: (py-compile-string)
