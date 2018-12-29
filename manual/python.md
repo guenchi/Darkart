@@ -377,7 +377,7 @@ Exemple:
 
 Library `(darkart py ffi)`
 
-This file contain the base interface to Python.
+This file contains the underlying interface to Python. Usually you won't use it.
 
 ### Interpreter
 
@@ -441,9 +441,9 @@ return: *po
 ```scheme
 procedure: (py/int-from-long number)
 
-procedure: (py/int-from-size_t number)
+procedure: (py/int-from-size_t size_t)
 
-procedure: (py/int-from-ssize_t number)
+procedure: (py/int-from-ssize_t ssize_t)
 
 return: *po<int>
 ```
@@ -459,9 +459,9 @@ procedure: (py/long-from-unsigned-longlong number)
 
 procedure: (py/long-from-double number)
 
-procedure: (py/long-from-size_t number)
+procedure: (py/long-from-size_t size_t)
 
-procedure: (py/long-from-ssize_t number)
+procedure: (py/long-from-ssize_t ssize_t)
 
 return: *po<long>
 ```
@@ -503,19 +503,35 @@ Pass Python number to Scheme.
 ```scheme
 procedure: (py/string-from-string string)
 
-procedure: (py/string-as-string *po<string>)
+return: *po<string>
 ```
+
+Pass Scheme string to Python.
+
+```scheme
+procedure: (py/string-as-string *po<string>)
+
+return: string
+```
+
+Pass Python string to Scheme.
 
 ### List
 
 ```scheme
-procedure: (py/list-new)
+procedure: (py/list-new ssize_t)
 
-procedure: (py/list-size)
+return: *po<list>
+
+procedure: (py/list-size *po<list>)
+
+return: ssize_t
 
 procedure: (py/list-get-item)
 
-procedure: (py/list-set-item!)
+procedure: (py/list-set-item! *po<list> ssize_t *po)
+
+return: 0 for succes -1 for fail
 
 procedure: (py/list-insert!)
 
@@ -535,6 +551,8 @@ procedure: (py/tuple-size)
 
 procedure: (py/tuple-set-item!)
 
+return: 0 for succes -1 for fail
+
 procedure: (py/tuple-get-item)
 ```
 
@@ -551,11 +569,19 @@ procedure: (py/dict-get-item-string)
 
 procedure: (py/dict-set-item!)
 
+return: 0 for succes -1 for fail
+
 procedure: (py/dict-set-item-string!)
+
+return: 0 for succes -1 for fail
 
 procedure: (py/dict-del-item!)
 
+return: 0 for succes -1 for fail
+
 procedure: (py/dict-del-item-string!)
+
+return: 0 for succes -1 for fail
 
 procedure: (py/dict-clear)
 
