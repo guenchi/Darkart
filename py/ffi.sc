@@ -83,6 +83,8 @@
         py/list-size
         py/list-get-item
         py/list-set-item!
+        py/list-get-slice
+        py/list-set-slice!
         py/list-insert!
         py/list-append!
         py/list-sort!
@@ -90,8 +92,9 @@
 
         py/tuple-new
         py/tuple-size
-        py/tuple-set-item!
         py/tuple-get-item
+        py/tuple-set-item!
+        py/tuple-get-slice
 
         py/sequence-size
         py/sequence-concat
@@ -305,6 +308,12 @@
 (define py/list-set-item!
     (foreign-procedure "PyList_SetItem" (uptr int uptr) int))
 
+(define py/list-get-slice
+    (foreign-procedure "PyList_GetSlice" (uptr int int) uptr))
+
+(define py/list-set-slice!
+    (foreign-procedure "PyList_SetSlice" (uptr int int uptr) int))
+
 (define py/list-insert!
     (foreign-procedure "PyList_Insert" (uptr int uptr) int))
 
@@ -328,6 +337,9 @@
 
 (define py/tuple-set-item!
     (foreign-procedure "PyTuple_SetItem" (uptr int uptr) int))
+
+(define py/tuple-get-slice
+    (foreign-procedure "PyTuple_GetSlice" (uptr int int) uptr))
 
 (define py/sequence-size
     (foreign-procedure "PySequence_Size" (uptr) int))
