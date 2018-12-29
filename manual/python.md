@@ -390,7 +390,7 @@ return: *po
 
 procedure: (plist-set! *po<list> int<index> *po)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (plist-sref *po<list> int int)
 
@@ -398,23 +398,23 @@ return: *po<list>{slice}
 
 procedure: (plist-sset! *po<list> int int *po<list>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (plist-insert! *po<list> int<index> *po)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (plist-append! *po<list-target> *po<list>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (plist-sort!)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (plist-reverse!)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 ```
 
 ### Python's tuple
@@ -434,11 +434,41 @@ return: *po
 
 procedure: (ptuple-set! *po<tuple> int<index> *po)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (ptuple-sref *po<tuple> int int)
 
 return: *po<tuple>{slice}
+```
+
+### Python's set
+
+```scheme
+procedure: (make-pset *po<iterable>)
+
+return: *po<set>
+
+procedure: (pset-length *po<set>)
+
+return: int<size>
+
+procedure: (pset-contains *po<set>)
+
+return: 1 if found, 0 if not found, and -1 if an error is encountered.
+
+procedure: (pset-add! *po<set> *po{key})
+
+return: 0 on success or -1 on failure.
+
+procedure: (pset-del! *po<set> *po{key})
+
+return: 1 if found and removed, 0 if not found and no action taken, and -1 if an error is encountered.
+
+procedure: (pset-pop! *po<set>)
+
+return: *po{arbitrary_key}
+
+procedure: (pset-clear! *po<set>)
 ```
 
 ### Python's sequence
@@ -470,11 +500,11 @@ return: *po
 
 procedure: (psequ-set! *po<sequence> int *po)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (psequ-del! *po<sequence> int)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (psequ-sref *po<sequence> int int)
 
@@ -482,11 +512,11 @@ return: *po<sequence>{slice}
 
 procedure: (psequ-sset! *po<sequence> int int *po<sequence>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (psequ-sdel! *po<sequence> int int)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (psequ-count *po<sequence> *po<value>)
 
@@ -522,19 +552,19 @@ return: *po
 
 procedure: (pdict-set! *po<dict> string<key> *po<value>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (pdict-set*! *po<dict> *po{key} *po<value>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (pdict-del! *po<dict> string<key>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (pdict-del*! *po<dict> *po{key})
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (pdict-clear! *po<dict>)
 
@@ -578,15 +608,15 @@ return: *po
 
 procedure: (pmap-set! *po<mapping> string<key> *po{value}) 
 
-return: return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (pmap-del! *po<mapping> string<key>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (pmap-del*! *po<mapping> *po{key})
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (pmap-keys *po<mapping>)
 
@@ -769,7 +799,7 @@ return: *po
 
 procedure: (py/list-set-item! *po<list> int<index> *po)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/list-get-slice *po<list> int int)
 
@@ -777,23 +807,23 @@ return: *po<list>{slice}
 
 procedure: (py/list-set-slice! *po<list> int int *po<list>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/list-insert! *po<list> int<index> *po)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/list-append! *po<list-target> *po<list>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/list-sort!)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/list-reverse!)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 ```
 
 ### Tuple
@@ -813,11 +843,41 @@ return: *po
 
 procedure: (py/tuple-set-item! *po<tuple> int<index> *po)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/tuple-get-slice *po<tuple> int int)
 
 return: *po<tuple>{slice}
+```
+
+### Set
+
+```scheme
+procedure: (py/set-new *po<iterable>)
+
+return: *po<set>
+
+procedure: (py/set-size *po<set>)
+
+return: int<size>
+
+procedure: (py/set-contains *po<set>)
+
+return: 1 if found, 0 if not found, and -1 if an error is encountered.
+
+procedure: (py/set-add! *po<set> *po{key})
+
+return: 0 on success or -1 on failure.
+
+procedure: (py/set-discard! *po<set> *po{key})
+
+return: 1 if found and removed, 0 if not found and no action taken, and -1 if an error is encountered.
+
+procedure: (py/set-pop! *po<set>)
+
+return: *po{arbitrary_key}
+
+procedure: (py/set-clear! *po<set>)
 ```
 
 ### Sequence  
@@ -849,11 +909,11 @@ return: *po
 
 procedure: (py/sequence-set-item! *po<sequence> int *po)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/sequence-del-item! *po<sequence> int)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/sequence-get-slice *po<sequence> int int)
 
@@ -861,11 +921,11 @@ return: *po<sequence>{slice}
 
 procedure: (py/sequence-set-slice! *po<sequence> int int *po<sequence>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/sequence-del-slice! *po<sequence> int int)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/sequence-count *po<sequence> *po<value>)
 
@@ -902,19 +962,19 @@ return: *po
 
 procedure: (py/dict-set-item! *po<dict> *po{key} *po<value>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/dict-set-item-string! *po<dict> string<key> *po<value>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/dict-del-item! *po<dict> *po{key})
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/dict-del-item-string! *po<dict> string<key>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/dict-clear! *po<dict>)
 
@@ -958,15 +1018,15 @@ return: *po
 
 procedure: (py/mapping-set-item-string! *po<mapping> string<key> *po{value}) 
 
-return: return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/mapping-del-item-string! *po<mapping> string<key>)
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/mapping-del-item! *po<mapping> *po{key})
 
-return: 0 for succes -1 for fail
+return: 0 on success or -1 on failure.
 
 procedure: (py/mapping-keys *po<mapping>)
 
