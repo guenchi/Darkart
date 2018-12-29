@@ -374,6 +374,9 @@
 (define py/dict-new
     (foreign-procedure "PyDict_New" () uptr))
 
+(define py/dict-size
+    (foreign-procedure "PyDict_Size" (uptr) int))
+
 (define py/dict-get-item
     (foreign-procedure "PyDict_GetItem" (uptr uptr) uptr))
 
@@ -394,9 +397,6 @@
 
 (define py/dict-clear!
     (foreign-procedure "PyDict_Clear" (uptr) void))
-
-(define py/dict-size
-    (foreign-procedure "PyDict_Size" (uptr) int))
 
 (define py/dict-keys
     (foreign-procedure "PyDict_Keys" (uptr) uptr))
