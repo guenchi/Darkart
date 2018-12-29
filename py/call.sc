@@ -124,6 +124,17 @@
         pdict-values 
         pdict-items 
 
+        pmap-size
+        pmap-has?
+        pmap-has*?
+        pmap-ref
+        pmap-set!
+        pmap-del!
+        pmap-del*!
+        pmap-keys
+        pmap-values
+        pmap-items
+
         py-display
     )
     (import
@@ -201,6 +212,17 @@
     (define pdict-values py/dict-values)
     (define pdict-items py/dict-items)
 
+    (define pmap-size py/mapping-size)
+    (define pmap-has? py/mapping-has-key-string?)
+    (define pmap-has*? py/mapping-has-key?)
+    (define pmap-ref py/mapping-get-item-string)
+    (define pmap-set! py/mapping-set-item-string!)
+    (define pmap-del! py/mapping-del-item-string!)
+    (define pmap-del*! py/mapping-del-item!)
+    (define pmap-keys py/mapping-keys)
+    (define pmap-values py/mapping-values)
+    (define pmap-items py/mapping-items)
+    
 
     (define py-import
         (lambda (x)
