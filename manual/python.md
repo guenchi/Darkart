@@ -394,7 +394,7 @@ return: 0 for succes -1 for fail
 
 procedure: (plist-sref *po<list> int int)
 
-return: *po<list>
+return: *po<list>{slice}
 
 procedure: (plist-sset! *po<list> int int *po<list>)
 
@@ -438,7 +438,7 @@ return: 0 for succes -1 for fail
 
 procedure: (ptuple-sref *po<tuple> int int)
 
-return: *po<tuple>
+return: *po<tuple>{slice}
 ```
 
 ### Python's sequence
@@ -478,7 +478,7 @@ return: 0 for succes -1 for fail
 
 procedure: (psequ-sref *po<sequence> int int)
 
-return: *po<sequence>
+return: *po<sequence>{slice}
 
 procedure: (psequ-sset! *po<sequence> int int *po<sequence>)
 
@@ -559,26 +559,46 @@ return: *po<list>{key...values...}
 
 ### Mapping
 
-```
+```scheme
 procedure: (pmap-size *po<mapping>)
 
-procedure: (pmap-has?)
+return: int
 
-procedure: (pmap-has*?)
+procedure: (pmap-has? *po<mapping> string<key>)
 
-procedure: (pmap-ref)
+return: 1 for ture 0 for false
 
-procedure: (pmap-set!)
+procedure: (pmap-has*? *po<mapping> *po{key})
 
-procedure: (pmap-del!)
+return: 1 for ture 0 for false
 
-procedure: (pmap-del*!)
+procedure: (pmap-ref *po<mapping> string<key>)
 
-procedure: (pmap-keys)
+return: *po
 
-procedure: (pmap-values)
+procedure: (pmap-set! *po<mapping> string<key> *po{value}) 
 
-procedure: (pmap-items)
+return: return: 0 for succes -1 for fail
+
+procedure: (pmap-del! *po<mapping> string<key>)
+
+return: 0 for succes -1 for fail
+
+procedure: (pmap-del*! *po<mapping> *po{key})
+
+return: 0 for succes -1 for fail
+
+procedure: (pmap-keys *po<mapping>)
+
+return: *po<list>{key...}
+
+procedure: (pmap-values *po<mapping>)
+
+return: *po<list>{value...}
+
+procedure: (pmap-items *po<mapping>)
+
+return: *po<list>{key...value...}
 ```
 
 ### Display
@@ -753,7 +773,7 @@ return: 0 for succes -1 for fail
 
 procedure: (py/list-get-slice *po<list> int int)
 
-return: *po<list>
+return: *po<list>{slice}
 
 procedure: (py/list-set-slice! *po<list> int int *po<list>)
 
@@ -797,7 +817,7 @@ return: 0 for succes -1 for fail
 
 procedure: (py/tuple-get-slice *po<tuple> int int)
 
-return: *po<tuple>
+return: *po<tuple>{slice}
 ```
 
 ### Dictionary
