@@ -373,6 +373,119 @@ Exemple:
 ```
 
 
+### Python's list
+
+```scheme
+procedure: (make-plist number<size>)
+
+return: *po<list>
+
+procedure: (plist-length *po<list>)
+
+return: number<size>
+
+procedure: (plist-ref *po<list> number<index>)
+
+return: *po
+
+procedure: (plist-set! *po<list> number<index> *po)
+
+return: 0 for succes -1 for fail
+
+procedure: (plist-insert! *po<list> number<index> *po)
+
+return: 0 for succes -1 for fail
+
+procedure: (plist-append! *po<list-target> *po<list>)
+
+return: 0 for succes -1 for fail
+
+procedure: (plist-sort!)
+
+return: 0 for succes -1 for fail
+
+procedure: (plist-reverse!)
+
+return: 0 for succes -1 for fail
+```
+
+### Python's tuple
+
+```scheme
+procedure: (make-ptuple number<index>)
+
+return: *po<tuple>
+
+procedure: (ptuple-length *po<tuple>)
+
+return: number<index>
+
+procedure: (ptuple-ref *po<tuple> number<index>)
+
+return: *po
+
+procedure: (ptuple-set! *po<tuple> number<index> *po)
+
+return: 0 for succes -1 for fail
+```
+
+### Python's dict
+
+```scheme
+procedure: (make-pdict)
+
+return: *po<dict>
+
+procedure: (pdict-length *po<dict>)
+
+return: number<size>
+
+procedure: (pdict-ref *po<dict> string<key)
+
+return: *po
+
+procedure: (pdict-ref* *po<dict> *po{key})
+
+return: *po
+
+procedure: (pdict-set! *po<dict> string<key> *po<value>)
+
+return: 0 for succes -1 for fail
+
+procedure: (pdict-set*! *po<dict> *po{key} *po<value>)
+
+return: 0 for succes -1 for fail
+
+procedure: (pdict-del! *po<dict> string<key>)
+
+return: 0 for succes -1 for fail
+
+procedure: (pdict-del*! *po<dict> *po{key})
+
+return: 0 for succes -1 for fail
+
+procedure: (pdict-clear! *po<dict>)
+
+return: <void>
+
+procedure: (pdict-copy *po<dict>)
+
+return: new *po<dict>
+
+procedure: (pdict-keys *po<dict>)
+
+return: *po<list>{key...}
+
+procedure: (pdict-values)
+
+return: *po<list>{value...}
+
+procedure: (pdict-items)
+
+return: *po<list>{key...values...}
+```
+
+
 # Py-FFI
 
 Library `(darkart py ffi)`
@@ -577,11 +690,19 @@ return: 0 for succes -1 for fail
 ```scheme
 procedure: (py/dict-new)
 
-procedure: (py/dict-size)
+return: *po<dict>
 
-procedure: (py/dict-get-item)
+procedure: (py/dict-size *po<dict>)
 
-procedure: (py/dict-get-item-string)
+return: number<size>
+
+procedure: (py/dict-get-item *po<dict> *po{key})
+
+return: *po
+
+procedure: (py/dict-get-item-string *po<dict> string<key>)
+
+return: *po
 
 procedure: (py/dict-set-item! *po<dict> *po{key} *po<value>)
 
