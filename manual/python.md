@@ -527,15 +527,15 @@ procedure: (py/list-size *po<list>)
 
 return: number<size>
 
-procedure: (py/list-get-item *po<list> number{index})
+procedure: (py/list-get-item *po<list> number<index>)
 
 return: *po
 
-procedure: (py/list-set-item! *po<list> number{index} *po)
+procedure: (py/list-set-item! *po<list> number<index> *po)
 
 return: 0 for succes -1 for fail
 
-procedure: (py/list-insert! *po<list> number{index} *po)
+procedure: (py/list-insert! *po<list> number<index> *po)
 
 return: 0 for succes -1 for fail
 
@@ -555,19 +555,19 @@ return: 0 for succes -1 for fail
 ### Tuple
 
 ```scheme
-procedure: (py/tuple-new number{index})
+procedure: (py/tuple-new number<index>)
 
 return: *po<tuple>
 
 procedure: (py/tuple-size *po<tuple>)
 
-return: number{index}
+return: number<index>
 
-procedure: (py/tuple-get-item *po<tuple> number{index})
+procedure: (py/tuple-get-item *po<tuple> number<index>)
 
 return: *po
 
-procedure: (py/tuple-set-item! *po<tuple> number{index} *po)
+procedure: (py/tuple-set-item! *po<tuple> number<index> *po)
 
 return: 0 for succes -1 for fail
 ```
@@ -587,7 +587,7 @@ procedure: (py/dict-set-item! *po<dict> *po{key} *po<value>)
 
 return: 0 for succes -1 for fail
 
-procedure: (py/dict-set-item-string! *po<dict> string{key} *po<value>)
+procedure: (py/dict-set-item-string! *po<dict> string<key> *po<value>)
 
 return: 0 for succes -1 for fail
 
@@ -595,11 +595,13 @@ procedure: (py/dict-del-item! *po<dict> *po{key})
 
 return: 0 for succes -1 for fail
 
-procedure: (py/dict-del-item-string! *po<dict> string{key})
+procedure: (py/dict-del-item-string! *po<dict> string<key>)
 
 return: 0 for succes -1 for fail
 
 procedure: (py/dict-clear)
+
+return: <void>
 
 procedure: (py/dict-copy *po<dict>)
 
@@ -607,15 +609,15 @@ return: new *po<dict>
 
 procedure: (py/dict-keys *po<dict>)
 
-return: *po<list>{keys}
+return: *po<list>{key...}
 
 procedure: (py/dict-values)
 
-return: *po<list>{values}
+return: *po<list>{value...}
 
 procedure: (py/dict-items)
 
-return: *po<list>{keys+values}
+return: *po<list>{key...values...}
 ```
 
 ### Run

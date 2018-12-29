@@ -101,7 +101,7 @@
         py/dict-set-item-string!
         py/dict-del-item!
         py/dict-del-item-string!
-        py/dict-clear
+        py/dict-clear!
         py/dict-copy
         py/dict-keys
         py/dict-values
@@ -324,7 +324,7 @@
 (define py/dict-del-item-string!
     (foreign-procedure "PyDict_DelItemString" (uptr string) uptr))
 
-(define py/dict-clear
+(define py/dict-clear!
     (foreign-procedure "PyDict_Clear" (uptr) void))
 
 (define py/dict-size
