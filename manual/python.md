@@ -557,6 +557,30 @@ procedure: (pdict-items)
 return: *po<list>{key...values...}
 ```
 
+### Mapping
+
+```
+procedure: (pmap-size *po<mapping>)
+
+procedure: (pmap-has?)
+
+procedure: (pmap-has*?)
+
+procedure: (pmap-ref)
+
+procedure: (pmap-set!)
+
+procedure: (pmap-del!)
+
+procedure: (pmap-del*!)
+
+procedure: (pmap-keys)
+
+procedure: (pmap-values)
+
+procedure: (pmap-items)
+```
+
 ### Display
 
 ```scheme
