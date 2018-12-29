@@ -172,6 +172,8 @@
     (define plist-length py/list-size)
     (define plist-ref py/list-get-item)
     (define plist-set! py/list-set-item!)
+    (define plist-sref py/list-get-slice)
+    (define plist-sset! py/list-set-slice!)
     (define plist-insert! py/list-insert!)
     (define plist-append! py/list-append!)
     (define plist-sort! py/list-sort!)
@@ -181,6 +183,7 @@
     (define ptuple-length py/tuple-size)
     (define ptuple-ref py/tuple-get-item)
     (define ptuple-set! py/tuple-set-item!)
+    (define ptuple->sref py/tuple-get-slice)
     
     (define psequ->plist py/sequence-list)
     (define psequ->ptuple py/sequence-tuple)
@@ -190,13 +193,12 @@
     (define psequ-ref py/sequence-get-item)
     (define psequ-set! py/sequence-set-item!)
     (define psequ-del! py/sequence-del-item!)
+    (define psequ-sref py/sequence-get-slice)
+    (define psequ-sset! py/sequence-set-slice!)
+    (define psequ-sdel! py/sequence-del-slice!)
     (define psequ-count py/sequence-count)
     (define psequ-contains py/sequence-contains)
     (define psequ-index py/sequence-index)
-    
-    (define pslice-ref py/sequence-get-slice)
-    (define pslice-set! py/sequence-set-slice!)
-    (define pslice-del! py/sequence-del-slice!)
     
     (define make-pdict py/dict-new)
     (define pdict-length py/dict-size)
@@ -222,7 +224,7 @@
     (define pmap-keys py/mapping-keys)
     (define pmap-values py/mapping-values)
     (define pmap-items py/mapping-items)
-    
+
 
     (define py-import
         (lambda (x)
