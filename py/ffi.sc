@@ -53,12 +53,14 @@
         py/number-absolute
         py/number-negative
 
+        py/int-check?
         py/int-from-long
         py/int-from-size_t
         py/int-from-ssize_t
         py/int-as-long
         py/int-as-ssize_t
         
+        py/long-check?
         py/long-from-long
         py/long-from-unsigned-long
         py/long-from-longlong
@@ -73,12 +75,15 @@
         py/long-as-double
         py/long-as-ssize_t
 
+        py/float-check?
         py/float-from-double
         py/float-as-double
         
+        py/string-check?
         py/string-from-string
         py/string-as-string
 
+        py/list-check?
         py/list-new
         py/list-size
         py/list-check?
@@ -91,12 +96,14 @@
         py/list-sort!
         py/list-reverse!
 
+        py/tuple-check?
         py/tuple-new
         py/tuple-size
         py/tuple-get-item
         py/tuple-set-item!
         py/tuple-get-slice
 
+        py/set-check?
         py/set-new
         py/set-size
         py/set-contains?
@@ -105,6 +112,7 @@
         py/set-pop!
         py/set-clear!
 
+        py/sequence-check?
         py/sequence-size
         py/sequence-concat
         py/sequence-repeat
@@ -120,6 +128,7 @@
         py/sequence-list
         py/sequence-tuple
 
+        py/dict-check?
         py/dict-new
         py/dict-size
         py/dict-get-item
@@ -134,6 +143,7 @@
         py/dict-values
         py/dict-items
 
+        py/mapping-check?
         py/mapping-size
         py/mapping-has-key-string?
         py/mapping-has-key?
@@ -233,6 +243,9 @@
 (define py/number-negative
     (foreign-procedure "PyNumber_Negative" (uptr) uptr))
 
+(define py/int-check?
+    (foreign-procedure "_PyInt_Check" (uptr) int))
+
 (define py/int-from-long
     (foreign-procedure "PyInt_FromLong" (long) uptr))
 
@@ -247,6 +260,9 @@
 
 (define py/int-as-ssize_t
     (foreign-procedure "PyInt_AsSsize_t" (uptr) ssize_t))
+
+(define py/long-check?
+    (foreign-procedure "_PyLong_Check" (uptr) int))
 
 (define py/long-from-long
     (foreign-procedure "PyLong_FromLong" (long) uptr))
@@ -287,11 +303,17 @@
 (define py/long-as-ssize_t
     (foreign-procedure "PyLong_AsSsize_t" (uptr) ssize_t))
 
+(define py/float-check?
+    (foreign-procedure "_PyFloat_Check" (uptr) int))
+
 (define py/float-from-double
     (foreign-procedure "PyFloat_FromDouble" (double) uptr))
     
 (define py/float-as-double
     (foreign-procedure "PyFloat_AsDouble" (uptr) double))
+
+(define py/string-check?
+    (foreign-procedure "_PyString_Check" (uptr) int))
 
 (define py/string-from-string
     (foreign-procedure "PyString_FromString" (string) uptr))
@@ -299,14 +321,14 @@
 (define py/string-as-string
     (foreign-procedure "PyString_AsString" (uptr) string))
 
+(define py/list-check?
+    (foreign-procedure "_PyList_Check" (uptr) int))
+
 (define py/list-new
     (foreign-procedure "PyList_New" (int) uptr))
 
 (define py/list-size
     (foreign-procedure "PyList_Size" (uptr) int))
-
-(define py/list-check?
-    (foreign-procedure "_PyList_Check" (uptr) int))
 
 (define py/list-get-item
     (foreign-procedure "PyList_GetItem" (uptr int) uptr))
@@ -332,6 +354,9 @@
 (define py/list-reverse!
     (foreign-procedure "PyList_Reverse" (uptr) int))
 
+(define py/tuple-check?
+    (foreign-procedure "_PyTuple_Check" (uptr) int))
+
 (define py/tuple-new
     (foreign-procedure "PyTuple_New" (int) uptr))
 
@@ -346,6 +371,9 @@
 
 (define py/tuple-get-slice
     (foreign-procedure "PyTuple_GetSlice" (uptr int int) uptr))
+
+(define py/set-check?
+    (foreign-procedure "_PySet_Check" (uptr) int))
 
 (define py/set-new
     (foreign-procedure "PySet_New" (uptr) uptr))
@@ -367,6 +395,9 @@
 
 (define py/set-clear!
     (foreign-procedure "PySet_Clear" (uptr) int))
+
+(define py/sequence-check?
+    (foreign-procedure "_PySequence_Check" (uptr) int))
 
 (define py/sequence-size
     (foreign-procedure "PySequence_Size" (uptr) int))
@@ -410,6 +441,9 @@
 (define py/sequence-tuple
     (foreign-procedure "PySequence_Tuple" (uptr) uptr))
 
+(define py/dict-check?
+    (foreign-procedure "_PyDict_Check" (uptr) int))
+
 (define py/dict-new
     (foreign-procedure "PyDict_New" () uptr))
 
@@ -448,6 +482,9 @@
 
 (define py/dict-copy
     (foreign-procedure "PyDict_Copy" (uptr) uptr))
+
+(define py/mapping-check?
+    (foreign-procedure "_PyMapping_Check" (uptr) int))
 
 (define py/mapping-size
     (foreign-procedure "PyMapping_Size" (uptr) int))
