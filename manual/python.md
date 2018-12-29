@@ -445,6 +445,10 @@ procedure: (py/int-from-size_t number)
 
 procedure: (py/int-from-ssize_t number)
 
+return: *po<int>
+```
+
+```scheme
 procedure: (py/long-from-long number)
 
 procedure: (py/long-from-unsigned-long number)
@@ -459,14 +463,21 @@ procedure: (py/long-from-size_t number)
 
 procedure: (py/long-from-ssize_t number)
 
-procedure: (py/float-from-double number)
+return: *po<long>
 ```
 
+```scheme
+procedure: (py/float-from-double number)
+
+return: *po<float>
+```
+
+Pass Scheme number to Python.
 
 ```scheme
-procedure: (py/int-as-long *po<long>)
+procedure: (py/int-as-long *po<int>)
 
-procedure: (py/int-as-ssize_t *po<long>)
+procedure: (py/int-as-ssize_t *po<int>)
 
 procedure: (py/long-as-long *po<long>)
 
@@ -481,7 +492,11 @@ procedure: (py/long-as-double *po<float>)
 procedure: (py/long-as-ssize_t *po<float>)
 
 procedure: (py/float-as-double *po<float>)
+
+return: number
 ```
+
+Pass Python number to Scheme.
 
 ### String
 
