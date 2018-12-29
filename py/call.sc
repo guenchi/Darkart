@@ -544,11 +544,11 @@
  
 
    
-(define py-display
-    (lambda (x)
-        (display 
-            (py->str
-                (py/object-str x)))))
+    (define py-display
+        (lambda (x)
+            (display 
+                (py->str
+                    (py/object-str x)))))
 
 
 )
