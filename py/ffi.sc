@@ -170,7 +170,7 @@
         py/object-call
         py/object-call-object
         py/object-str
-        py/callable-check
+        py/callable-check?
     
         py-compile-string
         )
@@ -244,7 +244,7 @@
     (foreign-procedure "PyNumber_Negative" (uptr) uptr))
 
 (define py/int-check?
-    (foreign-procedure "_PyInt_Check" (uptr) int))
+    (foreign-procedure "_PyInt_Check" (uptr) boolean))
 
 (define py/int-from-long
     (foreign-procedure "PyInt_FromLong" (long) uptr))
@@ -262,7 +262,7 @@
     (foreign-procedure "PyInt_AsSsize_t" (uptr) ssize_t))
 
 (define py/long-check?
-    (foreign-procedure "_PyLong_Check" (uptr) int))
+    (foreign-procedure "_PyLong_Check" (uptr) boolean))
 
 (define py/long-from-long
     (foreign-procedure "PyLong_FromLong" (long) uptr))
@@ -304,7 +304,7 @@
     (foreign-procedure "PyLong_AsSsize_t" (uptr) ssize_t))
 
 (define py/float-check?
-    (foreign-procedure "_PyFloat_Check" (uptr) int))
+    (foreign-procedure "_PyFloat_Check" (uptr) boolean))
 
 (define py/float-from-double
     (foreign-procedure "PyFloat_FromDouble" (double) uptr))
@@ -313,7 +313,7 @@
     (foreign-procedure "PyFloat_AsDouble" (uptr) double))
 
 (define py/string-check?
-    (foreign-procedure "_PyString_Check" (uptr) int))
+    (foreign-procedure "_PyString_Check" (uptr) boolean))
 
 (define py/string-from-string
     (foreign-procedure "PyString_FromString" (string) uptr))
@@ -322,7 +322,7 @@
     (foreign-procedure "PyString_AsString" (uptr) string))
 
 (define py/list-check?
-    (foreign-procedure "_PyList_Check" (uptr) int))
+    (foreign-procedure "_PyList_Check" (uptr) boolean))
 
 (define py/list-new
     (foreign-procedure "PyList_New" (int) uptr))
@@ -355,7 +355,7 @@
     (foreign-procedure "PyList_Reverse" (uptr) int))
 
 (define py/tuple-check?
-    (foreign-procedure "_PyTuple_Check" (uptr) int))
+    (foreign-procedure "_PyTuple_Check" (uptr) boolean))
 
 (define py/tuple-new
     (foreign-procedure "PyTuple_New" (int) uptr))
@@ -373,7 +373,7 @@
     (foreign-procedure "PyTuple_GetSlice" (uptr int int) uptr))
 
 (define py/set-check?
-    (foreign-procedure "_PySet_Check" (uptr) int))
+    (foreign-procedure "_PySet_Check" (uptr) boolean))
 
 (define py/set-new
     (foreign-procedure "PySet_New" (uptr) uptr))
@@ -397,7 +397,7 @@
     (foreign-procedure "PySet_Clear" (uptr) int))
 
 (define py/sequence-check?
-    (foreign-procedure "_PySequence_Check" (uptr) int))
+    (foreign-procedure "_PySequence_Check" (uptr) boolean))
 
 (define py/sequence-size
     (foreign-procedure "PySequence_Size" (uptr) int))
@@ -442,7 +442,7 @@
     (foreign-procedure "PySequence_Tuple" (uptr) uptr))
 
 (define py/dict-check?
-    (foreign-procedure "_PyDict_Check" (uptr) int))
+    (foreign-procedure "_PyDict_Check" (uptr) boolean))
 
 (define py/dict-new
     (foreign-procedure "PyDict_New" () uptr))
@@ -484,16 +484,16 @@
     (foreign-procedure "PyDict_Copy" (uptr) uptr))
 
 (define py/mapping-check?
-    (foreign-procedure "_PyMapping_Check" (uptr) int))
+    (foreign-procedure "_PyMapping_Check" (uptr) boolean))
 
 (define py/mapping-size
     (foreign-procedure "PyMapping_Size" (uptr) int))
 
 (define py/mapping-has-key-string?
-    (foreign-procedure "PyMapping_HasKeyString" (uptr string) int))
+    (foreign-procedure "PyMapping_HasKeyString" (uptr string) boolean))
 
 (define py/mapping-has-key?
-    (foreign-procedure "PyMapping_HasKey" (uptr uptr) int))
+    (foreign-procedure "PyMapping_HasKey" (uptr uptr) boolean))
 
 (define py/mapping-get-item-string
     (foreign-procedure "PyMapping_GetItemString" (uptr string) uptr))
@@ -567,8 +567,8 @@
 (define py/object-str 
     (foreign-procedure "PyObject_Str" (uptr) uptr))
 
-(define py/callable-check
-    (foreign-procedure "PyCallable_Check" (uptr) int))
+(define py/callable-check?
+    (foreign-procedure "PyCallable_Check" (uptr) boolean))
 
 (define py-compile-string
     (foreign-procedure "Py_CompileString" (string string int) uptr))

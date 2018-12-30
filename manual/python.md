@@ -4,29 +4,25 @@
 
 I haven't prepared the makefile yet, so it will need some manual settings.
 
-First, compile Python.h file with gcc to make a shared object (.so) file.
-
-Just like in https://github.com/guenchi/Darkart/blob/master/c/py.c 
-
-Compile with `cc -fPIC -shared -framework Python -o ../py.so py.c`
+Compile `./c/py.c` file with `cc -fPIC -shared -o ../py.so py.c` to make a shared object (.so) file.
 
 Note that depending on the system, you may need to manually specify the path to `python.h`.
 
 For me, with my mac it just:
 
-py.c: `<#include  <Python/Python.h>`
+`<#include  <Python/Python.h>`
 
 In other cases:
 
-py.c: `#include "/Library/Frameworks/Python.framework/Versions/3.5/include/python3.5m/Python.h"`
+`#include "/Library/Frameworks/Python.framework/Versions/3.5/include/python3.5m/Python.h"`
 
 or
 
-py.c: `#include "/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/Python.h"`
+`#include "/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/Python.h"`
 
 etc.
 
-Note that python belongs to a framework on mac, so with `-framework` when run cc command, in other cases, just: `cc -fPIC -shared -o ../py.so py.c`
+Note that python belongs to a framework on mac, so with `-framework` when run cc command: `cc -fPIC -shared -framework Python -o ../py.so py.c`
 
 
 # Definition:
@@ -196,6 +192,18 @@ This procedure is use to prepare a tuple of arguments for Python's function.
 It usually won't be used directly because it's included in `(py-call)`,`(py-call*)`,`(py-func)`and`(py-func*)`.
 
 ### Number and String
+
+```scheme
+procedure: (pint? *po)
+
+procedure: (pfloat? *po)
+
+procedure: (pstr? *po*)
+
+return: boolean
+```
+Type Check for numbers.
+
 
 ```scheme
 procedure: (int number)
@@ -376,6 +384,10 @@ Exemple:
 ### Python's list
 
 ```scheme
+procedure: (plist? *po)
+
+return: boolean
+
 procedure: (make-plist int<size>)
 
 return: *po<list>
@@ -420,6 +432,10 @@ return: 0 on success or -1 on failure.
 ### Python's tuple
 
 ```scheme
+procedure: (ptuple? *po)
+
+return: boolean
+
 procedure: (make-ptuple int<index>)
 
 return: *po<tuple>
@@ -444,6 +460,10 @@ return: *po<tuple>{slice}
 ### Python's set
 
 ```scheme
+procedure: (pset? *po)
+
+return: boolean
+
 procedure: (make-pset *po<iterable>)
 
 return: *po<set>
@@ -474,6 +494,10 @@ procedure: (pset-clear! *po<set>)
 ### Python's sequence
 
 ```scheme
+procedure: (psequ? *po)
+
+return: boolean
+
 procedure: (psequ->plist *po<sequence>)
 
 return: *po<list>
@@ -534,6 +558,10 @@ return: int
 ### Python's dict
 
 ```scheme
+procedure: (pdict? *po)
+
+return: boolean
+
 procedure: (make-pdict)
 
 return: *po<dict>
@@ -590,17 +618,21 @@ return: *po<list>{key...values...}
 ### Python's mapping
 
 ```scheme
+procedure: (pmap? *po)
+
+return: boolean
+
 procedure: (pmap-size *po<mapping>)
 
 return: int
 
 procedure: (pmap-has? *po<mapping> string<key>)
 
-return: 1 for ture 0 for false
+return: boolean
 
 procedure: (pmap-has*? *po<mapping> *po{key})
 
-return: 1 for ture 0 for false
+return: boolean
 
 procedure: (pmap-ref *po<mapping> string<key>)
 
@@ -747,6 +779,12 @@ Pass Python number to Scheme.
 ### String
 
 ```scheme
+procedure: (py/string-check? *po)
+
+return: boolean
+```
+
+```scheme
 procedure: (py/string-from-string string)
 
 return: *po<string>
@@ -765,6 +803,10 @@ Pass Python string to Scheme.
 ### List
 
 ```scheme
+procedure: (py/list-check? *po)
+
+return: boolean
+
 procedure: (py/list-new int<size>)
 
 return: *po<list>
@@ -809,6 +851,10 @@ return: 0 on success or -1 on failure.
 ### Tuple
 
 ```scheme
+procedure: (py/tuple-check? *po)
+
+return: boolean
+
 procedure: (py/tuple-new int<index>)
 
 return: *po<tuple>
@@ -833,6 +879,10 @@ return: *po<tuple>{slice}
 ### Set
 
 ```scheme
+procedure: (py/set-check? *po)
+
+return: boolean
+
 procedure: (py/set-new *po<iterable>)
 
 return: *po<set>
@@ -863,6 +913,10 @@ procedure: (py/set-clear! *po<set>)
 ### Sequence  
         
 ```scheme
+procedure: (py/sequence-check? *po)
+
+return: boolean
+
 procedure: (py/sequence-list *po<sequence>)
 
 return: *po<list>
@@ -924,6 +978,10 @@ return: int
 ### Dictionary
 
 ```scheme
+procedure: (py/dict-check? *po)
+
+return: boolean
+
 procedure: (py/dict-new)
 
 return: *po<dict>
@@ -980,17 +1038,21 @@ return: *po<list>{key...values...}
 ### Mapping
 
 ```scheme
+procedure: (py/mapping-check? *po)
+
+return: boolean
+
 procedure: (py/mapping-size *po<mapping>)
 
 return: int
 
 procedure: (py/mapping-has-key-string? *po<mapping> string<key>)
 
-return: 1 for ture 0 for false
+return: boolean
 
 procedure: (py/mapping-has-key? *po<mapping> *po{key})
 
-return: 1 for ture 0 for false
+return: boolean
 
 procedure: (py/mapping-get-item-string *po<mapping> string<key>)
 
@@ -1060,9 +1122,9 @@ procedure: (py/object-str *po)
 
 return: *po<string>
 
-procedure: (py/callable-check *po)
+procedure: (py/callable-check? *po)
 
-return: 1 true 0 false
+return: boolean
 ```
 
 ### Compile
