@@ -227,15 +227,15 @@ Exemple:
 ```
 
 ```scheme
-procedure: (py->int *po<number>)
+procedure: (int* *po<number>)
 
 return: number<int>
 
-procedure: (py->float *po<number>)
+procedure: (float* *po<number>)
 
 return: number<float>
 
-procedure: (py->str *po<string>)
+procedure: (str* *po<string>)
 
 return: string
 ```
@@ -244,15 +244,15 @@ Covert a Python data to Scheme data.
 
 Exemple:
 ```scheme
-(py->int (int 8))                => 8
+(int* (int 8))                => 8
 
-(py->float (float 3.1415926))    => 3.1415926
+(float* (float 3.1415926))    => 3.1415926
 
-(py->str (str "foo"))            => "foo"
+(str* (str "foo"))            => "foo"
 ```
 
 ```scheme
-procedure: (py->sc *po<int/float/string>)
+procedure: (ptype->stype *po<int/float/string>)
 
 return: int/float/string
 ```
@@ -261,11 +261,11 @@ This prcedure will automaticlly check the type .
 
 Exemple:
 ```scheme
-(py->sc (int 8))                => 8
+(ptype->stype (int 8))                => 8
 
-(py->sc (float 3.1415926))    => 3.1415926
+(ptype->stype (float 3.1415926))    => 3.1415926
 
-(py->sc (str "foo"))            => "foo"
+(ptype->stype (str "foo"))            => "foo"
 ```
 
 
@@ -339,14 +339,14 @@ procedure: (ptuple->vector* *po<tuple>)
 return: vector of *po
 ```
 
-The type function will be: py->int py->float or py->str.
+The type function will be: int* float* or str*.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
 
 Exemple:
 ```scheme
-(plist->list py->int (list->plist int '(1 2 3 4 5 6 7 8)))
+(plist->list int* (list->plist int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
 
 (plist->list (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
@@ -355,17 +355,17 @@ Exemple:
 (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
 => (*po{1} *po{3.14159} *po{"foo"})
 ```
-In last case it return a list of Memory Adresse of *po. You can use (py->int), (py->float) or (py-str) to convert it to Scheme Data.
+In last case it return a list of Memory Adresse of *po. You can use (int*), (float*) or (str*) to convert it to Scheme Data.
 
 Like:
 ```scheme
-(py->int (car (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(int* (car (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 1
 
-(py->float (cadr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(float* (cadr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 3.14159
 
-(py->str (caddr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(str* (caddr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => "foo"
 ```
 

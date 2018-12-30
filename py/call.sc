@@ -38,11 +38,11 @@
         int
         float
         str
-        sc->py
-        py->int
-        py->float
-        py->str
-        py->sc
+        stype->ptype
+        int*
+        float*
+        str*
+        ptype->stype
 
         py-add
         py-sub
@@ -170,9 +170,9 @@
     (define int py/long-from-long)
     (define float py/float-from-double)
     (define str py/string-from-string)
-    (define py->int py/long-as-long)
-    (define py->float py/float-as-double)
-    (define py->str py/string-as-string)
+    (define int* py/long-as-long)
+    (define float* py/float-as-double)
+    (define str* py/string-as-string)
 
     (define py-add py/number-add)
     (define py-sub py/number-subtract)
@@ -328,7 +328,7 @@
                     *r))))
 
 
-    (define sc->py
+    (define stype->ptype
         (lambda (x)
             (cond 
                 ((flonum? x) (float x))
@@ -336,12 +336,12 @@
                 ((string? x) (str x)))))
 
 
-    (define py->sc
+    (define ptype->stype
         (lambda (x)
             (cond 
-                ((pint? x) (py->int x))
-                ((pfloat? x) (py->float x))
-                ((pstr? x) (py->str x)))))
+                ((pint? x) (int* x))
+                ((pfloat? x) (float* x))
+                ((pstr? x) (str* x)))))
 
 
     (define list->plist
@@ -406,7 +406,7 @@
 
     (define-syntax plist->list
         (syntax-rules ()
-            ((_ x)(*plist->list py->sc x))
+            ((_ x)(*plist->list ptype->stype x))
             ((_ f x)(*plist->list f x))))
 
 
@@ -431,7 +431,7 @@
 
     (define-syntax ptuple->list
         (syntax-rules ()
-            ((_ x)(*ptuple->list py->sc x))
+            ((_ x)(*ptuple->list ptype->stype x))
             ((_ f x)(*ptuple->list f x))))
 
 
@@ -505,7 +505,7 @@
 
     (define-syntax plist->vector
         (syntax-rules ()
-            ((_ x)(*plist->vector py->sc x))
+            ((_ x)(*plist->vector ptype->stype x))
             ((_ f x)(*plist->vector f x))))
 
 
@@ -532,7 +532,7 @@
 
     (define-syntax ptuple->vector
         (syntax-rules ()
-            ((_ x)(*ptuple->vector py->sc x))
+            ((_ x)(*ptuple->vector ptype->stype x))
             ((_ f x)(*ptuple->vector f x))))
 
     (define ptuple->vector*
@@ -559,7 +559,7 @@
 
     (define *pdict->alist
         (lambda (f *p)
-            (define k (plist->list py->str (pdict-keys *p)))
+            (define k (plist->list str* (pdict-keys *p)))
             (define q
                 (lambda (x)
                     (cons (string->symbol x) (f (pdict-ref *p x)))))
@@ -571,14 +571,14 @@
 
     (define-syntax pdict->alist
         (syntax-rules ()
-            ((_ x)(*pdict->alist py->sc x))
+            ((_ x)(*pdict->alist ptype->stype x))
             ((_ f x)(*pdict->alist f x))))
 
    
     (define py-display
         (lambda (x)
             (display 
-                (py->str
+                (str*
                     (py/object-str x)))))
 
 
