@@ -335,63 +335,40 @@
 
 
     (define list->plist
-        (lambda (t lst)
+        (lambda (f lst)
             (define len (length lst))
             (define *p (make-plist len))
-            (define f
-                (case t
-                    ('int int)
-                    ('float float)
-                    ('str str)))
-            (define g
+            (define i
                 (lambda (x)
                     (if (list? x)
-                        (list->plist t x)
+                        (list->plist f x)
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
-                    (if (zero? (plist-set! *p n (g (car lst))))
+                    (if (zero? (plist-set! *p n (i (car lst))))
                         (l (+ n 1) (cdr lst))
                         (display 
-                            (string-append "Procedure list->plist*: error when set index[" (number->string n) "]'s value!\n")))
+                            (string-append "Procedure list->plist: error when set index[" (number->string n) "]'s value!\n")))
                     *p))))
 
 
     (define list->plist*
-        (lambda (lst)
-            (define len (length lst))
-            (define *p (make-plist len))
-            (define f
-                (lambda (x)
-                    (if (list? x)
-                        (list->plist* x)
-                        x)))
-            (let l ((n 0)(lst lst))
-                (if (< n len)
-                    (if (zero? (plist-set! *p n (f (car lst))))
-                        (l (+ n 1) (cdr lst))
-                        (display 
-                            (string-append "Procedure list->plist*: error when set index[" (number->string n) "]'s value!\n")))
-                    *p))))
+        (lambda (x)
+            (list->plist (lambda (x) x) x)))
 
 
     (define list->ptuple
-        (lambda (t lst)
+        (lambda (f lst)
             (define len (length lst))
             (define *p (make-ptuple len))
-            (define f
-                (case t
-                    ('int int)
-                    ('float float)
-                    ('str str)))
-            (define g
+            (define i
                 (lambda (x)
                     (if (list? x)
-                        (list->ptuple t x)
+                        (list->ptuple f x)
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
-                    (if (zero? (ptuple-set! *p n (g (car lst))))
+                    (if (zero? (ptuple-set! *p n (i (car lst))))
                         (l (+ n 1) (cdr lst))
                         (display 
                             (string-append "Procedure list->ptuple: error when set index[" (number->string n) "]'s value!\n")))
@@ -399,21 +376,8 @@
 
                     
     (define list->ptuple*
-        (lambda (lst)
-            (define len (length lst))
-            (define *p (make-ptuple len))
-            (define f
-                (lambda (x)
-                    (if (list? x)
-                        (list->ptuple* x)
-                        x)))
-            (let l ((n 0)(lst lst))
-                (if (< n len)
-                    (if (zero? (ptuple-set! *p n (f (car lst))))
-                        (l (+ n 1) (cdr lst))
-                        (display 
-                            (string-append "Procedure list->ptuple*: error when set index[" (number->string n) "]'s value!\n")))
-                    *p))))
+        (lambda (x)
+            (list->ptuple (lambda (x) x) x)))
     
     
     (define *plist->list
@@ -467,22 +431,17 @@
 
 
     (define vector->plist
-        (lambda (t vct)
+        (lambda (f vct)
             (define len (vector-length vct))
             (define *p (make-plist len))
-            (define f
-                (case t
-                    ('int int)
-                    ('float float)
-                    ('str str)))
-            (define g
+            (define i
                 (lambda (x)
                     (if (vector? x)
-                        (vector->plist t x)
+                        (vector->plist f x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (if (zero? (plist-set! *p n (g (vector-ref vct n))))
+                    (if (zero? (plist-set! *p n (i (vector-ref vct n))))
                         (l (+ n 1))
                         (display 
                             (string-append "Procedure vector->plist: error when set index[" (number->string n) "]'s value!\n")))
@@ -490,40 +449,22 @@
 
 
     (define vector->plist*
-        (lambda (t vct)
-            (define len (vector-length vct))
-            (define *p (make-plist len))
-            (define f
-                (lambda (x)
-                    (if (vector? x)
-                        (vector->plist* t x)
-                        (f x))))
-            (let l ((n 0))
-                (if (< n len)
-                    (if (zero? (plist-set! *p n (f (vector-ref vct n))))
-                        (l (+ n 1))
-                        (display 
-                            (string-append "Procedure vector->plist*: error when set index[" (number->string n) "]'s value!\n")))
-                    *p))))
+        (lambda (x)
+            (vector->plist (lambda (x) x) x)))
 
 
     (define vector->ptuple
-        (lambda (t vct)
+        (lambda (f vct)
             (define len (vector-length vct))
             (define *p (make-ptuple len))
-            (define f
-                (case t
-                    ('int int)
-                    ('float float)
-                    ('str str)))
-            (define g
+            (define i
                 (lambda (x)
                     (if (vector? x)
-                        (vector->ptuple t x)
+                        (vector->ptuple f x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (if (zero? (ptuple-set! *p n (g (vector-ref vct n))))
+                    (if (zero? (ptuple-set! *p n (i (vector-ref vct n))))
                         (l (+ n 1))
                         (display 
                             (string-append "Procedure vector->ptuple: error when set index[" (number->string n) "]'s value!\n")))
@@ -531,21 +472,8 @@
 
 
     (define vector->ptuple*
-        (lambda (t vct)
-            (define len (vector-length vct))
-            (define *p (make-ptuple len))
-            (define f
-                (lambda (x)
-                    (if (vector? x)
-                        (vector->ptuple* t x)
-                        (f x))))
-            (let l ((n 0))
-                (if (< n len)
-                    (if (zero? (ptuple-set! *p n (f (vector-ref vct n))))
-                        (l (+ n 1))
-                        (display 
-                            (string-append "Procedure vector->ptuple*: error when set index[" (number->string n) "]'s value!\n")))
-                    *p))))
+        (lambda (x)
+            (vector->ptuple (lambda (x) x) x)))
 
 
     (define *plist->vector
