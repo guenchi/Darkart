@@ -39,9 +39,9 @@
         float
         str
         stype->ptype
-        int*
-        float*
-        str*
+        *int
+        *float
+        *str
         ptype->stype
 
         py-add
@@ -67,7 +67,7 @@
         py-call*
         py-func
         py-func*
-        
+
         list->plist
         list->plist*
         list->ptuple
@@ -172,9 +172,9 @@
     (define int py/long-from-long)
     (define float py/float-from-double)
     (define str py/string-from-string)
-    (define int* py/long-as-long)
-    (define float* py/float-as-double)
-    (define str* py/string-as-string)
+    (define *int py/long-as-long)
+    (define *float py/float-as-double)
+    (define *str py/string-as-string)
 
     (define py-add py/number-add)
     (define py-sub py/number-subtract)
@@ -341,9 +341,9 @@
     (define ptype->stype
         (lambda (x)
             (cond 
-                ((pint? x) (int* x))
-                ((pfloat? x) (float* x))
-                ((pstr? x) (str* x)))))
+                ((pint? x) (*int x))
+                ((pfloat? x) (*float x))
+                ((pstr? x) (*str x)))))
 
 
     (define *list->plist
@@ -589,7 +589,7 @@
 
     (define *pdict->alist
         (lambda (f *p)
-            (define k (plist->list str* (pdict-keys *p)))
+            (define k (plist->list *str (pdict-keys *p)))
             (define q
                 (lambda (x)
                     (cons (string->symbol x) (f (pdict-ref *p x)))))
@@ -613,7 +613,7 @@
     (define py-display
         (lambda (x)
             (display 
-                (str*
+                (*str
                     (py/object-str x)))))
 
 

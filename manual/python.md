@@ -227,15 +227,15 @@ Exemple:
 ```
 
 ```scheme
-procedure: (int* *po<number>)
+procedure: (*int *po<number>)
 
 return: number<int>
 
-procedure: (float* *po<number>)
+procedure: (*float *po<number>)
 
 return: number<float>
 
-procedure: (str* *po<string>)
+procedure: (*str *po<string>)
 
 return: string
 ```
@@ -244,11 +244,11 @@ Covert a Python data to Scheme data.
 
 Exemple:
 ```scheme
-(int* (int 8))                => 8
+(*int (int 8))                => 8
 
-(float* (float 3.1415926))    => 3.1415926
+(*float (float 3.1415926))    => 3.1415926
 
-(str* (str "foo"))            => "foo"
+(*str (str "foo"))            => "foo"
 ```
 
 ```scheme
@@ -301,7 +301,7 @@ return: *po<list,tuple>
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
 
-The type function will be: int* float* or str*.
+The type function will be: *int *float or *str.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
@@ -349,14 +349,14 @@ procedure: (ptuple->vector* *po<tuple>)
 return: vector of *po
 ```
 
-The type function will be: int* float* or str*.
+The type function will be: *int *float or *str.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
 
 Exemple:
 ```scheme
-(plist->list int* (list->plist int '(1 2 3 4 5 6 7 8)))
+(plist->list *int (list->plist int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
 
 (plist->list (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
@@ -365,17 +365,17 @@ Exemple:
 (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
 => (*po{1} *po{3.14159} *po{"foo"})
 ```
-In last case it return a list of Memory Adresse of *po. You can use (int*), (float*) or (str*) to convert it to Scheme Data.
+In last case it return a list of Memory Adresse of *po. You can use (*int), (*float) or (*str) to convert it to Scheme Data.
 
 Like:
 ```scheme
-(int* (car (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(*int (car (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 1
 
-(float* (cadr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(*float (cadr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => 3.14159
 
-(str* (caddr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(*str (caddr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
 => "foo"
 ```
 
