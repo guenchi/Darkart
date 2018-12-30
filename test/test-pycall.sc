@@ -169,6 +169,12 @@
 (display (ptuple->vector int* (list->ptuple int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
 (newline)
 (display (ptuple->vector* (list->ptuple int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
+(newline)
+
+; test alist dict pass
+
+(display (pdict->alist (alist->pdict '((a . 8)(b . 9.5)(c . "c")))))
+(newline)
 
 (py-fin)
 
