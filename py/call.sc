@@ -84,6 +84,7 @@
         ptuple->vector*
         alist->pdict
         alist->pdict*
+        pdict->alist
 
         plist?
         make-plist 
@@ -531,13 +532,8 @@
 
 
     (define alist->pdict
-        (lambda (t lst)
+        (lambda (f lst)
             (define *p (py/dict-new))
-            (define f 
-                (case t
-                    ('int int)
-                    ('float float)
-                    ('str str)))
             (let l ((i (car lst))(r (cdr lst)))
                 (if (zero? (pdict-set! *p (symbol->string (car i)) (f (cdr i))))
                     (if (null? r)
@@ -548,16 +544,26 @@
 
                     
     (define alist->pdict*
-        (lambda (lst)
-            (define *p (py/dict-new))
-            (let l ((i (car lst))(r (cdr lst)))
-                (if (zero? (pdict-set! *p (symbol->string (car i)) (cdr i)))
-                    (if (null? r)
-                        *p
-                        (l (car r)(cdr r)))
-                    (display 
-                        (string-append "Procedure alist->pdict*: error when set " (symbol->string (car i)) "'s value!\n"))))))
+        (lambda (x)
+            (alist->pdict (lambda (x) x) x)))
  
+
+    (define *pdict->alist
+        (lambda (f *p)
+            (define k (plist->list py->str (pdict-keys *p)))
+            (define q
+                (lambda (x)
+                    (cons (string->symbol x) (f (pdict-ref *p x)))))
+            (let l ((i (car k))(r (cdr k)))
+                (if (null? r)
+                    (cons (q i) '())
+                    (cons (q i) (l (car r) (cdr r)))))))
+
+
+    (define-syntax pdict->alist
+        (syntax-rules ()
+            ((_ x)(*pdict->alist py->sc x))
+            ((_ f x)(*pdict->alist f x))))
 
    
     (define py-display
