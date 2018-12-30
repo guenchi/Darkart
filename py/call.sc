@@ -38,6 +38,7 @@
         int
         float
         str
+        sc->py
         py->int
         py->float
         py->str
@@ -326,7 +327,15 @@
                     (py-decref *d)
                     *r))))
 
-    
+
+    (define sc->py
+        (lambda (x)
+            (cond 
+                ((flonum? x) (float x))
+                ((integer? x) (int x))
+                ((string? x) (str x)))))
+
+
     (define py->sc
         (lambda (x)
             (cond 
