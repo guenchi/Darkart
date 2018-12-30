@@ -260,7 +260,7 @@ Exemple:
 ```
 
 ```scheme
-procedure: (ptype->stype *po<int/float/string>)
+procedure: (ptype->s *po<int/float/string>)
 
 return: int/float/string
 ```
@@ -269,11 +269,11 @@ This prcedure will automaticlly check the type .
 
 Exemple:
 ```scheme
-(ptype->stype (int 8))                => 8
+(ptype->s (int 8))                => 8
 
-(ptype->stype (float 3.1415926))    => 3.1415926
+(ptype->s (float 3.1415926))    => 3.1415926
 
-(ptype->stype (str "foo"))            => "foo"
+(ptype->s (str "foo"))            => "foo"
 ```
 
 
