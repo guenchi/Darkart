@@ -344,14 +344,14 @@
                 ((pstr? x) (str* x)))))
 
 
-    (define list->plist
+    (define *list->plist
         (lambda (f lst)
             (define len (length lst))
             (define *p (make-plist len))
             (define i
                 (lambda (x)
                     (if (list? x)
-                        (list->plist f x)
+                        (*list->plist f x)
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
@@ -362,19 +362,25 @@
                     *p))))
 
 
+    (define-syntax list->plist
+        (syntax-rules ()
+            ((_ x)(*list->plist stype->ptype x))
+            ((_ f x)(*list->plist f x))))                
+
+
     (define list->plist*
         (lambda (x)
-            (list->plist (lambda (x) x) x)))
+            (*list->plist (lambda (x) x) x)))
 
 
-    (define list->ptuple
+    (define *list->ptuple
         (lambda (f lst)
             (define len (length lst))
             (define *p (make-ptuple len))
             (define i
                 (lambda (x)
                     (if (list? x)
-                        (list->ptuple f x)
+                        (*list->ptuple f x)
                         (f x))))
             (let l ((n 0)(lst lst))
                 (if (< n len)
@@ -384,7 +390,13 @@
                             (string-append "Procedure list->ptuple: error when set index[" (number->string n) "]'s value!\n")))
                     *p))))
 
-                    
+              
+    (define-syntax list->ptuple
+        (syntax-rules ()
+            ((_ x)(*list->ptuple stype->ptype x))
+            ((_ f x)(*list->ptuple f x))))                    
+
+
     (define list->ptuple*
         (lambda (x)
             (list->ptuple (lambda (x) x) x)))
@@ -440,14 +452,14 @@
             (*ptuple->list (lambda (x) x) x)))
 
 
-    (define vector->plist
+    (define *vector->plist
         (lambda (f vct)
             (define len (vector-length vct))
             (define *p (make-plist len))
             (define i
                 (lambda (x)
                     (if (vector? x)
-                        (vector->plist f x)
+                        (*vector->plist f x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
@@ -458,19 +470,25 @@
                     *p))))
 
 
+    (define-syntax vector->plist
+        (syntax-rules ()
+            ((_ x)(*vector->plist stype->ptype x))
+            ((_ f x)(*vector->plist f x))))  
+    
+
     (define vector->plist*
         (lambda (x)
             (vector->plist (lambda (x) x) x)))
 
 
-    (define vector->ptuple
+    (define *vector->ptuple
         (lambda (f vct)
             (define len (vector-length vct))
             (define *p (make-ptuple len))
             (define i
                 (lambda (x)
                     (if (vector? x)
-                        (vector->ptuple f x)
+                        (*vector->ptuple f x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
@@ -479,6 +497,12 @@
                         (display 
                             (string-append "Procedure vector->ptuple: error when set index[" (number->string n) "]'s value!\n")))
                     *p))))
+
+    
+    (define-syntax vector->ptuple
+        (syntax-rules ()
+            ((_ x)(*vector->ptuple stype->ptype x))
+            ((_ f x)(*vector->ptuple f x))))  
 
 
     (define vector->ptuple*
@@ -540,7 +564,7 @@
             (*ptuple->vector (lambda (x) x) x)))
 
 
-    (define alist->pdict
+    (define *alist->pdict
         (lambda (f lst)
             (define *p (py/dict-new))
             (let l ((i (car lst))(r (cdr lst)))
@@ -551,10 +575,14 @@
                     (display 
                         (string-append "Procedure alist->pdict: error when set " (symbol->string (car i)) "'s value!\n")))))) 
 
+    (define-syntax alist->pdict
+        (syntax-rules ()
+            ((_ x)(*alist->pdict stype->ptype x))
+            ((_ f x)(*alist->pdict f x))))
                     
     (define alist->pdict*
         (lambda (x)
-            (alist->pdict (lambda (x) x) x)))
+            (*alist->pdict (lambda (x) x) x)))
  
 
     (define *pdict->alist
@@ -573,6 +601,11 @@
         (syntax-rules ()
             ((_ x)(*pdict->alist ptype->stype x))
             ((_ f x)(*pdict->alist f x))))
+
+        
+    (define pdict->alist*
+        (lambda (x)
+            (*pdict->alist (lambda (x) x) x)))
 
    
     (define py-display
