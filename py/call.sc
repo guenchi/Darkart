@@ -67,6 +67,7 @@
         py-call*
         py-func
         py-func*
+        
         list->plist
         list->plist*
         list->ptuple
@@ -86,6 +87,7 @@
         alist->pdict
         alist->pdict*
         pdict->alist
+        pdict->alist*
 
         plist?
         make-plist 
