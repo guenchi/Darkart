@@ -280,6 +280,14 @@ procedure: (vector->plist* vectorOf*Po)
 
 procedure: (vector->ptuple* vectorOf*Po)
 
+procedure: (list->plist list)
+
+procedure: (list->ptuple list)
+
+procedure: (vector->plist vector)
+
+procedure: (vector->ptuple vector)
+
 procedure: (list->plist type list)
 
 procedure: (list->ptuple type list)
@@ -293,7 +301,9 @@ return: *po<list,tuple>
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
 
-The type function will be: int float or str.
+The type function will be: int* float* or str*.
+
+If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
 Exemple:
 ```scheme
