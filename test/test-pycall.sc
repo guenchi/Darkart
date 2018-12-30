@@ -144,6 +144,8 @@
 (display (pmap? (list->plist 'int '(1 2 3 4 5 6))))
 
 
+; test nesting plist / ptuple
+
 (display (plist->list 'int (list->plist 'int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
 
 (display (plist->list* (list->plist 'int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
