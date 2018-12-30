@@ -198,19 +198,23 @@ procedure: (*int? *po)
 
 procedure: (*float? *po)
 
+procedure: (*complex? *po)
+
 procedure: (*str? *po*)
 
 return: boolean
 ```
-Type Check for numbers.
+Type Check for Python's number and string.
 
 
 ```scheme
-procedure: (int number)
+procedure: (int int)
 
-procedure: (float number)
+procedure: (float float)
 
-procedure: (str number)
+procedure: (complex cflonum)
+
+procedure: (str string)
 
 return: *po<number,string>
 ```
@@ -234,6 +238,10 @@ return: number<int>
 procedure: (*float *po<number>)
 
 return: number<float>
+
+procedure: (*complex? *po)
+
+return: number<cflonum>
 
 procedure: (*str *po<string>)
 
@@ -301,15 +309,13 @@ return: *po<list,tuple>
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
 
-The type function will be: *int *float or *str.
+The type procedure will be: `int` `float` `complex` or `str`.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
 Exemple:
 ```scheme
 (list->plist int '(1 2 3 4 5 6 7 8))
-
-(list->plist* `(,(int 1) ,(int 2) ,(int 3)))
 
 (vector->plist* `#(,(int 1) ,(float 3.14159) ,(str "foo")))
 ```
@@ -357,7 +363,7 @@ procedure: (ptuple->vector* *type *po<tuple>)
 return: vector of *po
 ```
 
-The *type function will be: *int *float or *str.
+The *type procedure will be: `*int` `*float` `*complex` or `*str`.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
