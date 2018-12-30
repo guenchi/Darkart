@@ -320,9 +320,9 @@ procedure: (plist->list *po<list>)
 
 procedure: (ptuple->list *po<tuple>)
 
-procedure: (plist->list type *po<list>)
+procedure: (plist->list *type *po<list>)
 
-procedure: (ptuple->list type *po<tuple>)
+procedure: (ptuple->list *type *po<tuple>)
 
 return: list
 
@@ -330,9 +330,9 @@ procedure: (plist->vector *po<list>)
 
 procedure: (ptuple->vector *po<tuple>)
 
-procedure: (plist->vector type *po<list>)
+procedure: (plist->vector *type *po<list>)
 
-procedure: (ptuple->vector type *po<tuple>)
+procedure: (ptuple->vector *type *po<tuple>)
 
 return: vector
 
@@ -340,16 +340,24 @@ procedure: (plist->list* *po<tuple>)
 
 procedure: (ptuple->list* *po<tuple>)
 
+procedure: (plist->list* *type *po<tuple>)
+
+procedure: (ptuple->list* *type *po<tuple>)
+
 return: list of *po
 
 procedure: (plist->vector* *po<list>)
 
 procedure: (ptuple->vector* *po<tuple>)
 
+procedure: (plist->vector* *type *po<list>)
+
+procedure: (ptuple->vector* *type *po<tuple>)
+
 return: vector of *po
 ```
 
-The type function will be: *int *float or *str.
+The *type function will be: *int *float or *str.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
