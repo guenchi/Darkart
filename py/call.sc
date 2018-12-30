@@ -41,6 +41,8 @@
         py->int
         py->float
         py->str
+        py->sc
+
         py-add
         py-sub
         py-mul
@@ -323,6 +325,14 @@
                     (py-decref *d)
                     *r))))
 
+    
+    (define py->sc
+        (lambda (x)
+            (cond 
+                ((pint? x) (py->int x))
+                ((pfloat? x) (py->float x))
+                ((pstr? x) (py->str x)))))
+
 
     (define list->plist
         (lambda (t lst)
@@ -406,70 +416,54 @@
                     *p))))
     
     
-    (define plist->list
-        (lambda (t *p)
+    (define *plist->list
+        (lambda (f *p)
             (define len (plist-length *p))
-            (define f
-                (case t
-                    ('int py->int)
-                    ('float py->float)
-                    ('str py->str)))
-            (define g
+            (define i
                 (lambda (x)
                     (if (plist? x)
-                        (plist->list t x)
+                        (*plist->list f x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (cons (g (plist-ref *p n)) (l (+ n 1)))
+                    (cons (i (plist-ref *p n)) (l (+ n 1)))
                     '()))))
+
+
+    (define-syntax plist->list
+        (syntax-rules ()
+            ((_ x)(*plist->list py->sc x))
+            ((_ f x)(*plist->list f x))))
 
 
     (define plist->list*
-        (lambda (*p)
-            (define len (plist-length *p))
-            (define f
-                (lambda (x)
-                    (if (plist? x)
-                        (plist->list* x)
-                        x)))
-            (let l ((n 0))
-                (if (< n len)
-                    (cons (f (plist-ref *p n)) (l (+ n 1)))
-                    '()))))
+        (lambda (x)
+            (*plist->list (lambda (x) x) x)))
 
 
-    (define ptuple->list
-        (lambda (t *p)
+    (define *ptuple->list
+        (lambda (f *p)
             (define len (py/tuple-size *p))
-            (define f
-                (case t
-                    ('int py->int)
-                    ('float py->float)
-                    ('str py->str)))
-            (define g
+            (define i
                 (lambda (x)
                     (if (ptuple? x)
-                        (ptuple->list t x)
+                        (*ptuple->list f x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (cons (g (ptuple-ref *p n)) (l (+ n 1)))
+                    (cons (i (ptuple-ref *p n)) (l (+ n 1)))
                     '()))))
+
+
+    (define-syntax ptuple->list
+        (syntax-rules ()
+            ((_ x)(*ptuple->list py->sc x))
+            ((_ f x)(*ptuple->list f x))))
 
 
     (define ptuple->list*
-        (lambda (*p)
-            (define len (py/tuple-size *p))
-            (define f
-                (lambda (x)
-                    (if (ptuple? x)
-                        (ptuple->list* x)
-                        x)))
-            (let l ((n 0))
-                (if (< n len)
-                    (cons (f (ptuple-ref *p n)) (l (+ n 1)))
-                    '()))))
+        (lambda (x)
+            (*ptuple->list (lambda (x) x) x)))
 
 
     (define vector->plist
@@ -554,83 +548,58 @@
                     *p))))
 
 
-    (define plist->vector
-        (lambda (t *p)
+    (define *plist->vector
+        (lambda (f *p)
             (define len (plist-length *p))
             (define v (make-vector len))
-            (define f
-                (case t
-                    ('int py->int)
-                    ('float py->float)
-                    ('str py->str)))
-            (define g
+            (define i
                 (lambda (x)
                     (if (plist? x)
-                        (plist->vector t x)
+                        (*plist->vector f x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
-                        (vector-set! v n (g (plist-ref *p n)))
+                        (vector-set! v n (i (plist-ref *p n)))
                         (l (+ n 1)))
                     v))))
 
-                    
+
+    (define-syntax plist->vector
+        (syntax-rules ()
+            ((_ x)(*plist->vector py->sc x))
+            ((_ f x)(*plist->vector f x))))
+
+
     (define plist->vector*
-        (lambda (*p)
-            (define len (plist-length *p))
-            (define v (make-vector len))
-            (define f
-                (lambda (x)
-                    (if (plist? x)
-                        (plist->vector* x)
-                        x)))
-            (let l ((n 0))
-                (if (< n len)
-                    (begin 
-                        (vector-set! v n (f (plist-ref *p n)))
-                        (l (+ n 1)))
-                    v))))
- 
+        (lambda (x)
+            (*plist->vector (lambda (x) x) x)))
 
 
-    (define ptuple->vector
-        (lambda (t *p)
+    (define *ptuple->vector
+        (lambda (f *p)
             (define len (py/tuple-size *p))
             (define v (make-vector len))
-            (define f
-                (case t
-                    ('int py->int)
-                    ('float py->float)
-                    ('str py->str)))
-            (define g
+            (define i
                 (lambda (x)
                     (if (ptuple? x)
-                        (ptuple->vector t x)
+                        (*ptuple->vector f x)
                         (f x))))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
-                        (vector-set! v n (g (ptuple-ref *p n)))
+                        (vector-set! v n (i (ptuple-ref *p n)))
                         (l (+ n 1)))
                     v))))
 
-                    
+    (define-syntax ptuple->vector
+        (syntax-rules ()
+            ((_ x)(*ptuple->vector py->sc x))
+            ((_ f x)(*ptuple->vector f x))))
+
     (define ptuple->vector*
-        (lambda (*p)
-            (define len (py/tuple-size *p))
-            (define v (make-vector len))
-            (define f
-                (lambda (x)
-                    (if (ptuple? x)
-                        (ptuple->vector* x)
-                        x)))
-            (let l ((n 0))
-                (if (< n len)
-                    (begin 
-                        (vector-set! v n (f (ptuple-ref *p n)))
-                        (l (+ n 1)))
-                    v))))
+        (lambda (x)
+            (*ptuple->vector (lambda (x) x) x)))
 
 
     (define alist->pdict
