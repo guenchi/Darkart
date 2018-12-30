@@ -32,16 +32,19 @@
         py-incref
         py-decref
 
-        pint?
-        pfloat?
-        pstr?
+        *int?
+        *float?
+        *str?
+        *complex?
         int
         float
         str
+        complex
         stype->ptype
         *int
         *float
         *str
+        *complex
         ptype->stype
 
         py-add
@@ -166,9 +169,10 @@
     (define py-init py-initialize)
     (define py-fin py-finalize)
 
-    (define pint? py/long-check?)
-    (define pfloat? py/float-check?)
-    (define pstr? py/string-check?)
+    (define *int? py/long-check?)
+    (define *float? py/float-check?)
+    (define *str? py/string-check?)
+    (define *complex? py/complex-check?)
     (define int py/long-from-long)
     (define float py/float-from-double)
     (define str py/string-from-string)
@@ -341,9 +345,24 @@
     (define ptype->stype
         (lambda (x)
             (cond 
-                ((pint? x) (*int x))
-                ((pfloat? x) (*float x))
-                ((pstr? x) (*str x)))))
+                ((*int? x) (*int x))
+                ((*float? x) (*float x))
+                ((*str? x) (*str x)))))
+
+    
+    (define complex
+        (lambda (c)
+            (py/complex-from-doubles 
+                (cfl-real-part c)
+                (cfl-imag-part c))))
+
+    
+    (define *complex
+        (lambda (*c)
+            (fl-make-rectangular 
+                (py/complex-real-as-double *c)
+                (py/complex-imag-as-double *c))))
+
 
 
     (define *list->plist

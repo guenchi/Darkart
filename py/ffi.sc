@@ -78,6 +78,11 @@
         py/float-check?
         py/float-from-double
         py/float-as-double
+
+        py/complex-check?
+        py/complex-from-doubles
+        py/complex-real-as-double
+        py/complex-imag-as-double
         
         py/string-check?
         py/string-from-string
@@ -312,6 +317,18 @@
 (define py/float-as-double
     (foreign-procedure "PyFloat_AsDouble" (uptr) double))
 
+(define py/complex-check?
+    (foreign-procedure "_PyComplex_Check" (uptr) boolean))
+
+(define py/complex-from-doubles
+    (foreign-procedure "PyComplex_FromDoubles" (double double) uptr))
+    
+(define py/complex-real-as-double
+    (foreign-procedure "PyComplex_RealAsDouble" (uptr) double))
+
+(define py/complex-imag-as-double
+    (foreign-procedure "PyComplex_ImagAsDouble" (uptr) double))
+    
 (define py/string-check?
     (foreign-procedure "_PyString_Check" (uptr) boolean))
 

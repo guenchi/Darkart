@@ -194,11 +194,11 @@ It usually won't be used directly because it's included in `(py-call)`,`(py-call
 ### Number and String
 
 ```scheme
-procedure: (pint? *po)
+procedure: (*int? *po)
 
-procedure: (pfloat? *po)
+procedure: (*float? *po)
 
-procedure: (pstr? *po*)
+procedure: (*str? *po*)
 
 return: boolean
 ```
