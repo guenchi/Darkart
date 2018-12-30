@@ -176,5 +176,14 @@
 (display (pdict->alist (alist->pdict '((a . 8)(b . 9.5)(c . "c")))))
 (newline)
 
+; test complex parser
+
+(display 
+    (*complex
+        (py-add 
+            (complex 4.0-3i)
+            (complex 3.0+5i))))
+(newline)
+
 (py-fin)
 
