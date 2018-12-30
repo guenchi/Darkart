@@ -34,17 +34,17 @@
 
         *int?
         *float?
-        *str?
         *complex?
+        *str?
         int
         float
-        str
         complex
+        str
         stype->ptype
         *int
         *float
-        *str
         *complex
+        *str
         ptype->stype
 
         py-add
@@ -171,8 +171,8 @@
 
     (define *int? py/long-check?)
     (define *float? py/float-check?)
-    (define *str? py/string-check?)
     (define *complex? py/complex-check?)
+    (define *str? py/string-check?)
     (define int py/long-from-long)
     (define float py/float-from-double)
     (define str py/string-from-string)
@@ -339,6 +339,7 @@
             (cond 
                 ((flonum? x) (float x))
                 ((integer? x) (int x))
+                ((cflonum? x) (complex x))
                 ((string? x) (str x)))))
 
 
@@ -347,6 +348,7 @@
             (cond 
                 ((*int? x) (*int x))
                 ((*float? x) (*float x))
+                ((*complex? x) (*complex x))
                 ((*str? x) (*str x)))))
 
     
