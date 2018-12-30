@@ -414,18 +414,28 @@
                     ('int py->int)
                     ('float py->float)
                     ('str py->str)))
+            (define g
+                (lambda (x)
+                    (if (plist? x)
+                        (plist->list t x)
+                        (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (cons (f (plist-ref *p n)) (l (+ n 1)))
+                    (cons (g (plist-ref *p n)) (l (+ n 1)))
                     '()))))
 
 
     (define plist->list*
         (lambda (*p)
             (define len (plist-length *p))
+            (define f
+                (lambda (x)
+                    (if (plist? x)
+                        (plist->list* x)
+                        x)))
             (let l ((n 0))
                 (if (< n len)
-                    (cons (plist-ref *p n) (l (+ n 1)))
+                    (cons (f (plist-ref *p n)) (l (+ n 1)))
                     '()))))
 
 
@@ -437,18 +447,28 @@
                     ('int py->int)
                     ('float py->float)
                     ('str py->str)))
+            (define g
+                (lambda (x)
+                    (if (ptuple? x)
+                        (ptuple->list t x)
+                        (f x))))
             (let l ((n 0))
                 (if (< n len)
-                    (cons (f (ptuple-ref *p n)) (l (+ n 1)))
+                    (cons (g (ptuple-ref *p n)) (l (+ n 1)))
                     '()))))
 
 
     (define ptuple->list*
         (lambda (*p)
             (define len (py/tuple-size *p))
+            (define f
+                (lambda (x)
+                    (if (ptuple? x)
+                        (ptuple->list* x)
+                        x)))
             (let l ((n 0))
                 (if (< n len)
-                    (cons (ptuple-ref *p n) (l (+ n 1)))
+                    (cons (f (ptuple-ref *p n)) (l (+ n 1)))
                     '()))))
 
 
@@ -543,10 +563,15 @@
                     ('int py->int)
                     ('float py->float)
                     ('str py->str)))
+            (define g
+                (lambda (x)
+                    (if (plist? x)
+                        (plist->vector t x)
+                        (f x))))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
-                        (vector-set! v n (f (plist-ref *p n)))
+                        (vector-set! v n (g (plist-ref *p n)))
                         (l (+ n 1)))
                     v))))
 
@@ -555,10 +580,15 @@
         (lambda (*p)
             (define len (plist-length *p))
             (define v (make-vector len))
+            (define f
+                (lambda (x)
+                    (if (plist? x)
+                        (plist->vector* x)
+                        x)))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
-                        (vector-set! v n  (plist-ref *p n))
+                        (vector-set! v n (f (plist-ref *p n)))
                         (l (+ n 1)))
                     v))))
  
@@ -573,10 +603,15 @@
                     ('int py->int)
                     ('float py->float)
                     ('str py->str)))
+            (define g
+                (lambda (x)
+                    (if (ptuple? x)
+                        (ptuple->vector t x)
+                        (f x))))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
-                        (vector-set! v n (f (ptuple-ref *p n)))
+                        (vector-set! v n (g (ptuple-ref *p n)))
                         (l (+ n 1)))
                     v))))
 
@@ -585,10 +620,15 @@
         (lambda (*p)
             (define len (py/tuple-size *p))
             (define v (make-vector len))
+            (define f
+                (lambda (x)
+                    (if (ptuple? x)
+                        (ptuple->vector* x)
+                        x)))
             (let l ((n 0))
                 (if (< n len)
                     (begin 
-                        (vector-set! v n  (ptuple-ref *p n))
+                        (vector-set! v n (f (ptuple-ref *p n)))
                         (l (+ n 1)))
                     v))))
 
