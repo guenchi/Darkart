@@ -106,14 +106,14 @@ return: *po
 
 Exemple:
 ```scheme
-(py-call array (list->plist 'int '(1 2 3 4 5)))
+(py-call array (list->plist int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 
 (define np-array
     (lambda (x)
         (py-call array x)))
 
-(np-array (list->plist 'int '(1 2 3 4 5)))
+(np-array (list->plist int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 ```
 
@@ -129,7 +129,7 @@ Exemple:
 ```scheme
 (define np-array (py-func array))
 
-(np-array (list->plist 'int '(1 2 3 4 5)))
+(np-array (list->plist int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 ```
 
@@ -144,7 +144,7 @@ The alist is like: `'((symbol<Name> . *po) ...)`
 
 Exemple:
 ```scheme
-((py-call* array (list->plist 'int '(1 2 3 4 5)))
+((py-call* array (list->plist int '(1 2 3 4 5)))
     `(('dtype . ,(str "float"))))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 
@@ -155,10 +155,10 @@ Exemple:
             ((py-call* *array e) 
                 (list (cons k v) ...)))))
 
-(np-array (list->plist 'int '(1 2 3 4 5)))
+(np-array (list->plist int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
 
-(np-array (list->plist 'int '(1 2 3 4 5)) ('dtype (str "float")))
+(np-array (list->plist int '(1 2 3 4 5)) ('dtype (str "float")))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
 
@@ -175,7 +175,7 @@ Exemple:
 (define np-array (py-func* array))
 
 ((np-array 
-    (list->plist 'int '(1 2 3 4 5)))
+    (list->plist int '(1 2 3 4 5)))
     `(('dtype . ,(str "float"))))
 => *op{[1.0, 2.0, 3.0, 4.0, 5.0]}
 ```
@@ -251,6 +251,24 @@ Exemple:
 (py->str (str "foo"))            => "foo"
 ```
 
+```scheme
+procedure: (py->sc *po<int/float/string>)
+
+return: int/float/string
+```
+
+This prcedure will automaticlly check the type .
+
+Exemple:
+```scheme
+(py->sc (int 8))                => 8
+
+(py->sc (float 3.1415926))    => 3.1415926
+
+(py->sc (str "foo"))            => "foo"
+```
+
+
 ### List and Tuple
 
 ```scheme
@@ -275,11 +293,11 @@ return: *po<list,tuple>
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
 
-The type will be: 'int 'float or 'str.
+The type function will be: int float or str.
 
 Exemple:
 ```scheme
-(list->plist 'int '(1 2 3 4 5 6 7 8))
+(list->plist int '(1 2 3 4 5 6 7 8))
 
 (list->plist* `(,(int 1) ,(int 2) ,(int 3)))
 
@@ -288,11 +306,19 @@ Exemple:
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
 ```scheme
+procedure: (plist->list *po<list>)
+
+procedure: (ptuple->list *po<tuple>)
+
 procedure: (plist->list type *po<list>)
 
 procedure: (ptuple->list type *po<tuple>)
 
 return: list
+
+procedure: (plist->vector *po<list>)
+
+procedure: (ptuple->vector *po<tuple>)
 
 procedure: (plist->vector type *po<list>)
 
@@ -313,10 +339,18 @@ procedure: (ptuple->vector* *po<tuple>)
 return: vector of *po
 ```
 
+The type function will be: py->int py->float or py->str.
+
+If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
+
+
 Exemple:
 ```scheme
-(plist->list 'int (list->plist 'int '(1 2 3 4 5 6 7 8)))
+(plist->list py->int (list->plist int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
+
+(plist->list (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
+=> (1 3.14159 "foo")
 
 (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
 => (*po{1} *po{3.14159} *po{"foo"})
