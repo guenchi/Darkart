@@ -340,7 +340,8 @@
                 ((flonum? x) (float x))
                 ((integer? x) (int x))
                 ((cflonum? x) (complex x))
-                ((string? x) (str x)))))
+                ((string? x) (str x))
+                (else (error 'stype->p "illegal input" x)))))
 
 
     (define ptype->s
@@ -349,7 +350,8 @@
                 ((*int? x) (*int x))
                 ((*float? x) (*float x))
                 ((*complex? x) (*complex x))
-                ((*str? x) (*str x)))))
+                ((*str? x) (*str x))
+                (else (error 'ptype->s "illegal input" x)))))
 
     
     (define complex
