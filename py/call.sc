@@ -278,7 +278,7 @@
                 (if (< n len)
                     (if (zero? (ptuple-set! *p n (car args)))
                         (loop (+ n 1) (cdr args))
-                        (display "Procedure py-args: error when prepare arguments!\n"))
+                        (error 'py-args "error when set arg" (car args)))
                     *p))))
 
 
@@ -290,7 +290,7 @@
                 (if (< n len)
                     (if (zero? (ptuple-set! *p n (car args)))
                         (loop (+ n 1) (cdr args))
-                        (display "Procedure py-args*: error when prepare arguments!\n"))
+                        (error 'py-args* "error when set arg" (car args)))
                     *p))))
             
 
@@ -380,8 +380,7 @@
                 (if (< n len)
                     (if (zero? (plist-set! *p n (i (car lst))))
                         (l (+ n 1) (cdr lst))
-                        (display 
-                            (string-append "Procedure list->plist: error when set index[" (number->string n) "]'s value!\n")))
+                        (error "list->plist" "error when set value" n (i (car lst))))
                     *p))))
 
 
@@ -409,8 +408,7 @@
                 (if (< n len)
                     (if (zero? (ptuple-set! *p n (i (car lst))))
                         (l (+ n 1) (cdr lst))
-                        (display 
-                            (string-append "Procedure list->ptuple: error when set index[" (number->string n) "]'s value!\n")))
+                        (error "list->ptuple" "error when set value" n (i (car lst))))
                     *p))))
 
               
@@ -488,8 +486,7 @@
                 (if (< n len)
                     (if (zero? (plist-set! *p n (i (vector-ref vct n))))
                         (l (+ n 1))
-                        (display 
-                            (string-append "Procedure vector->plist: error when set index[" (number->string n) "]'s value!\n")))
+                        (error "vector->plist" "error when set value" n (i (vector-ref vct n))))
                     *p))))
 
 
@@ -517,8 +514,7 @@
                 (if (< n len)
                     (if (zero? (ptuple-set! *p n (i (vector-ref vct n))))
                         (l (+ n 1))
-                        (display 
-                            (string-append "Procedure vector->ptuple: error when set index[" (number->string n) "]'s value!\n")))
+                        (error "vector->ptuple" "error when set value" n (i (vector-ref vct n))))
                     *p))))
 
     
@@ -595,8 +591,8 @@
                     (if (null? r)
                         *p
                         (l (car r)(cdr r)))
-                    (display 
-                        (string-append "Procedure alist->pdict: error when set " (symbol->string (car i)) "'s value!\n")))))) 
+                    (error "alist->pdict" "error when set value" (symbol->string (car i)) (f (cdr i))))))) 
+
 
     (define-syntax alist->pdict
         (syntax-rules ()
