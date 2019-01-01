@@ -191,9 +191,11 @@
 
 (plist-set! x 0 1 2 3 (int 100))
 (display (*int (plist-ref x 0 1 2 3)))
-(display (plist->list (plist-sref x 0 1 2 0 4)))
+(newline)
+(display (plist->list (plist-sref x 0 1 2 (0 4))))
 (newline)
 (plist-sset! x 0 1 2 (0 4) (list->plist '(90 91 92 93)))
 (display (plist->list (plist-ref x 0 1 2 )))
+(newline)
 (py-fin)
 
