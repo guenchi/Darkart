@@ -185,5 +185,12 @@
             (complex 3.0+5i))))
 (newline)
 
+; test plist-ref plist-set!
+
+(define x (list->plist int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4))))))
+
+(plist-set! x 0 1 2 3 (int 100))
+(display (*int (plist-ref x 0 1 2 3)))
+
 (py-fin)
 

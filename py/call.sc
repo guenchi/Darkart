@@ -198,8 +198,6 @@
     (define plist? py/list-check?)
     (define make-plist py/list-new)
     (define plist-length py/list-size)
-    (define plist-ref py/list-get-item)
-    (define plist-set! py/list-set-item!)
     (define plist-sref py/list-get-slice)
     (define plist-sset! py/list-set-slice!)
     (define plist-insert! py/list-insert!)
@@ -210,8 +208,6 @@
     (define ptuple? py/tuple-check?)
     (define make-ptuple py/tuple-new)
     (define ptuple-length py/tuple-size)
-    (define ptuple-ref py/tuple-get-item)
-    (define ptuple-set! py/tuple-set-item!)
     (define ptuple-sref py/tuple-get-slice)
 
     (define pset? py/set-check?)
@@ -367,6 +363,29 @@
                 (py/complex-real-as-double *c)
                 (py/complex-imag-as-double *c))))
 
+
+    (define-syntax plist-ref 
+        (syntax-rules ()
+            ((_ *p k)(py/list-get-item *p k))
+            ((_ *p k1 ... k2)(plist-ref (plist-ref *p k1 ...) k2))))
+
+        
+    (define-syntax plist-set!
+        (syntax-rules ()
+            ((_ *p k v)(py/list-set-item! *p k v))
+            ((_ *p k1 ... k2 v)(plist-set! (plist-ref *p k1 ...) k2 v))))
+            
+        
+    (define-syntax ptuple-ref 
+        (syntax-rules ()
+            ((_ *p k)(py/tuple-get-item *p k))
+            ((_ *p k1 ... k2)(plist-ref (ptuple-ref *p k1 ...) k2))))
+        
+    
+    (define-syntax ptuple-set!
+        (syntax-rules ()
+            ((_ *p k v)(py/tuple-set-item! *p k v))
+            ((_ *p k1 ... k2 v)(ptuple-set! (ptulpe-ref *p k1 ...) k2 v))))
 
 
     (define *list->plist
