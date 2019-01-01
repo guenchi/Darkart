@@ -380,7 +380,7 @@
                 (if (< n len)
                     (if (zero? (plist-set! *p n (i (car lst))))
                         (l (+ n 1) (cdr lst))
-                        (error "list->plist" "error when set value" n (i (car lst))))
+                        (error 'list->plist "error when set value" n (i (car lst))))
                     *p))))
 
 
@@ -408,7 +408,7 @@
                 (if (< n len)
                     (if (zero? (ptuple-set! *p n (i (car lst))))
                         (l (+ n 1) (cdr lst))
-                        (error "list->ptuple" "error when set value" n (i (car lst))))
+                        (error 'list->ptuple "error when set value" n (i (car lst))))
                     *p))))
 
               
@@ -486,7 +486,7 @@
                 (if (< n len)
                     (if (zero? (plist-set! *p n (i (vector-ref vct n))))
                         (l (+ n 1))
-                        (error "vector->plist" "error when set value" n (i (vector-ref vct n))))
+                        (error 'vector->plist "error when set value" n (i (vector-ref vct n))))
                     *p))))
 
 
@@ -514,7 +514,7 @@
                 (if (< n len)
                     (if (zero? (ptuple-set! *p n (i (vector-ref vct n))))
                         (l (+ n 1))
-                        (error "vector->ptuple" "error when set value" n (i (vector-ref vct n))))
+                        (error 'vector->ptuple "error when set value" n (i (vector-ref vct n))))
                     *p))))
 
     
@@ -591,7 +591,7 @@
                     (if (null? r)
                         *p
                         (l (car r)(cdr r)))
-                    (error "alist->pdict" "error when set value" (symbol->string (car i)) (f (cdr i))))))) 
+                    (error 'alist->pdict "error when set value" (symbol->string (car i)) (f (cdr i))))))) 
 
 
     (define-syntax alist->pdict
