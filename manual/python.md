@@ -459,19 +459,23 @@ procedure: (plist-length *po<list>)
 
 return: int<size>
 
-procedure: (plist-ref *po<list> int<index>)
+procedure: (plist-ref *po<list> int<index> ...)
 
 return: *po
 
-procedure: (plist-set! *po<list> int<index> *po)
+procedure: (plist-set! *po<list> int<index> ... *po)
 
 return: 0 on success or -1 on failure.
 
-procedure: (plist-sref *po<list> int int)
+procedure: (plist-sref *po<list> int<begin> int<end>)
+
+procedure: (plist-sref *po<list> int<index> ... (int<begin> int<end>))
 
 return: *po<list>{slice}
 
-procedure: (plist-sset! *po<list> int int *po<list>)
+procedure: (plist-sset! *po<list> int<begin> int<end> *po<list>)
+
+procedure: (plist-sset! *po<list> int<index> ... (int<begin> int<end>) *po<list>)
 
 return: 0 on success or -1 on failure.
 
@@ -507,15 +511,17 @@ procedure: (ptuple-length *po<tuple>)
 
 return: int<index>
 
-procedure: (ptuple-ref *po<tuple> int<index>)
+procedure: (ptuple-ref *po<tuple> int<index> ...)
 
 return: *po
 
-procedure: (ptuple-set! *po<tuple> int<index> *po)
+procedure: (ptuple-set! *po<tuple> int<index> ... *po)
 
 return: 0 on success or -1 on failure.
 
-procedure: (ptuple-sref *po<tuple> int int)
+procedure: (ptuple-sref *po<tuple> int<begin> int<end>)
+
+procedure: (ptuple-sref *po<tuple> int<index> ... (int<begin> int<end>))
 
 return: *po<tuple>{slice}
 ```
