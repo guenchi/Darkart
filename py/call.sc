@@ -198,8 +198,6 @@
     (define plist? py/list-check?)
     (define make-plist py/list-new)
     (define plist-length py/list-size)
-    (define plist-sref py/list-get-slice)
-    (define plist-sset! py/list-set-slice!)
     (define plist-insert! py/list-insert!)
     (define plist-append! py/list-append!)
     (define plist-sort! py/list-sort!)
@@ -208,7 +206,6 @@
     (define ptuple? py/tuple-check?)
     (define make-ptuple py/tuple-new)
     (define ptuple-length py/tuple-size)
-    (define ptuple-sref py/tuple-get-slice)
 
     (define pset? py/set-check?)
     (define make-pset py/set-new)
@@ -367,25 +364,43 @@
     (define-syntax plist-ref 
         (syntax-rules ()
             ((_ *p k)(py/list-get-item *p k))
-            ((_ *p k1 ... k2)(plist-ref (plist-ref *p k1 ...) k2))))
+            ((_ *p k* ... k)(plist-ref (plist-ref *p k* ...) k))))
 
         
     (define-syntax plist-set!
         (syntax-rules ()
             ((_ *p k v)(py/list-set-item! *p k v))
-            ((_ *p k1 ... k2 v)(plist-set! (plist-ref *p k1 ...) k2 v))))
+            ((_ *p k* ... k v)(plist-set! (plist-ref *p k* ...) k v))))
+
+
+    (define-syntax plist-sref 
+        (syntax-rules ()
+            ((_ *p b e)(py/list-get-slice *p b e))
+            ((_ *p k* ... (b e))(plist-sref (plist-ref *p k* ...) b e))))
+
+
+    (define-syntax plist-sset!
+        (syntax-rules ()
+            ((_ *p b e l)(py/list-set-slice! *p b e l))
+            ((_ *p k* ... (b e) l)(plist-sset! (plist-ref *p k* ...) b e l))))
             
         
     (define-syntax ptuple-ref 
         (syntax-rules ()
             ((_ *p k)(py/tuple-get-item *p k))
-            ((_ *p k1 ... k2)(plist-ref (ptuple-ref *p k1 ...) k2))))
+            ((_ *p k* ... k)(plist-ref (ptuple-ref *p k* ...) k))))
         
     
     (define-syntax ptuple-set!
         (syntax-rules ()
             ((_ *p k v)(py/tuple-set-item! *p k v))
-            ((_ *p k1 ... k2 v)(ptuple-set! (ptulpe-ref *p k1 ...) k2 v))))
+            ((_ *p k* ... k v)(ptuple-set! (ptulpe-ref *p k* ...) k v))))
+
+        
+    (define-syntax ptuple-sref 
+        (syntax-rules ()
+            ((_ *p b e)(py/tuple-get-slice *p b e))
+            ((_ *p k* ... (b e))(ptuple-sref (ptuple-ref *p k* ...) b e))))
 
 
     (define *list->plist
