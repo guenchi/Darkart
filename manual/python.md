@@ -10,7 +10,7 @@ Note that depending on the system, you may need to manually specify the path to 
 
 For me, with my mac it just:
 
-`<#include  <Python/Python.h>`
+`#include  <Python/Python.h>`
 
 In other cases:
 
