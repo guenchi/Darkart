@@ -29,8 +29,8 @@
     (export
         py-init
         py-fin
-        py-incref
-        py-decref
+        py-inc
+        py-dec
 
         *int?
         *float?
@@ -168,6 +168,8 @@
 
     (define py-init py-initialize)
     (define py-fin py-finalize)
+    (define py-inc py-incref)
+    (define py-dec py-decref)
 
     (define *int? py/long-check?)
     (define *float? py/float-check?)
@@ -291,7 +293,7 @@
         (lambda (f . args)
             (define *k (py-args* args))
             (define *r (py/object-call-object f *k))
-            (py-decref *k)
+            (py-dec *k)
             *r))
 
 
@@ -301,8 +303,8 @@
                 (define *k (py-args* args))
                 (define *d (alist->pdict* lst))
                 (define *r (py/object-call f *k *d))
-                (py-decref *k)
-                (py-decref *d)
+                (py-dec *k)
+                (py-dec *d)
                 *r)))
 
 
@@ -311,7 +313,7 @@
             (lambda args
                 (define *k (py-args* args))
                 (define *r (py/object-call-object f *k))
-                (py-decref *k)
+                (py-dec *k)
                 *r)))
 
 
@@ -322,8 +324,8 @@
                     (define *k (py-args* args))
                     (define *d (alist->pdict* lst))
                     (define *r (py/object-call f *k *d))
-                    (py-decref *k)
-                    (py-decref *d)
+                    (py-dec *k)
+                    (py-dec *d)
                     *r))))
 
 
