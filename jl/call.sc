@@ -28,7 +28,7 @@
 (library (darkart jl call)
     (export)
     (import
-        (scheme)
+        (chezscheme)
         (darkart jl ffi))
 
 

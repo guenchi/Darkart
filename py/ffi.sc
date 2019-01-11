@@ -180,7 +180,7 @@
         py-compile-string
         )
     (import
-        (scheme))
+        (chezscheme))
 
 (define lib (load-shared-object "./lib/darkart/py.so"))
 

@@ -28,7 +28,7 @@
 (library (darkart js ffi)
     (export)
     (import
-        (scheme))
+        (chezscheme))
 
 
 )

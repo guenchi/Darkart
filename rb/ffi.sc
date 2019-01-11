@@ -28,7 +28,7 @@
 (library (darkart rb ffi)
     (export)
     (import
-        (scheme))
+        (chezscheme))
 
 
 )

@@ -28,7 +28,7 @@
 (library (darkart julia jl-ffi)
     (export)
     (import
-        (scheme))
+        (chezscheme))
 
 
 )

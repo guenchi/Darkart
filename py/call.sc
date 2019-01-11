@@ -161,7 +161,7 @@
         py-display
     )
     (import
-        (scheme)
+        (chezscheme)
         (darkart py ffi))
 
 
@@ -420,10 +420,10 @@
                     *p))))
 
 
-    (define-syntax list->plist
-        (syntax-rules ()
-            ((_ x)(*list->plist stype->p x))
-            ((_ f x)(*list->plist f x))))                
+    (define list->plist
+        (case-lambda
+            ((x)(*list->plist stype->p x))
+            ((f x)(*list->plist f x))))                
 
 
     (define list->plist*
@@ -448,10 +448,10 @@
                     *p))))
 
               
-    (define-syntax list->ptuple
-        (syntax-rules ()
-            ((_ x)(*list->ptuple stype->p x))
-            ((_ f x)(*list->ptuple f x))))                    
+    (define list->ptuple
+        (case-lambda
+            ((x)(*list->ptuple stype->p x))
+            ((f x)(*list->ptuple f x))))                    
 
 
     (define list->ptuple*
@@ -473,10 +473,10 @@
                     '()))))
 
 
-    (define-syntax plist->list
-        (syntax-rules ()
-            ((_ x)(*plist->list ptype->s x))
-            ((_ f x)(*plist->list f x))))
+    (define plist->list
+        (case-lambda
+            ((x)(*plist->list ptype->s x))
+            ((f x)(*plist->list f x))))
 
 
     (define plist->list*
@@ -498,10 +498,10 @@
                     '()))))
 
 
-    (define-syntax ptuple->list
-        (syntax-rules ()
-            ((_ x)(*ptuple->list ptype->s x))
-            ((_ f x)(*ptuple->list f x))))
+    (define ptuple->list
+        (case-lambda
+            ((x)(*ptuple->list ptype->s x))
+            ((f x)(*ptuple->list f x))))
 
 
     (define ptuple->list*
@@ -526,10 +526,10 @@
                     *p))))
 
 
-    (define-syntax vector->plist
-        (syntax-rules ()
-            ((_ x)(*vector->plist stype->p x))
-            ((_ f x)(*vector->plist f x))))  
+    (define vector->plist
+        (case-lambda
+            ((x)(*vector->plist stype->p x))
+            ((f x)(*vector->plist f x))))  
     
 
     (define vector->plist*
@@ -554,10 +554,10 @@
                     *p))))
 
     
-    (define-syntax vector->ptuple
-        (syntax-rules ()
-            ((_ x)(*vector->ptuple stype->p x))
-            ((_ f x)(*vector->ptuple f x))))  
+    (define vector->ptuple
+        (case-lambda
+            ((x)(*vector->ptuple stype->p x))
+            ((f x)(*vector->ptuple f x))))  
 
 
     (define vector->ptuple*
@@ -582,10 +582,10 @@
                     v))))
 
 
-    (define-syntax plist->vector
-        (syntax-rules ()
-            ((_ x)(*plist->vector ptype->s x))
-            ((_ f x)(*plist->vector f x))))
+    (define plist->vector
+        (case-lambda
+            ((x)(*plist->vector ptype->s x))
+            ((f x)(*plist->vector f x))))
 
 
     (define plist->vector*
@@ -609,10 +609,10 @@
                         (l (+ n 1)))
                     v))))
 
-    (define-syntax ptuple->vector
-        (syntax-rules ()
-            ((_ x)(*ptuple->vector ptype->s x))
-            ((_ f x)(*ptuple->vector f x))))
+    (define ptuple->vector
+        (case-lambda
+            ((x)(*ptuple->vector ptype->s x))
+            ((f x)(*ptuple->vector f x))))
 
     (define ptuple->vector*
         (lambda (x)
@@ -630,10 +630,10 @@
                     (error 'alist->pdict "error when set value" (symbol->string (car i)) (f (cdr i))))))) 
 
 
-    (define-syntax alist->pdict
-        (syntax-rules ()
-            ((_ x)(*alist->pdict stype->p x))
-            ((_ f x)(*alist->pdict f x))))
+    (define alist->pdict
+        (case-lambda
+            ((x)(*alist->pdict stype->p x))
+            ((f x)(*alist->pdict f x))))
                     
     (define alist->pdict*
         (lambda (x)
@@ -652,10 +652,10 @@
                     (cons (q i) (l (car r) (cdr r)))))))
 
 
-    (define-syntax pdict->alist
-        (syntax-rules ()
-            ((_ x)(*pdict->alist ptype->s x))
-            ((_ f x)(*pdict->alist f x))))
+    (define pdict->alist
+        (case-lambda
+            ((x)(*pdict->alist ptype->s x))
+            ((f x)(*pdict->alist f x))))
 
         
     (define pdict->alist*

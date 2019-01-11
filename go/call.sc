@@ -28,7 +28,7 @@
 (library (darkart go call)
     (export)
     (import
-        (scheme)
+        (chezscheme)
         (darkart go ffi))
 
 
