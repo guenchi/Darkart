@@ -197,5 +197,20 @@
 (plist-sset! x 0 1 2 (0 4) (list->plist '(90 91 92 93)))
 (display (plist->list (plist-ref x 0 1 2 )))
 (newline)
+
+; test py-inc and py-dec
+
+(define k (list->plist '((1 2 3 4)(5 6 7 8)(9 8 7 6))))
+(py-inc k)
+(py-display (np-array k))
+(newline)
+(py-display k)
+(py-dec k)
+(newline)
+
+
+
 (py-fin)
+
+
 
