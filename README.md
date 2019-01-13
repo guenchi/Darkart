@@ -6,7 +6,7 @@ This project is inspired by the Julia language. The FFI interface provided by Ch
 
 Implementation priority: Python ✅ > Julia > Javascript > OCaml
 
-
+### Exemple
 ```
 (define np (py-import 'numpy))
 
@@ -37,7 +37,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 See https://github.com/guenchi/numpy for more python library binding exemples.
 
 
-Sources:
+### Sources:
 
 https://github.com/JuliaPy/PyCall.jl/blob/master/src/PyCall.jl
 
@@ -50,6 +50,6 @@ http://www.linux-nantes.org/~fmonnier/OCaml/ocaml-wrapping-c.html
 http://caml.inria.fr/pub/docs/manual-ocaml-4.00/manual033.html#htoc281
 
 
-Deprecated attempt:
+### Deprecated attempt:
 
 † https://github.com/guenchi/Py-call
