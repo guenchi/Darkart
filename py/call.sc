@@ -179,10 +179,12 @@
     (define *float? py/float-check?)
     (define *complex? py/complex-check?)
     (define *str? py/string-check?)
+
     (define int py/long-from-long)
     (define short py/int-from-long)
     (define float py/float-from-double)
     (define str py/string-from-string)
+    
     (define *int py/long-as-long)
     (define *short py/int-as-long)
     (define *float py/float-as-double)
