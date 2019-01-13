@@ -11,7 +11,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 (define np (py-import 'numpy))
 
 (define ndarray (py-get np 'ndarray))
-(define np-pi (py-get np 'pi))
+(define pi (py-get np 'pi))
 (define np-array (py-get np 'array))
 (define np-sin (py-get np 'sin))
 (define np-tolist (py-get ndarray 'tolist))
@@ -22,7 +22,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
             (py-call np-tolist
                 (py-call np-sin
                     (py-div
-                        (py-mul np-pi 
+                        (py-mul pi 
                             (py-call np-array
                                 (list->plist int lst)))
                         (int 180)))))))
