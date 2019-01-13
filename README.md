@@ -32,9 +32,9 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
 =>
 (0.01745240643728351 0.03489949670250097 0.05233595624294383 0.0697564737441253 
 0.08715574274765817 0.10452846326765346 0.12186934340514748 0.13917310096006544)
-
 ```
 
+See https://github.com/guenchi/numpy for more python library binding exemples.
 
 
 Sources:
