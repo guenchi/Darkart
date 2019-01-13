@@ -24,7 +24,7 @@ Implementation priority: Python ✅ > Julia > Javascript > OCaml
                     (py-div
                         (py-mul pi 
                             (py-call np-array
-                                (list->plist int lst)))
+                                (list->plist lst)))
                         (int 180)))))))
 
 (get-sin '(1 2 3 4 5 6 7 8))
