@@ -770,16 +770,6 @@ return: *po
 ### Number
 
 ```scheme
-procedure: (py/int-from-long number)
-
-procedure: (py/int-from-size_t size_t)
-
-procedure: (py/int-from-ssize_t ssize_t)
-
-return: *po<int>
-```
-
-```scheme
 procedure: (py/long-from-long number)
 
 procedure: (py/long-from-unsigned-long number)
@@ -832,13 +822,13 @@ Pass Python number to Scheme.
 ### String
 
 ```scheme
-procedure: (py/string-check? *po)
+procedure: (py/bytes-check? *po)
 
 return: boolean
 ```
 
 ```scheme
-procedure: (py/string-from-string string)
+procedure: (py/bytes-from-string string)
 
 return: *po<string>
 ```
@@ -846,7 +836,7 @@ return: *po<string>
 Pass Scheme string to Python.
 
 ```scheme
-procedure: (py/string-as-string *po<string>)
+procedure: (py/bytes-as-string *po<string>)
 
 return: string
 ```
