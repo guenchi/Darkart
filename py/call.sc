@@ -37,18 +37,20 @@
         *float?
         *complex?
         *str?
+
         int
         short
         float
         complex
         str
-        stype->p
+        s->ptype
+        
         *int
         *short
         *float
         *complex
         *str
-        ptype->s
+        p->stype
 
         py-add
         py-sub
@@ -184,7 +186,7 @@
     (define short py/int-from-long)
     (define float py/float-from-double)
     (define str py/string-from-string)
-    
+
     (define *int py/long-as-long)
     (define *short py/int-as-long)
     (define *float py/float-as-double)
@@ -337,24 +339,24 @@
                     *r))))
 
 
-    (define stype->p
+    (define s->ptype
         (lambda (x)
             (cond 
                 ((flonum? x) (float x))
                 ((integer? x) (int x))
                 ((cflonum? x) (complex x))
                 ((string? x) (str x))
-                (else (error 'stype->p "illegal input" x)))))
+                (else (error 's->ptype "illegal input" x)))))
 
 
-    (define ptype->s
+    (define p->stype
         (lambda (x)
             (cond 
                 ((*int? x) (*int x))
                 ((*float? x) (*float x))
                 ((*complex? x) (*complex x))
                 ((*str? x) (*str x))
-                (else (error 'ptype->s "illegal input" x)))))
+                (else (error 'p->stype "illegal input" x)))))
 
     
     (define complex
@@ -432,7 +434,7 @@
 
     (define list->plist
         (case-lambda
-            ((x)(*list->plist stype->p x))
+            ((x)(*list->plist s->ptype x))
             ((f x)(*list->plist f x))))                
 
 
@@ -460,7 +462,7 @@
               
     (define list->ptuple
         (case-lambda
-            ((x)(*list->ptuple stype->p x))
+            ((x)(*list->ptuple s->ptype x))
             ((f x)(*list->ptuple f x))))                    
 
 
@@ -485,7 +487,7 @@
 
     (define plist->list
         (case-lambda
-            ((x)(*plist->list ptype->s x))
+            ((x)(*plist->list p->stype x))
             ((f x)(*plist->list f x))))
 
 
@@ -510,7 +512,7 @@
 
     (define ptuple->list
         (case-lambda
-            ((x)(*ptuple->list ptype->s x))
+            ((x)(*ptuple->list p->stype x))
             ((f x)(*ptuple->list f x))))
 
 
@@ -538,7 +540,7 @@
 
     (define vector->plist
         (case-lambda
-            ((x)(*vector->plist stype->p x))
+            ((x)(*vector->plist s->ptype x))
             ((f x)(*vector->plist f x))))  
     
 
@@ -566,7 +568,7 @@
     
     (define vector->ptuple
         (case-lambda
-            ((x)(*vector->ptuple stype->p x))
+            ((x)(*vector->ptuple s->ptype x))
             ((f x)(*vector->ptuple f x))))  
 
 
@@ -594,7 +596,7 @@
 
     (define plist->vector
         (case-lambda
-            ((x)(*plist->vector ptype->s x))
+            ((x)(*plist->vector p->stype x))
             ((f x)(*plist->vector f x))))
 
 
@@ -621,7 +623,7 @@
 
     (define ptuple->vector
         (case-lambda
-            ((x)(*ptuple->vector ptype->s x))
+            ((x)(*ptuple->vector p->stype x))
             ((f x)(*ptuple->vector f x))))
 
     (define ptuple->vector*
@@ -642,7 +644,7 @@
 
     (define alist->pdict
         (case-lambda
-            ((x)(*alist->pdict stype->p x))
+            ((x)(*alist->pdict s->ptype x))
             ((f x)(*alist->pdict f x))))
                     
     (define alist->pdict*
@@ -664,7 +666,7 @@
 
     (define pdict->alist
         (case-lambda
-            ((x)(*pdict->alist ptype->s x))
+            ((x)(*pdict->alist p->stype x))
             ((f x)(*pdict->alist f x))))
 
         

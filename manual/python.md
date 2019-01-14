@@ -260,11 +260,11 @@ Exemple:
 ```
 
 ```scheme
-procedure: (stype->p int/float/cflonum/string>)
+procedure: (s->ptype int/float/cflonum/string>)
 
 return: *po<int/float/complex/string>
 
-procedure: (ptype->s *po<int/float/complex/string>)
+procedure: (p->stype *po<int/float/complex/string>)
 
 return: int/float/cflonum/string
 ```
@@ -273,11 +273,11 @@ Automatic simple type detection and conversion.
 
 Exemple:
 ```scheme
-(ptype->s (int 8))                => 8
+(p->stype (int 8))                => 8
 
-(ptype->s (float 3.1415926))    => 3.1415926
+(p->stype (float 3.1415926))    => 3.1415926
 
-(ptype->s (str "foo"))            => "foo"
+(p->stype (str "foo"))            => "foo"
 
 ```
 
