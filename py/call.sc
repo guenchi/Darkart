@@ -33,20 +33,17 @@
         py-dec
 
         *int?
-        *short?
         *float?
         *complex?
         *str?
 
         int
-        short
         float
         complex
         str
         s->ptype
-        
+
         *int
-        *short
         *float
         *complex
         *str
@@ -177,20 +174,17 @@
     (define py-dec py-decref)
 
     (define *int? py/long-check?)
-    (define *short? py/int-check?)
     (define *float? py/float-check?)
     (define *complex? py/complex-check?)
-    (define *str? py/string-check?)
+    (define *str? py/bytes-check?)
 
     (define int py/long-from-long)
-    (define short py/int-from-long)
     (define float py/float-from-double)
-    (define str py/string-from-string)
+    (define str py/bytes-from-string)
 
     (define *int py/long-as-long)
-    (define *short py/int-as-long)
     (define *float py/float-as-double)
-    (define *str py/string-as-string)
+    (define *str py/bytes-as-string)
 
     (define py-add py/number-add)
     (define py-sub py/number-subtract)

@@ -4,25 +4,9 @@
 
 I haven't prepared the makefile yet, so it will need some manual settings.
 
-Compile `./c/py.c` file with `cc -fPIC -shared -o ../py.so py.c` to make a shared object (.so) file.
+Compile `./c/py.c` file with `cc -fPIC -shared  -L/Library/Frameworks/Python.framework/Versions/3.7/lib/ -lpython3.7 -o ../py.so py.c` to make a shared object (.so) file.
 
 Note that depending on the system, you may need to manually specify the path to `python.h`.
-
-For me, with my mac it just:
-
-`#include  <Python/Python.h>`
-
-In other cases:
-
-`#include "/Library/Frameworks/Python.framework/Versions/3.5/include/python3.5m/Python.h"`
-
-or
-
-`#include "/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7/Python.h"`
-
-etc.
-
-Note that python belongs to a framework on mac, so with `-framework` when run cc command: `cc -fPIC -shared -framework Python -o ../py.so py.c`
 
 
 # Definition:

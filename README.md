@@ -45,7 +45,7 @@ See https://github.com/guenchi/numpy for more python library binding exemples.
 
 https://github.com/JuliaPy/PyCall.jl/blob/master/src/PyCall.jl
 
-https://docs.python.org/2/c-api/index.html
+https://docs.python.org/3.7/c-api/index.html
 
 https://docs.python.org/2.5/ext/callingPython.html
 

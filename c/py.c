@@ -1,9 +1,5 @@
-#include  <Python/Python.h>
+#include "/Library/Frameworks/Python.framework/Versions/3.7/include/python3.7m/Python.h"
 
-int _PyInt_Check(PyObject *p)
-{
-    return PyInt_Check(p);
-}
 
 int _PyLong_Check(PyObject *p)
 {
@@ -20,9 +16,9 @@ int _PyComplex_Check(PyObject *p)
     return PyComplex_Check(p);
 }
 
-int _PyString_Check(PyObject *p)
+int _PyBytes_Check(PyObject *p)
 {
-    return PyString_Check(p);
+    return PyBytes_Check(p);
 }
 
 int _PyList_Check(PyObject *p)

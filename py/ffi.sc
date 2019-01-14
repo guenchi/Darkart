@@ -52,13 +52,6 @@
         py/number-invert
         py/number-absolute
         py/number-negative
-
-        py/int-check?
-        py/int-from-long
-        py/int-from-size_t
-        py/int-from-ssize_t
-        py/int-as-long
-        py/int-as-ssize_t
         
         py/long-check?
         py/long-from-long
@@ -84,9 +77,9 @@
         py/complex-real-as-double
         py/complex-imag-as-double
         
-        py/string-check?
-        py/string-from-string
-        py/string-as-string
+        py/bytes-check?
+        py/bytes-from-string
+        py/bytes-as-string
 
         py/list-check?
         py/list-new
@@ -216,7 +209,7 @@
     (foreign-procedure "PyNumber_Multiply" (uptr uptr) uptr))
 
 (define py/number-divide
-    (foreign-procedure "PyNumber_Divide" (uptr uptr) uptr))
+    (foreign-procedure "PyNumber_TrueDivide" (uptr uptr) uptr))
 
 (define py/number-floor-divide
     (foreign-procedure "PyNumber_FloorDivide" (uptr uptr) uptr))
@@ -247,24 +240,6 @@
 
 (define py/number-negative
     (foreign-procedure "PyNumber_Negative" (uptr) uptr))
-
-(define py/int-check?
-    (foreign-procedure "_PyInt_Check" (uptr) boolean))
-
-(define py/int-from-long
-    (foreign-procedure "PyInt_FromLong" (long) uptr))
-
-(define py/int-from-size_t
-    (foreign-procedure "PyInt_FromSize_t" (size_t) uptr))
-
-(define py/int-from-ssize_t
-    (foreign-procedure "PyInt_FromSsize_t" (ssize_t) uptr))
-
-(define py/int-as-long
-    (foreign-procedure "PyInt_AsLong" (uptr) long))
-
-(define py/int-as-ssize_t
-    (foreign-procedure "PyInt_AsSsize_t" (uptr) ssize_t))
 
 (define py/long-check?
     (foreign-procedure "_PyLong_Check" (uptr) boolean))
@@ -329,14 +304,14 @@
 (define py/complex-imag-as-double
     (foreign-procedure "PyComplex_ImagAsDouble" (uptr) double))
     
-(define py/string-check?
-    (foreign-procedure "_PyString_Check" (uptr) boolean))
+(define py/bytes-check?
+    (foreign-procedure "_PyBytes_Check" (uptr) boolean))
 
-(define py/string-from-string
-    (foreign-procedure "PyString_FromString" (string) uptr))
+(define py/bytes-from-string
+    (foreign-procedure "PyBytes_FromString" (string) uptr))
 
-(define py/string-as-string
-    (foreign-procedure "PyString_AsString" (uptr) string))
+(define py/bytes-as-string
+    (foreign-procedure "PyBytes_AsString" (uptr) string))
 
 (define py/list-check?
     (foreign-procedure "_PyList_Check" (uptr) boolean))
