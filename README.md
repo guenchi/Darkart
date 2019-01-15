@@ -38,7 +38,17 @@ https://github.com/guenchi/Darkart/blob/master/manual/python.md
 0.08715574274765817 0.10452846326765346 0.12186934340514748 0.13917310096006544)
 ```
 
-See https://github.com/guenchi/numpy for more python library binding exemples.
+### The eco-system which base on Darkart:
+
+https://github.com/guenchi/NumPy
+
+https://github.com/guenchi/SciPy
+
+https://github.com/guenchi/SymPy
+
+https://github.com/guenchi/Matplotlib
+
+(which is more python library binding exemples)
 
 
 ### Sources:
