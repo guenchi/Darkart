@@ -6,7 +6,7 @@ This project is inspired by the Julia language. The FFI interface provided by Ch
 
 Priority: Python ✅ > Julia > Javascript > OCaml > lua ✅ 
 
-Eco-system: [NumPy](https://github.com/guenchi/NumPy) ✅ [SciPy](https://github.com/guenchi/SciPy) :construction: [SymPy](https://github.com/guenchi/SymPy) :construction: [Matplotlib](https://github.com/guenchi/Matplotlib) ✅ [Pandas](https://github.com/guenchi/Pandas) :construction:
+Ecosystem: [NumPy](https://github.com/guenchi/NumPy) ✅ [SciPy](https://github.com/guenchi/SciPy) :construction: [SymPy](https://github.com/guenchi/SymPy) :construction: [Matplotlib](https://github.com/guenchi/Matplotlib) ✅ [Pandas](https://github.com/guenchi/Pandas) :construction:
 
 
 ### Manual
@@ -41,7 +41,7 @@ https://github.com/guenchi/Darkart/blob/master/manual/python.md
 0.08715574274765817 0.10452846326765346 0.12186934340514748 0.13917310096006544)
 ```
 
-### The eco-system which base on Darkart:
+### The ecosystem which base on Darkart:
 
 https://github.com/guenchi/NumPy
 

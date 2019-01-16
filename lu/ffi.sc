@@ -26,9 +26,26 @@
 
 
 (library (darkart lu ffi)
-    (export)
+    (export
+        lual-newstate
+        lual-openlibs
+        lua-close
+        )
     (import
         (chezscheme))
+
+
+    (define lib (load-shared-object "./lib/darkart/lu.so"))
+
+    (define lual-newstate
+        (foreign-procedure "luaL_newstate" () uptr))
+
+    (define lual-openlibs
+        (foreign-procedure "luaL_openlibs" (uptr) uptr))   
+           
+    (define lua-close
+        (foreign-procedure "lua_close" (uptr) uptr))  
+            
 
 
 )
