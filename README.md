@@ -6,7 +6,7 @@ This project is inspired by the Julia language. The FFI interface provided by Ch
 
 Priority: Python ✅ > Julia > Javascript > OCaml > lua ✅ 
 
-Eco-system: [NumPy](https://github.com/guenchi/NumPy) ✅ (https://github.com/guenchi/SciPy) 🔧 (https://github.com/guenchi/SymPy) 🔧 (https://github.com/guenchi/Matplotlib) ✅ (https://github.com/guenchi/Pandas) 🔧
+Eco-system: [NumPy](https://github.com/guenchi/NumPy) ✅ [SciPy](https://github.com/guenchi/SciPy) 🔧 [SymPy](https://github.com/guenchi/SymPy) 🔧 [Matplotlib](https://github.com/guenchi/Matplotlib) ✅ [Pandas](https://github.com/guenchi/Pandas) 🔧
 
 
 ### Manual
