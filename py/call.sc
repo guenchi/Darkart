@@ -277,7 +277,7 @@
                 (if (< n len)
                     (if (zero? (ptuple-set! *p n (car args)))
                         (loop (+ n 1) (cdr args))
-                        (error 'py-args "error when set arg" (car args)))
+                        (error 'py-args "error when set args" (car args)))
                     *p))))
 
 
@@ -289,7 +289,7 @@
                 (if (< n len)
                     (if (zero? (ptuple-set! *p n (car args)))
                         (loop (+ n 1) (cdr args))
-                        (error 'py-args* "error when set arg" (car args)))
+                        (error 'py-args* "error when set args" (car args)))
                     *p))))
             
 
