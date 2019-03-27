@@ -69,7 +69,6 @@
         py-args
         py-args*
         py-call
-        py-fcall
         py-call*
         py-func
         py-func*
@@ -301,71 +300,6 @@
             (py-dec *k)
             *r))
 
-
-    (define notzero?
-        (lambda (x)
-            (not (zero? x))))
-
-
-    (define py-fcall
-        (case-lambda 
-            ((f a)
-                (define *p (make-ptuple 1))
-                (cond
-                    ((notzero? (ptuple-set! *p 0 a))
-                        (error 'py-fcall "error when set args" a))
-                    (else
-                        (py/object-call-object f *p))))
-            ((f a b)
-                (define *p (make-ptuple 2))
-                (cond
-                    ((notzero? (ptuple-set! *p 0 a))
-                        (error 'py-fcall "error when set args" a))
-                    ((notzero? (ptuple-set! *p 1 b))
-                        (error 'py-fcall "error when set args" b))
-                    (else
-                        (py/object-call-object f *p))))
-            ((f a b c)
-                (define *p (make-ptuple 3))
-                (cond
-                    ((notzero? (ptuple-set! *p 0 a))
-                        (error 'py-fcall "error when set args" a))
-                    ((notzero? (ptuple-set! *p 1 b))
-                        (error 'py-fcall "error when set args" b))
-                    ((notzero? (ptuple-set! *p 2 c))
-                        (error 'py-fcall "error when set args" c))
-                    (else
-                        (py/object-call-object f *p))))
-            ((f a b c d)
-                (define *p (make-ptuple 4))
-                (cond
-                    ((notzero? (ptuple-set! *p 0 a))
-                        (error 'py-fcall "error when set args" a))
-                    ((notzero? (ptuple-set! *p 1 b))
-                        (error 'py-fcall "error when set args" b))
-                    ((notzero? (ptuple-set! *p 2 c))
-                        (error 'py-fcall "error when set args" c))
-                    ((notzero? (ptuple-set! *p 3 d))
-                        (error 'py-fcall "error when set args" d))
-                    (else
-                        (py/object-call-object f *p))))
-            ((f a b c d e)
-                (define *p (make-ptuple 5))
-                (cond
-                    ((notzero? (ptuple-set! *p 0 a))
-                        (error 'py-fcall "error when set args" a))
-                    ((notzero? (ptuple-set! *p 1 b))
-                        (error 'py-fcall "error when set args" b))
-                    ((notzero? (ptuple-set! *p 2 c))
-                        (error 'py-fcall "error when set args" c))
-                    ((notzero? (ptuple-set! *p 3 d))
-                        (error 'py-fcall "error when set args" d))
-                    ((notzero? (ptuple-set! *p 4 e))
-                        (error 'py-fcall "error when set args" e))
-                    (else
-                        (py/object-call-object f *p))))))
-
-                        
 
     (define py-call*
         (lambda (f . args)
