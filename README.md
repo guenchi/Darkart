@@ -4,6 +4,8 @@ A binary interface let Chez Scheme use Python, Lua, Ruby etc's library
 
 This project is inspired by the Julia language. The FFI interface provided by Chez is used to embed the interpreter or JIT compiler of other languages into the Scheme program (CPython, Luajit etc) or to link the compiled object code with the C binary interface. (OCaml, Golang etc).
 
+This library can be ported to other Scheme implementations, with [R6RS-AD](https://github.com/qobi/R6RS-AD).
+
 ***Priority***: Python ✅ > Julia > Javascript > OCaml > lua ✅ 
 
 ***Ecosystem***: [NumPy](https://github.com/guenchi/NumPy) ✅ [SciPy](https://github.com/guenchi/SciPy) :construction: [SymPy](https://github.com/guenchi/SymPy) :construction: [Matplotlib](https://github.com/guenchi/Matplotlib) ✅ [Pandas](https://github.com/guenchi/Pandas) :construction:
