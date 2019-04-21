@@ -1,17 +1,17 @@
 ;  MIT License
 
-;  Copyright guenchi (c) 2018 - 2019 
-         
+;  Copyright guenchi (c) 2018 - 2019
+
 ;  Permission is hereby granted, free of charge, to any person obtaining a copy
 ;  of this software and associated documentation files (the "Software"), to deal
 ;  in the Software without restriction, including without limitation the rights
 ;  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 ;  copies of the Software, and to permit persons to whom the Software is
 ;  furnished to do so, subject to the following conditions:
-         
+
 ;  The above copyright notice and this permission notice shall be included in all
 ;  copies or substantial portions of the Software.
-         
+
 ;  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 ;  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 ;  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -19,10 +19,6 @@
 ;  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 ;  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ;  SOFTWARE.
-
-
-
-
 
 
 (library (darkart py call)
@@ -48,6 +44,8 @@
         *complex
         *str
         p->stype
+
+        obj->bytes
 
         py-add
         py-sub
@@ -95,23 +93,23 @@
         pdict->alist*
 
         plist?
-        make-plist 
-        plist-length 
-        plist-ref 
+        make-plist
+        plist-length
+        plist-ref
         plist-set!
         plist-sref
         plist-sset!
-        plist-insert! 
-        plist-append! 
-        plist-sort! 
-        plist-reverse! 
-    
+        plist-insert!
+        plist-append!
+        plist-sort!
+        plist-reverse!
+
         ptuple?
-        make-ptuple 
-        ptuple-length 
-        ptuple-ref 
+        make-ptuple
+        ptuple-length
+        ptuple-ref
         ptuple-set!
-        ptuple-sref 
+        ptuple-sref
 
         pset?
         make-pset
@@ -121,7 +119,7 @@
         pset-del!
         pset-pop!
         pset-clear!
-        
+
         psequ?
         psequ->plist
         psequ->ptuple
@@ -137,21 +135,21 @@
         psequ-count
         psequ-contains
         psequ-index
-    
+
         pdict?
-        make-pdict 
-        pdict-length 
-        pdict-ref 
-        pdict-ref* 
-        pdict-set! 
-        pdict-set*! 
-        pdict-del! 
-        pdict-del*! 
+        make-pdict
+        pdict-length
+        pdict-ref
+        pdict-ref*
+        pdict-set!
+        pdict-set*!
+        pdict-del!
+        pdict-del*!
         pdict-clear!
-        pdict-copy 
-        pdict-keys 
-        pdict-values 
-        pdict-items 
+        pdict-copy
+        pdict-keys
+        pdict-values
+        pdict-items
 
         pmap?
         pmap-size
@@ -221,7 +219,7 @@
     (define pset-del! py/set-discard!)
     (define pset-pop! py/set-pop!)
     (define pset-clear! py/set-clear!)
-    
+
     (define psequ? py/sequence-check?)
     (define psequ->plist py/sequence-list)
     (define psequ->ptuple py/sequence-tuple)
@@ -237,7 +235,7 @@
     (define psequ-count py/sequence-count)
     (define psequ-contains py/sequence-contains)
     (define psequ-index py/sequence-index)
-    
+
     (define pdict? py/dict-check?)
     (define make-pdict py/dict-new)
     (define pdict-length py/dict-size)
@@ -260,9 +258,11 @@
     (define pmap-ref py/mapping-get-item-string)
     (define pmap-set! py/mapping-set-item-string!)
 
+
     (define py-import
         (lambda (x)
             (py/import-import-module (symbol->string x))))
+
 
     (define py-get
         (lambda (x y)
@@ -270,7 +270,7 @@
 
 
     (define py-args
-        (lambda args 
+        (lambda args
             (define len (length args))
             (define *p (make-ptuple len))
             (let loop ((n 0)(args args))
@@ -282,7 +282,7 @@
 
 
     (define py-args*
-        (lambda (args) 
+        (lambda (args)
             (define len (length args))
             (define *p (make-ptuple len))
             (let loop ((n 0)(args args))
@@ -291,7 +291,7 @@
                         (loop (+ n 1) (cdr args))
                         (error 'py-args* "error when set args" (car args)))
                     *p))))
-            
+
 
     (define py-call
         (lambda (f . args)
@@ -352,34 +352,34 @@
                 ((*str? x) (*str x))
                 (else (error 'p->stype "illegal input" x)))))
 
-    
+
     (define complex
         (lambda (c)
-            (py/complex-from-doubles 
+            (py/complex-from-doubles
                 (cfl-real-part c)
                 (cfl-imag-part c))))
 
-    
+
     (define *complex
         (lambda (*c)
-            (fl-make-rectangular 
+            (fl-make-rectangular
                 (py/complex-real-as-double *c)
                 (py/complex-imag-as-double *c))))
 
 
-    (define-syntax plist-ref 
+    (define-syntax plist-ref
         (syntax-rules ()
             ((_ *p k)(py/list-get-item *p k))
             ((_ *p k* ... k)(plist-ref (plist-ref *p k* ...) k))))
 
-        
+
     (define-syntax plist-set!
         (syntax-rules ()
             ((_ *p k v)(py/list-set-item! *p k v))
             ((_ *p k* ... k v)(plist-set! (plist-ref *p k* ...) k v))))
 
 
-    (define-syntax plist-sref 
+    (define-syntax plist-sref
         (syntax-rules ()
             ((_ *p b e)(py/list-get-slice *p b e))
             ((_ *p k* ... (b e))(plist-sref (plist-ref *p k* ...) b e))))
@@ -389,21 +389,21 @@
         (syntax-rules ()
             ((_ *p b e l)(py/list-set-slice! *p b e l))
             ((_ *p k* ... (b e) l)(plist-sset! (plist-ref *p k* ...) b e l))))
-            
-        
-    (define-syntax ptuple-ref 
+
+
+    (define-syntax ptuple-ref
         (syntax-rules ()
             ((_ *p k)(py/tuple-get-item *p k))
             ((_ *p k* ... k)(plist-ref (ptuple-ref *p k* ...) k))))
-        
-    
+
+
     (define-syntax ptuple-set!
         (syntax-rules ()
             ((_ *p k v)(py/tuple-set-item! *p k v))
             ((_ *p k* ... k v)(ptuple-set! (ptulpe-ref *p k* ...) k v))))
 
-        
-    (define-syntax ptuple-sref 
+
+    (define-syntax ptuple-sref
         (syntax-rules ()
             ((_ *p b e)(py/tuple-get-slice *p b e))
             ((_ *p k* ... (b e))(ptuple-sref (ptuple-ref *p k* ...) b e))))
@@ -429,7 +429,7 @@
     (define list->plist
         (case-lambda
             ((x)(*list->plist s->ptype x))
-            ((f x)(*list->plist f x))))                
+            ((f x)(*list->plist f x))))
 
 
     (define list->plist*
@@ -453,18 +453,18 @@
                         (error 'list->ptuple "error when set value" n (i (car lst))))
                     *p))))
 
-              
+
     (define list->ptuple
         (case-lambda
             ((x)(*list->ptuple s->ptype x))
-            ((f x)(*list->ptuple f x))))                    
+            ((f x)(*list->ptuple f x))))
 
 
     (define list->ptuple*
         (lambda (x)
             (list->ptuple (lambda (x) x) x)))
-    
-    
+
+
     (define *plist->list
         (lambda (f *p)
             (define len (plist-length *p))
@@ -535,8 +535,8 @@
     (define vector->plist
         (case-lambda
             ((x)(*vector->plist s->ptype x))
-            ((f x)(*vector->plist f x))))  
-    
+            ((f x)(*vector->plist f x))))
+
 
     (define vector->plist*
         (lambda (x)
@@ -559,11 +559,11 @@
                         (error 'vector->ptuple "error when set value" n (i (vector-ref vct n))))
                     *p))))
 
-    
+
     (define vector->ptuple
         (case-lambda
             ((x)(*vector->ptuple s->ptype x))
-            ((f x)(*vector->ptuple f x))))  
+            ((f x)(*vector->ptuple f x))))
 
 
     (define vector->ptuple*
@@ -615,10 +615,12 @@
                         (l (+ n 1)))
                     v))))
 
+
     (define ptuple->vector
         (case-lambda
             ((x)(*ptuple->vector p->stype x))
             ((f x)(*ptuple->vector f x))))
+
 
     (define ptuple->vector*
         (lambda (x)
@@ -633,18 +635,19 @@
                     (if (null? r)
                         *p
                         (l (car r)(cdr r)))
-                    (error 'alist->pdict "error when set value" (symbol->string (car i)) (f (cdr i))))))) 
+                    (error 'alist->pdict "error when set value" (symbol->string (car i)) (f (cdr i)))))))
 
 
     (define alist->pdict
         (case-lambda
             ((x)(*alist->pdict s->ptype x))
             ((f x)(*alist->pdict f x))))
-                    
+
+
     (define alist->pdict*
         (lambda (x)
             (*alist->pdict (lambda (x) x) x)))
- 
+
 
     (define *pdict->alist
         (lambda (f *p)
@@ -663,19 +666,29 @@
             ((x)(*pdict->alist p->stype x))
             ((f x)(*pdict->alist f x))))
 
-        
+
     (define pdict->alist*
         (lambda (x)
             (*pdict->alist (lambda (x) x) x)))
 
-   
-    (define py-display
-        (lambda (x)
-            (display 
-                (*str
-                    (py/object-str x)))))
 
+    (define obj->bytes
+        (lambda (obj)
+            (let ((string (py/object-str obj)))
+              (define *bytes (py/unicode-as-encoded-string string "utf-8" "strict"))
+              (py-dec string)
+              *bytes)))
+
+
+    (define py-display
+        (lambda (obj)
+            (let ([obj->str (lambda (obj)
+                      (define *bytes (obj->bytes obj))
+                      (define string (*str *bytes))
+                      (py-dec *bytes)
+                      string)])
+                (display (if (*str? obj)
+                             (*str obj)
+                             (obj->str obj))))))
 
 )
-
-
