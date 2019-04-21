@@ -1,17 +1,17 @@
 ;  MIT License
 
-;  Copyright guenchi (c) 2018 - 2019 
-         
+;  Copyright guenchi (c) 2018 - 2019
+
 ;  Permission is hereby granted, free of charge, to any person obtaining a copy
 ;  of this software and associated documentation files (the "Software"), to deal
 ;  in the Software without restriction, including without limitation the rights
 ;  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 ;  copies of the Software, and to permit persons to whom the Software is
 ;  furnished to do so, subject to the following conditions:
-         
+
 ;  The above copyright notice and this permission notice shall be included in all
 ;  copies or substantial portions of the Software.
-         
+
 ;  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 ;  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 ;  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -52,7 +52,7 @@
         py/number-invert
         py/number-absolute
         py/number-negative
-        
+
         py/long-check?
         py/long-from-long
         py/long-from-unsigned-long
@@ -76,10 +76,12 @@
         py/complex-from-doubles
         py/complex-real-as-double
         py/complex-imag-as-double
-        
+
         py/bytes-check?
         py/bytes-from-string
         py/bytes-as-string
+        py/unicode-as-encoded-string
+        py/unicode-as-from-string
 
         py/list-check?
         py/list-new
@@ -147,7 +149,7 @@
         py/mapping-has-key?
         py/mapping-get-item-string
         py/mapping-set-item-string!
-        
+
         py/run-simple-file
         py/run-file
         py/run-file-exflags
@@ -163,14 +165,20 @@
         py/module-get-dict
         py/module-get-name
         py/module-get-filename
-        
+
         py/object-get-attr-string
         py/object-call
         py/object-call-object
         py/object-str
+        py/object-bytes
+        py/object-repr
         py/callable-check?
-    
+
+        py/unicode-as-encoded-string
+
         py-compile-string
+        py/err-print
+        py/err-print-ex
         )
     (import
         (chezscheme))
@@ -180,7 +188,7 @@
 (define py-sigle-input 256)
 (define py-file-input 257)
 (define py-eval-input 258)
-    
+
 (define py-initialize
     (foreign-procedure "Py_Initialize" () void))
 
@@ -288,7 +296,7 @@
 
 (define py/float-from-double
     (foreign-procedure "PyFloat_FromDouble" (double) uptr))
-    
+
 (define py/float-as-double
     (foreign-procedure "PyFloat_AsDouble" (uptr) double))
 
@@ -297,13 +305,13 @@
 
 (define py/complex-from-doubles
     (foreign-procedure "PyComplex_FromDoubles" (double double) uptr))
-    
+
 (define py/complex-real-as-double
     (foreign-procedure "PyComplex_RealAsDouble" (uptr) double))
 
 (define py/complex-imag-as-double
     (foreign-procedure "PyComplex_ImagAsDouble" (uptr) double))
-    
+
 (define py/bytes-check?
     (foreign-procedure "_PyBytes_Check" (uptr) boolean))
 
@@ -312,6 +320,12 @@
 
 (define py/bytes-as-string
     (foreign-procedure "PyBytes_AsString" (uptr) string))
+
+(define py/unicode-as-encoded-string
+    (foreign-procedure "PyUnicode_AsEncodedString" (uptr string string) uptr))
+
+(define py/unicode-as-from-string
+    (foreign-procedure "PyUnicode_FromString" (string) uptr))
 
 (define py/list-check?
     (foreign-procedure "_PyList_Check" (uptr) boolean))
@@ -372,7 +386,7 @@
 
 (define py/set-size
     (foreign-procedure "PySet_Size" (uptr) int))
-    
+
 (define py/set-contains?
     (foreign-procedure "PySet_Contains" (uptr uptr) int))
 
@@ -403,7 +417,7 @@
 (define py/sequence-get-item
     (foreign-procedure "PySequence_GetItem" (uptr int) uptr))
 
-(define py/sequence-get-slice 
+(define py/sequence-get-slice
     (foreign-procedure "PySequence_GetSlice" (uptr int int) uptr))
 
 (define py/sequence-set-item!
@@ -510,7 +524,7 @@
 
 (define py/run-string-flags
     (foreign-procedure "PyRun_StringFlags" (string int uptr uptr uptr) uptr))
-    
+
 (define py/import-import
     (foreign-procedure "PyImport_Import" (uptr) uptr))
 
@@ -556,7 +570,7 @@
 (define py/object-call-object
     (foreign-procedure "PyObject_CallObject" (uptr uptr) uptr))
 
-(define py/object-str 
+(define py/object-str
     (foreign-procedure "PyObject_Str" (uptr) uptr))
 
 (define py/callable-check?
@@ -565,6 +579,16 @@
 (define py-compile-string
     (foreign-procedure "Py_CompileString" (string string int) uptr))
 
+(define py/object-bytes
+    (foreign-procedure "PyObject_Bytes" (uptr) uptr))
 
+(define py/object-repr
+    (foreign-procedure "PyObject_Repr" (uptr) uptr))
+
+(define py/err-print-ex
+    (foreign-procedure "PyErr_PrintEx" (int) void))
+
+(define py/err-print
+    (foreign-procedure "PyErr_Print" () void))
 
 )
