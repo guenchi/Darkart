@@ -178,6 +178,7 @@
 
         py-compile-string
         py/err-print
+        py/err-print-ex
         )
     (import
         (chezscheme))
@@ -584,6 +585,10 @@
 (define py/object-repr
     (foreign-procedure "PyObject_Repr" (uptr) uptr))
 
-(define py/err-print
+(define py/err-print-ex
     (foreign-procedure "PyErr_PrintEx" (int) void))
+
+(define py/err-print
+    (foreign-procedure "PyErr_Print" () void))
+
 )
