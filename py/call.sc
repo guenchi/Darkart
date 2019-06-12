@@ -28,22 +28,38 @@
     py-inc
     py-dec
 
+
+    py-int?
+    py-float?
+    py-complex?
+    py-str?
+    s->pint
+    s->pfloat
+    s->pcomplex
+    s->pstr
+    s->ptype
+    p->sint
+    p->sfloat
+    p->scomplex
+    p->sstr
+    p->stype
+
+
     *int?
     *float?
     *complex?
     *str?
-
     int
     float
     complex
     str
-    s->ptype
-
+    auto
     *int
     *float
     *complex
     *str
-    p->stype
+    *auto
+
 
     obj->bytes
 
@@ -171,18 +187,31 @@
   (define py-inc py-incref)
   (define py-dec py-decref)
 
-  (define *int? py/long-check?)
-  (define *float? py/float-check?)
-  (define *complex? py/complex-check?)
-  (define *str? py/bytes-check?)
+  (define py-int? py/long-check?)
+  (define py-float? py/float-check?)
+  (define py-complex? py/complex-check?)
+  (define py-str? py/bytes-check?)
 
-  (define int py/long-from-long)
-  (define float py/float-from-double)
-  (define str py/bytes-from-string)
+  (define *int? py-int?)
+  (define *float? py-float?)
+  (define *complex? py-complex?)
+  (define *str? py-str?)
 
-  (define *int py/long-as-long)
-  (define *float py/float-as-double)
-  (define *str py/bytes-as-string)
+  (define s->pint py/long-from-long)
+  (define s->pfloat py/float-from-double)
+  (define s->pstr py/bytes-from-string)
+
+  (define int s->pint)
+  (define float s->pfloat)
+  (define str s->pstr)
+
+  (define p->sint py/long-as-long)
+  (define p->sfloat py/float-as-double)
+  (define p->sstr py/bytes-as-string)
+
+  (define *int p->sint)
+  (define *float p->sfloat)
+  (define *str p->sstr)
 
   (define py-add py/number-add)
   (define py-sub py/number-subtract)
@@ -342,6 +371,8 @@
         ((string? x) (str x))
         (else (error 's->ptype "illegal input" x)))))
 
+  (define auto s->ptype)
+
 
   (define p->stype
     (lambda (x)
@@ -352,20 +383,25 @@
         ((*str? x) (*str x))
         (else (error 'p->stype "illegal input" x)))))
 
+  (define *auto p->stype)
 
-  (define complex
+
+  (define s->pcomplex
     (lambda (c)
       (py/complex-from-doubles
         (cfl-real-part c)
         (cfl-imag-part c))))
 
+  (define complex s->pcomplex)      
 
-  (define *complex
+
+  (define p->scomplex
     (lambda (*c)
       (fl-make-rectangular
         (py/complex-real-as-double *c)
         (py/complex-imag-as-double *c))))
 
+  (define *complex p->scomplex)
 
   (define-syntax plist-ref
     (syntax-rules ()
