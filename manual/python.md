@@ -178,13 +178,21 @@ It usually won't be used directly because it's included in `(py-call)`,`(py-call
 ### Number and String
 
 ```scheme
-procedure: (*int? *po)
+procedure: (py-int? *po)
 
-procedure: (*float? *po)
+alias: (*int?)
 
-procedure: (*complex? *po)
+procedure: (py-float? *po)
 
-procedure: (*str? *po*)
+alias: (*float?)
+
+procedure: (py-complex? *po)
+
+alias: (*complex?)
+
+procedure: (py-str? *po*)
+
+alias: (*str?)
 
 return: boolean
 ```
@@ -192,13 +200,21 @@ Type Check for Python's number and string.
 
 
 ```scheme
-procedure: (int int)
+procedure: (s->pint int)
 
-procedure: (float float)
+alias: (int)
 
-procedure: (complex cflonum)
+procedure: (s->pfloat float)
 
-procedure: (str string)
+alias: (float)
+
+procedure: (s->pcomplex cflonum)
+
+alias: (complex)
+
+procedure: (s->pstr string)
+
+alias: (str)
 
 return: *po<number,string>
 ```
@@ -215,19 +231,27 @@ Exemple:
 ```
 
 ```scheme
-procedure: (*int *po<number>)
+procedure: (p->sint *po<number>)
+
+alias: (*int)
 
 return: number<int>
 
-procedure: (*float *po<number>)
+procedure: (p->sfloat *po<number>)
+
+alias: (*float)
 
 return: number<float>
 
-procedure: (*complex? *po)
+procedure: (p->scomplex *po)
+
+alias: (*complex)
 
 return: number<cflonum>
 
-procedure: (*str *po<string>)
+procedure: (p->sstr *po<string>)
+
+alias: (*str)
 
 return: string
 ```
@@ -246,9 +270,13 @@ Exemple:
 ```scheme
 procedure: (s->ptype int/float/cflonum/string>)
 
+alias: (auto)
+
 return: *po<int/float/complex/string>
 
 procedure: (p->stype *po<int/float/complex/string>)
+
+alias: (*auto)
 
 return: int/float/cflonum/string
 ```
@@ -257,11 +285,11 @@ Automatic simple type detection and conversion.
 
 Exemple:
 ```scheme
-(p->stype (int 8))                => 8
+(*auto (int 8))                 => 8
 
-(p->stype (float 3.1415926))    => 3.1415926
+(*auto (float 3.1415926))       => 3.1415926
 
-(p->stype (str "foo"))            => "foo"
+(*auto (str "foo"))             => "foo"
 
 ```
 
