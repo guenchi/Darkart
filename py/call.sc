@@ -29,10 +29,10 @@
     py-dec
 
 
-    py-int?
-    py-float?
-    py-complex?
-    py-str?
+    pint?
+    pfloat?
+    pcomplex?
+    pstr?
     s->pint
     s->pfloat
     s->pcomplex
@@ -187,10 +187,10 @@
   (define py-inc py-incref)
   (define py-dec py-decref)
 
-  (define py-int? py/long-check?)
-  (define py-float? py/float-check?)
-  (define py-complex? py/complex-check?)
-  (define py-str? py/bytes-check?)
+  (define pint? py/long-check?)
+  (define pfloat? py/float-check?)
+  (define pcomplex? py/complex-check?)
+  (define pstr? py/bytes-check?)
 
   (define *int? py-int?)
   (define *float? py-float?)
