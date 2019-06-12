@@ -178,19 +178,19 @@ It usually won't be used directly because it's included in `(py-call)`,`(py-call
 ### Number and String
 
 ```scheme
-procedure: (py-int? *po)
+procedure: (pint? *po)
 
 alias: (*int?)
 
-procedure: (py-float? *po)
+procedure: (pfloat? *po)
 
 alias: (*float?)
 
-procedure: (py-complex? *po)
+procedure: (pcomplex? *po)
 
 alias: (*complex?)
 
-procedure: (py-str? *po*)
+procedure: (pstr? *po*)
 
 alias: (*str?)
 
