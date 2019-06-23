@@ -521,7 +521,7 @@
 
   (define plist->list
     (case-lambda
-      ((x)(*plist->list p->stype x))
+      ((x)(*plist->list *auto x))
       ((f x)(*plist->list f x))))
 
 
@@ -546,7 +546,7 @@
 
   (define ptuple->list
     (case-lambda
-      ((x)(*ptuple->list p->stype x))
+      ((x)(*ptuple->list *auto x))
       ((f x)(*ptuple->list f x))))
 
 
@@ -630,7 +630,7 @@
 
   (define plist->vector
     (case-lambda
-      ((x)(*plist->vector p->stype x))
+      ((x)(*plist->vector *auto x))
       ((f x)(*plist->vector f x))))
 
 
@@ -658,7 +658,7 @@
 
   (define ptuple->vector
     (case-lambda
-      ((x)(*ptuple->vector p->stype x))
+      ((x)(*ptuple->vector *auto x))
       ((f x)(*ptuple->vector f x))))
 
 
@@ -703,7 +703,7 @@
 
   (define pdict->alist
     (case-lambda
-      ((x)(*pdict->alist p->stype x))
+      ((x)(*pdict->alist *auto x))
       ((f x)(*pdict->alist f x))))
 
 
