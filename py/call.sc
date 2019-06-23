@@ -182,111 +182,114 @@
 
 
 
-  (define py-init py-initialize)
-  (define py-fin py-finalize)
-  (define py-inc py-incref)
-  (define py-dec py-decref)
+  (alias py-init py-initialize)
+  (alias py-fin py-finalize)
+  (alias py-inc py-incref)
+  (alias py-dec py-decref)
 
-  (define pint? py/long-check?)
-  (define pfloat? py/float-check?)
-  (define pcomplex? py/complex-check?)
-  (define pstr? py/bytes-check?)
+  (alias pint? py/long-check?)
+  (alias pfloat? py/float-check?)
+  (alias pcomplex? py/complex-check?)
+  (alias pstr? py/bytes-check?)
 
-  (define *int? py-int?)
-  (define *float? py-float?)
-  (define *complex? py-complex?)
-  (define *str? py-str?)
+  (alias *int? py-int?)
+  (alias *float? py-float?)
+  (alias *complex? py-complex?)
+  (alias *str? py-str?)
 
-  (define s->pint py/long-from-long)
-  (define s->pfloat py/float-from-double)
-  (define s->pstr py/bytes-from-string)
+  (alias s->pint py/long-from-long)
+  (alias s->pfloat py/float-from-double)
+  (alias s->pstr py/bytes-from-string)
 
-  (define int s->pint)
-  (define float s->pfloat)
-  (define str s->pstr)
+  (alias int s->pint)
+  (alias float s->pfloat)
+  (alias str s->pstr)
 
-  (define p->sint py/long-as-long)
-  (define p->sfloat py/float-as-double)
-  (define p->sstr py/bytes-as-string)
+  (alias p->sint py/long-as-long)
+  (alias p->sfloat py/float-as-double)
+  (alias p->sstr py/bytes-as-string)
 
-  (define *int p->sint)
-  (define *float p->sfloat)
-  (define *str p->sstr)
+  (alias *int p->sint)
+  (alias *float p->sfloat)
+  (alias *str p->sstr)
 
-  (define py-add py/number-add)
-  (define py-sub py/number-subtract)
-  (define py-mul py/number-multiply)
-  (define py-div py/number-divide)
-  (define py-fdiv py/number-floor-divide)
-  (define py-mod py/number-divmod)
-  (define py-lsh py/number-lshift)
-  (define py-rsh py/number-rshift)
-  (define py-and py/number-and)
-  (define py-or py/number-or)
-  (define py-xor py/number-xor)
-  (define py-inv py/number-invert)
-  (define py-abs py/number-absolute)
-  (define py-neg py/number-negative)
+  (alias py-add py/number-add)
+  (alias py-sub py/number-subtract)
+  (alias py-mul py/number-multiply)
+  (alias py-div py/number-divide)
+  (alias py-fdiv py/number-floor-divide)
+  (alias py-mod py/number-divmod)
+  (alias py-lsh py/number-lshift)
+  (alias py-rsh py/number-rshift)
+  (alias py-and py/number-and)
+  (alias py-or py/number-or)
+  (alias py-xor py/number-xor)
+  (alias py-inv py/number-invert)
+  (alias py-abs py/number-absolute)
+  (alias py-neg py/number-negative)
 
-  (define plist? py/list-check?)
-  (define make-plist py/list-new)
-  (define plist-length py/list-size)
-  (define plist-insert! py/list-insert!)
-  (define plist-append! py/list-append!)
-  (define plist-sort! py/list-sort!)
-  (define plist-reverse! py/list-reverse!)
+  (alias plist? py/list-check?)
+  (alias make-plist py/list-new)
+  (alias plist-length py/list-size)
+  (alias plist-insert! py/list-insert!)
+  (alias plist-append! py/list-append!)
+  (alias plist-sort! py/list-sort!)
+  (alias plist-reverse! py/list-reverse!)
 
-  (define ptuple? py/tuple-check?)
-  (define make-ptuple py/tuple-new)
-  (define ptuple-length py/tuple-size)
+  (alias ptuple? py/tuple-check?)
+  (alias make-ptuple py/tuple-new)
+  (alias ptuple-length py/tuple-size)
 
-  (define pset? py/set-check?)
-  (define make-pset py/set-new)
-  (define pset-length py/set-size)
-  (define pset-contains? py/set-contains?)
-  (define pset-add! py/set-add!)
-  (define pset-del! py/set-discard!)
-  (define pset-pop! py/set-pop!)
-  (define pset-clear! py/set-clear!)
+  (alias pset? py/set-check?)
+  (alias make-pset py/set-new)
+  (alias pset-length py/set-size)
+  (alias pset-contains? py/set-contains?)
+  (alias pset-add! py/set-add!)
+  (alias pset-del! py/set-discard!)
+  (alias pset-pop! py/set-pop!)
+  (alias pset-clear! py/set-clear!)
 
-  (define psequ? py/sequence-check?)
-  (define psequ->plist py/sequence-list)
-  (define psequ->ptuple py/sequence-tuple)
-  (define psequ-length py/sequence-size)
-  (define psequ-append py/sequence-concat)
-  (define psequ-repeat py/sequence-repeat)
-  (define psequ-ref py/sequence-get-item)
-  (define psequ-set! py/sequence-set-item!)
-  (define psequ-del! py/sequence-del-item!)
-  (define psequ-sref py/sequence-get-slice)
-  (define psequ-sset! py/sequence-set-slice!)
-  (define psequ-sdel! py/sequence-del-slice!)
-  (define psequ-count py/sequence-count)
-  (define psequ-contains py/sequence-contains)
-  (define psequ-index py/sequence-index)
+  (alias psequ? py/sequence-check?)
+  (alias psequ->plist py/sequence-list)
+  (alias psequ->ptuple py/sequence-tuple)
+  (alias psequ-length py/sequence-size)
+  (alias psequ-append py/sequence-concat)
+  (alias psequ-repeat py/sequence-repeat)
+  (alias psequ-ref py/sequence-get-item)
+  (alias psequ-set! py/sequence-set-item!)
+  (alias psequ-del! py/sequence-del-item!)
+  (alias psequ-sref py/sequence-get-slice)
+  (alias psequ-sset! py/sequence-set-slice!)
+  (alias psequ-sdel! py/sequence-del-slice!)
+  (alias psequ-count py/sequence-count)
+  (alias psequ-contains py/sequence-contains)
+  (alias psequ-index py/sequence-index)
 
-  (define pdict? py/dict-check?)
-  (define make-pdict py/dict-new)
-  (define pdict-length py/dict-size)
-  (define pdict-ref py/dict-get-item-string)
-  (define pdict-ref* py/dict-get-item)
-  (define pdict-set! py/dict-set-item-string!)
-  (define pdict-set*! py/dict-set-item!)
-  (define pdict-del! py/dict-del-item-string!)
-  (define pdict-del*! py/dict-del-item!)
-  (define pdict-clear! py/dict-clear!)
-  (define pdict-copy py/dict-copy)
-  (define pdict-keys py/dict-keys)
-  (define pdict-values py/dict-values)
-  (define pdict-items py/dict-items)
+  (alias pdict? py/dict-check?)
+  (alias make-pdict py/dict-new)
+  (alias pdict-length py/dict-size)
+  (alias pdict-ref py/dict-get-item-string)
+  (alias pdict-ref* py/dict-get-item)
+  (alias pdict-set! py/dict-set-item-string!)
+  (alias pdict-set*! py/dict-set-item!)
+  (alias pdict-del! py/dict-del-item-string!)
+  (alias pdict-del*! py/dict-del-item!)
+  (alias pdict-clear! py/dict-clear!)
+  (alias pdict-copy py/dict-copy)
+  (alias pdict-keys py/dict-keys)
+  (alias pdict-values py/dict-values)
+  (alias pdict-items py/dict-items)
 
-  (define pmap? py/mapping-check?)
-  (define pmap-size py/mapping-size)
-  (define pmap-has? py/mapping-has-key-string?)
-  (define pmap-has*? py/mapping-has-key?)
-  (define pmap-ref py/mapping-get-item-string)
-  (define pmap-set! py/mapping-set-item-string!)
+  (alias pmap? py/mapping-check?)
+  (alias pmap-size py/mapping-size)
+  (alias pmap-has? py/mapping-has-key-string?)
+  (alias pmap-has*? py/mapping-has-key?)
+  (alias pmap-ref py/mapping-get-item-string)
+  (alias pmap-set! py/mapping-set-item-string!)
 
+
+  (define self
+    (lambda (x) x))
 
   (define py-import
     (lambda (x)
@@ -371,7 +374,7 @@
         ((string? x) (str x))
         (else (error 's->ptype "illegal input" x)))))
 
-  (define auto s->ptype)
+  (alias auto s->ptype)
 
 
   (define p->stype
@@ -383,7 +386,7 @@
         ((*str? x) (*str x))
         (else (error 'p->stype "illegal input" x)))))
 
-  (define *auto p->stype)
+  (alias *auto p->stype)
 
 
   (define s->pcomplex
@@ -392,7 +395,7 @@
         (cfl-real-part c)
         (cfl-imag-part c))))
 
-  (define complex s->pcomplex)      
+  (alias complex s->pcomplex)      
 
 
   (define p->scomplex
@@ -401,7 +404,8 @@
         (py/complex-real-as-double *c)
         (py/complex-imag-as-double *c))))
 
-  (define *complex p->scomplex)
+  (alias *complex p->scomplex)
+
 
   (define-syntax plist-ref
     (syntax-rules ()
@@ -470,7 +474,7 @@
 
   (define list->plist*
     (lambda (x)
-      (*list->plist (lambda (x) x) x)))
+      (*list->plist self x)))
 
 
   (define *list->ptuple
@@ -498,7 +502,7 @@
 
   (define list->ptuple*
     (lambda (x)
-      (list->ptuple (lambda (x) x) x)))
+      (list->ptuple self x)))
 
 
   (define *plist->list
@@ -523,7 +527,7 @@
 
   (define plist->list*
     (lambda (x)
-      (*plist->list (lambda (x) x) x)))
+      (*plist->list self x)))
 
 
   (define *ptuple->list
@@ -548,7 +552,7 @@
 
   (define ptuple->list*
     (lambda (x)
-      (*ptuple->list (lambda (x) x) x)))
+      (*ptuple->list self x)))
 
 
   (define *vector->plist
@@ -576,7 +580,7 @@
 
   (define vector->plist*
     (lambda (x)
-      (vector->plist (lambda (x) x) x)))
+      (vector->plist self x)))
 
 
   (define *vector->ptuple
@@ -604,7 +608,7 @@
 
   (define vector->ptuple*
     (lambda (x)
-      (vector->ptuple (lambda (x) x) x)))
+      (vector->ptuple self x)))
 
 
   (define *plist->vector
@@ -632,7 +636,7 @@
 
   (define plist->vector*
     (lambda (x)
-      (*plist->vector (lambda (x) x) x)))
+      (*plist->vector self x)))
 
 
   (define *ptuple->vector
@@ -660,7 +664,7 @@
 
   (define ptuple->vector*
     (lambda (x)
-      (*ptuple->vector (lambda (x) x) x)))
+      (*ptuple->vector self x)))
 
 
   (define *alist->pdict
@@ -682,7 +686,7 @@
 
   (define alist->pdict*
     (lambda (x)
-      (*alist->pdict (lambda (x) x) x)))
+      (*alist->pdict self x)))
 
 
   (define *pdict->alist
@@ -705,7 +709,7 @@
 
   (define pdict->alist*
     (lambda (x)
-      (*pdict->alist (lambda (x) x) x)))
+      (*pdict->alist self x)))
 
 
   (define obj->bytes
