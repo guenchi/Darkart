@@ -502,7 +502,7 @@
 
   (define list->ptuple*
     (lambda (x)
-      (list->ptuple self x)))
+      (*list->ptuple self x)))
 
 
   (define *plist->list
@@ -580,7 +580,7 @@
 
   (define vector->plist*
     (lambda (x)
-      (vector->plist self x)))
+      (*vector->plist self x)))
 
 
   (define *vector->ptuple
@@ -608,7 +608,7 @@
 
   (define vector->ptuple*
     (lambda (x)
-      (vector->ptuple self x)))
+      (*vector->ptuple self x)))
 
 
   (define *plist->vector
