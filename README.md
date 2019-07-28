@@ -74,4 +74,4 @@ http://caml.inria.fr/pub/docs/manual-ocaml-4.00/manual033.html#htoc281
 
 ### Deprecated attempt:
 
-† https://github.com/guenchi/Py-call
+† https://github.com/guenchi/Darkart/tree/deprecated
