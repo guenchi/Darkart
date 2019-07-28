@@ -25,7 +25,7 @@
 
 
 
-(library (py-call py-call)
+(library (darkart py-call)
     (export
         py-init
         py-fin
@@ -41,7 +41,7 @@
     (import
         (scheme)
         (match match)
-        (enchantment py call))
+        (darkart py call))
 
 
     (define py-call
