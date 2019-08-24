@@ -192,10 +192,10 @@
   (alias pcomplex? py/complex-check?)
   (alias pstr? py/bytes-check?)
 
-  (alias *int? py-int?)
-  (alias *float? py-float?)
-  (alias *complex? py-complex?)
-  (alias *str? py-str?)
+  (alias *int? pint?)
+  (alias *float? pfloat?)
+  (alias *complex? pcomplex?)
+  (alias *str? pstr?)
 
   (alias s->pint py/long-from-long)
   (alias s->pfloat py/float-from-double)
