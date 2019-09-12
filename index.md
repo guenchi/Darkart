@@ -1,37 +1,19 @@
-## Welcome to GitHub Pages
+## What is the Darkart
 
-You can use the [editor on GitHub](https://github.com/guenchi/Darkart/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Darkart implements a set of interfaces to other language libraries that can be used to easily bind libraries to other languages.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Thanks to Chez Scheme's efficient binary interface, Darkart access to libraries in other languages is very efficient and may even be faster than native languages. For example, [Darkart-based Scheme binding of NumPy](https://github.com/guenchi/NumPy) is faster than the Python version.
 
-### Markdown
+Darkart solves the  dilemmas of libraries of lisp community.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Darkart's ecosystem
 
-```markdown
-Syntax highlighted code block
+- [NumPy](https://github.com/guenchi/NumPy)
 
-# Header 1
-## Header 2
-### Header 3
+- [SciPy](https://github.com/guenchi/SciPy)
 
-- Bulleted
-- List
+- [SymPy](https://github.com/guenchi/SymPy)
 
-1. Numbered
-2. List
+- [Matplotlib](https://github.com/guenchi/Matplotlib)
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/guenchi/Darkart/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+- [Pandas](https://github.com/guenchi/Pandas)
