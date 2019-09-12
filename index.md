@@ -1,3 +1,6 @@
+
+![image](img/darkart.jpg)
+
 ## What is the Darkart
 
 Darkart implements a set of interfaces to other language libraries that can be used to easily bind other languages' libraries to Scheme.
