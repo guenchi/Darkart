@@ -9,6 +9,15 @@ Thanks to Chez Scheme's efficient binary interface, Darkart access to libraries 
 
 Darkart solves the  dilemmas of libraries of lisp community.
 
+## Manual
+
+- [Python](manual/python.md)
+
+- [Lua](manual/lua.md)
+
+- [Julia](manual/julia.md)
+
+
 ## Darkart's ecosystem
 
 - [NumPy](https://github.com/guenchi/NumPy)
