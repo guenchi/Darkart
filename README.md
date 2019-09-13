@@ -13,7 +13,7 @@ This library can be ported to other Scheme implementations, with [r6rs-pffi](htt
 
 ### Manual
 
-https://github.com/guenchi/Darkart/blob/master/manual/python.md
+[Darkart Python Interface User’s Guide](https://guenchi.github.io/Darkart/manual/python.html)
 
 ### Exemple
 
