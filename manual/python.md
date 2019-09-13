@@ -4,7 +4,11 @@
 
 I haven't prepared the makefile yet, so it will need some manual settings.
 
-Compile `./c/py.c` file with `cc -fPIC -shared  -L/Library/Frameworks/Python.framework/Versions/3.7/lib/ -lpython3.7 -o ../py.so py.c` to make a shared object (.so) file.
+Compile `./c/py.c` file:
+
+```
+cc -fPIC -shared  -L/Library/Frameworks/Python.framework/Versions/3.7/lib/ -lpython3.7 -o ../py.so py.c
+```
 
 Note that depending on the system, you may need to manually specify the path to `python.h`.
 
@@ -39,7 +43,9 @@ The codes which manipulating the python library must between `(py-init)` and `(p
 
 Note that you can use it only on time, or you risk to get a 
 
-`Exception: invalid memory reference.  Some debugging context lost`
+```
+Exception: invalid memory reference.  Some debugging context lost
+```
 
 If you want to write a library which wrap some Python Library, you don't have to use `(py-init)` and `(py-fin)` in the library code. like: https://github.com/guenchi/numpy/blob/master/numpy.sc
 
