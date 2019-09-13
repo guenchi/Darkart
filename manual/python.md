@@ -1,6 +1,6 @@
 # Darkart: Python Interface User's Guide
 
-# Build
+## Build
 
 I haven't prepared the makefile yet, so it will need some manual settings.
 
@@ -9,7 +9,7 @@ Compile `./c/py.c` file with `cc -fPIC -shared  -L/Library/Frameworks/Python.fra
 Note that depending on the system, you may need to manually specify the path to `python.h`.
 
 
-# Definition:
+## Definition:
 
 `*po` representing a pointer to a Python Object reference.
 
@@ -27,7 +27,7 @@ In this document, *po may be followed by the type of Python object it points to,
 
 And *po{value} means a `*po` point to this value.
 
-# Py-call
+## Py-call
 
 Library `(darkart py call)`
 
@@ -732,7 +732,7 @@ procedure: (py-display *po)
 
 Display anything of Python Object.
 
-# Py-FFI
+## Py-FFI
 
 Library `(darkart py ffi)`
 
