@@ -59,7 +59,7 @@ You can go to python envirement do something like `import numpy` to test it.
 ```scheme
 procedure: (py-import libraryName)
 
-return: *po
+symbol -> *po
 ```
 
 Don't forget store the memory addres that procedure return, like:
@@ -73,9 +73,9 @@ https://github.com/guenchi/numpy/blob/master/numpy.sc
 ### Point
 
 ```scheme
-procedure: (py-get *po Name)
+procedure: (py-get Object Name)
 
-return: *po
+*po -> symbol -> *po
 ```
 This is the point syntax of Python.
 Like:
@@ -89,9 +89,9 @@ Like:
 ### Function
 
 ```scheme
-procedure: (py-call *po<callable> args ...)
+procedure: (py-call pyCallableObj args ...)
 
-return: *po
+*po -> any -> ... -> *po
 ```
 
 Exemple:
@@ -110,9 +110,9 @@ Exemple:
 There is a helper to generate a procedure with *po<callable>:
 
 ```scheme
-procedure: (py-func *po<callable>)
+procedure: (py-func pyCallableObj)
 
-return: *po<function>
+*po -> func
 ```
 
 Exemple:
@@ -126,9 +126,9 @@ Exemple:
 Some python function need named arguments, use:
 
 ```scheme
-procedure: ((py-call* *po<callable> args ...) alistOfNamedArgs)
+procedure: ((py-call* pyCallableObj args ...) namedArgs)
 
-return: *po
+*po -> any -> ... -> alist -> *po
 ```
 The alist is like: `'((symbol<Name> . *po) ...)`
 
@@ -155,9 +155,9 @@ Exemple:
 There is also a helper to generate a procedure which need named argument with *po<callable>:
 
 ```scheme
-procedure: (py-func* *po<callable>)
+procedure: (py-func* pyCallableObj)
 
-return: *po<function>
+*po -> func
 ```
 
 Exemple:
@@ -176,7 +176,7 @@ procedure: (py-args *po ...)
 
 procedure: (py-args* '(*po ...))
 
-return: *po<tuple>
+*po -> ... -> *po
 ```
 This procedure is use to prepare a tuple of arguments for Python's function. 
 It usually won't be used directly because it's included in `(py-call)`,`(py-call*)`,`(py-func)`and`(py-func*)`.
@@ -184,23 +184,23 @@ It usually won't be used directly because it's included in `(py-call)`,`(py-call
 ### Number and String
 
 ```scheme
-procedure: (pint? *po)
+procedure: (pint? pythonData)
 
 alias: (*int?)
 
-procedure: (pflt? *po)
+procedure: (pflt? pythonData)
 
 alias: (*flt?)
 
-procedure: (pcomplex? *po)
+procedure: (pcomplex? pythonData)
 
 alias: (*complex?)
 
-procedure: (pstr? *po*)
+procedure: (pstr? pythonData)
 
 alias: (*str?)
 
-return: boolean
+*po -> boolean
 ```
 Type Check for Python's number and string.
 
@@ -210,19 +210,26 @@ procedure: (s->pint int)
 
 alias: (int)
 
+int -> *po
+
 procedure: (s->pflt float)
 
 alias: (flt)
+
+float -> *po
 
 procedure: (s->pcomplex cflonum)
 
 alias: (complex)
 
+cflonum ->*po
+
 procedure: (s->pstr string)
 
 alias: (str)
 
-return: *po<number,string>
+string -> *po
+
 ```
 
 Covert a Scheme data to Python data.
@@ -237,29 +244,29 @@ Exemple:
 ```
 
 ```scheme
-procedure: (p->sint *po<number>)
+procedure: (p->sint pyInt)
 
 alias: (*int)
 
-return: number<int>
+*po -> number
 
-procedure: (p->sflt *po<number>)
+procedure: (p->sflt pyFloat)
 
 alias: (*flt)
 
-return: number<float>
+*po -> number
 
-procedure: (p->scomplex *po)
+procedure: (p->scomplex pyComplex)
 
 alias: (*complex)
 
-return: number<cflonum>
+*po -> cflonum
 
-procedure: (p->sstr *po<string>)
+procedure: (p->sstr pyStr)
 
 alias: (*str)
 
-return: string
+*po -> string
 ```
 
 Covert a Python data to Scheme data.
@@ -278,13 +285,13 @@ procedure: (s->ptype int/float/cflonum/string>)
 
 alias: (auto)
 
-return: *po<int/float/complex/string>
+any -> *po
 
 procedure: (p->stype *po<int/float/complex/string>)
 
 alias: (*auto)
 
-return: int/float/cflonum/string
+*po -> any
 ```
 
 Automatic simple type detection and conversion.
