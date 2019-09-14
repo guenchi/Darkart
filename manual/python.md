@@ -480,53 +480,57 @@ Exemple:
 ### Python's list
 
 ```scheme
-procedure: (plist? object)
+procedure: (plist? pyObject)
 
 *po -> boolean
 
-procedure: (make-plist int<size>)
+procedure: (make-plist size)
 
-return: *po<list>
+int -> *po
 
-procedure: (plist-length *po<list>)
+procedure: (plist-length pyList)
 
-return: int<size>
+*po -> int
 
-procedure: (plist-ref *po<list> int<index> ...)
+procedure: (plist-ref pyList index ...)
 
-return: *po
+*po -> int -> ... -> *po
 
-procedure: (plist-set! *po<list> int<index> ... *po)
+procedure: (plist-set! pyList index ... pyObject)
 
-return: 0 on success or -1 on failure.
+*po -> int -> ... -> *po -> 0 on success or -1 on failure.
 
-procedure: (plist-sref *po<list> int<begin> int<end>)
+procedure: (plist-sref pyList begin end)
 
-procedure: (plist-sref *po<list> int<index> ... (int<begin> int<end>))
+*po -> int -> int -> *po 
 
-return: *po<list>{slice}
+procedure: (plist-sref pyList index ... (begin end))
 
-procedure: (plist-sset! *po<list> int<begin> int<end> *po<list>)
+*po -> int -> ... -> (int int) -> *po
 
-procedure: (plist-sset! *po<list> int<index> ... (int<begin> int<end>) *po<list>)
+procedure: (plist-sset! pyList begin end pyList)
 
-return: 0 on success or -1 on failure.
+*po -> int -> int -> *po -> 0 on success or -1 on failure.
 
-procedure: (plist-insert! *po<list> int<index> *po)
+procedure: (plist-sset! pyList index ... (begin end) pyList)
 
-return: 0 on success or -1 on failure.
+*po -> int -> ... -> (int int) -> *po -> 0 on success or -1 on failure.
 
-procedure: (plist-append! *po<list-target> *po<list>)
+procedure: (plist-insert! pyList index pyObject)
 
-return: 0 on success or -1 on failure.
+*po -> int -> *po -> 0 on success or -1 on failure.
+
+procedure: (plist-append! targetPyList pyList)
+
+*po -> *po -> 0 on success or -1 on failure.
 
 procedure: (plist-sort!)
 
-return: 0 on success or -1 on failure.
+0 on success or -1 on failure.
 
 procedure: (plist-reverse!)
 
-return: 0 on success or -1 on failure.
+0 on success or -1 on failure.
 ```
 
 ### Python's tuple
