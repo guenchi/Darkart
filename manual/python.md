@@ -326,13 +326,13 @@ procedure: (list->plist type list)
 
 procedure: (list->ptuple type list)
 
-list -> func (int/flt/complex/str) -> *po
+func (int/flt/complex/str) -> list -> *po
 
 procedure: (vector->plist type vector)
 
 procedure: (vector->ptuple type vector)
 
-vector -> func (int/flt/complex/str) -> *po
+func (int/flt/complex/str) -> vector -> *po
 
 procedure: (list->plist* '(*po ...))
 
@@ -378,13 +378,13 @@ procedure: (plist->list type pyList)
 
 procedure: (ptuple->list type pyTuple)
 
-*po -> func (*int/*flt/*complex/*str) -> list
+func (*int/*flt/*complex/*str) -> *po -> list
 
 procedure: (plist->vector type pyList)
 
 procedure: (ptuple->vector type pyTuple)
 
-*po -> func (*int/*flt/*complex/*str) -> vector
+func (*int/*flt/*complex/*str) -> *po -> vector
 
 procedure: (plist->list* pyList)
 
