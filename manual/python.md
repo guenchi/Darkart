@@ -310,31 +310,41 @@ Exemple:
 ### List and Tuple
 
 ```scheme
-procedure: (list->plist* listOf*Po)
-
-procedure: (list->ptuple* listOf*Po)
-
-procedure: (vector->plist* vectorOf*Po)
-
-procedure: (vector->ptuple* vectorOf*Po)
-
 procedure: (list->plist list)
 
 procedure: (list->ptuple list)
+
+list -> *po
 
 procedure: (vector->plist vector)
 
 procedure: (vector->ptuple vector)
 
+vector -> *po
+
 procedure: (list->plist type list)
 
 procedure: (list->ptuple type list)
+
+list -> func (int/flt/complex/str) -> *po
 
 procedure: (vector->plist type vector)
 
 procedure: (vector->ptuple type vector)
 
-return: *po<list,tuple>
+vector -> func (int/flt/complex/str) -> *po
+
+procedure: (list->plist* listOf*Po)
+
+procedure: (list->ptuple* listOf*Po)
+
+list (*po) -> *po
+
+procedure: (vector->plist* vectorOf*Po)
+
+procedure: (vector->ptuple* vectorOf*Po)
+
+vector (*po) -> *po
 ```
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
@@ -352,48 +362,44 @@ Exemple:
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
 ```scheme
-procedure: (plist->list *po<list>)
+procedure: (plist->list pyList)
 
-procedure: (ptuple->list *po<tuple>)
+procedure: (ptuple->list pyTuple)
 
-procedure: (plist->list *type *po<list>)
+*po -> list
 
-procedure: (ptuple->list *type *po<tuple>)
+procedure: (plist->vector pyList)
 
-return: list
+procedure: (ptuple->vector pyTuple)
 
-procedure: (plist->vector *po<list>)
+*po -> vector
 
-procedure: (ptuple->vector *po<tuple>)
+procedure: (plist->list type pyList)
 
-procedure: (plist->vector *type *po<list>)
+procedure: (ptuple->list type pyTuple)
 
-procedure: (ptuple->vector *type *po<tuple>)
+*po -> func (*int/*flt/*complex/*str) -> list
 
-return: vector
+procedure: (plist->vector type pyList)
 
-procedure: (plist->list* *po<tuple>)
+procedure: (ptuple->vector type pyTuple)
 
-procedure: (ptuple->list* *po<tuple>)
+*po -> func (*int/*flt/*complex/*str) -> vector
 
-procedure: (plist->list* *type *po<tuple>)
+procedure: (plist->list* pyList)
 
-procedure: (ptuple->list* *type *po<tuple>)
+procedure: (ptuple->list* pyTuple)
 
-return: list of *po
+*po -> list (*po)
 
-procedure: (plist->vector* *po<list>)
+procedure: (plist->vector* pyList)
 
-procedure: (ptuple->vector* *po<tuple>)
+procedure: (ptuple->vector* pyTuple)
 
-procedure: (plist->vector* *type *po<list>)
-
-procedure: (ptuple->vector* *type *po<tuple>)
-
-return: vector of *po
+*po -> vector (*po)
 ```
 
-The *type procedure will be: `*int` `*float` `*complex` or `*str`.
+The type procedure will be: `*int` `*float` `*complex` or `*str`.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
