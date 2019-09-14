@@ -64,7 +64,7 @@ return: *po
 
 Don't forget store the memory addres that procedure return, like:
 ```scheme
-(define np (py-import numpy))
+(define np (py-import 'numpy))
 ```
 
 To repackage a Library to Scheme, there is a Exemple:
@@ -81,9 +81,9 @@ This is the point syntax of Python.
 Like:
 
 ```scheme
-(define array (py-get np array))      = numpy.array
+(define array (py-get np 'array))      = numpy.array
 
-(define pi (py-get np pi))            = numpy.pi
+(define pi (py-get np 'pi))            = numpy.pi
 ```
 
 ### Function
