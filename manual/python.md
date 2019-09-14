@@ -188,9 +188,9 @@ procedure: (pint? *po)
 
 alias: (*int?)
 
-procedure: (pfloat? *po)
+procedure: (pflt? *po)
 
-alias: (*float?)
+alias: (*flt?)
 
 procedure: (pcomplex? *po)
 
@@ -210,9 +210,9 @@ procedure: (s->pint int)
 
 alias: (int)
 
-procedure: (s->pfloat float)
+procedure: (s->pflt float)
 
-alias: (float)
+alias: (flt)
 
 procedure: (s->pcomplex cflonum)
 
@@ -231,7 +231,7 @@ Exemple:
 ```scheme
 (int 8)                       => *po{8}
 
-(float 3.1415926)             => *po{3.1415926}
+(flt 3.1415926)             => *po{3.1415926}
 
 (str "foo")                   => *po{"foo"}
 ```
@@ -243,9 +243,9 @@ alias: (*int)
 
 return: number<int>
 
-procedure: (p->sfloat *po<number>)
+procedure: (p->sflt *po<number>)
 
-alias: (*float)
+alias: (*flt)
 
 return: number<float>
 
@@ -268,7 +268,7 @@ Exemple:
 ```scheme
 (*int (int 8))                => 8
 
-(*float (float 3.1415926))    => 3.1415926
+(*flt (flt 3.1415926))    => 3.1415926
 
 (*str (str "foo"))            => "foo"
 ```
@@ -293,7 +293,7 @@ Exemple:
 ```scheme
 (*auto (int 8))                 => 8
 
-(*auto (float 3.1415926))       => 3.1415926
+(*auto (flt 3.1415926))       => 3.1415926
 
 (*auto (str "foo"))             => "foo"
 
@@ -340,7 +340,7 @@ Exemple:
 ```scheme
 (list->plist int '(1 2 3 4 5 6 7 8))
 
-(vector->plist* `#(,(int 1) ,(float 3.14159) ,(str "foo")))
+(vector->plist* `#(,(int 1) ,(flt 3.14159) ,(str "foo")))
 ```
 Attention that if don't specific list / vector's type, you have to covert data to *po before make list / vector.
 
@@ -396,23 +396,23 @@ Exemple:
 (plist->list *int (list->plist int '(1 2 3 4 5 6 7 8)))
 => (1 2 3 4 5 6 7 8)
 
-(plist->list (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
+(plist->list (list->plist* `(,(int 1) ,(flt 3.14159) ,(str "foo"))))
 => (1 3.14159 "foo")
 
-(plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))
+(plist->list* (list->plist* `(,(int 1) ,(flt 3.14159) ,(str "foo"))))
 => (*po{1} *po{3.14159} *po{"foo"})
 ```
-In last case it return a list of Memory Adresse of *po. You can use (*int), (*float) or (*str) to convert it to Scheme Data.
+In last case it return a list of Memory Adresse of *po. You can use (*int), (*flt) or (*str) to convert it to Scheme Data.
 
 Like:
 ```scheme
-(*int (car (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(*int (car (plist->list* (list->plist* `(,(int 1) ,(flt 3.14159) ,(str "foo"))))))
 => 1
 
-(*float (cadr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(*flt (cadr (plist->list* (list->plist* `(,(int 1) ,(flt 3.14159) ,(str "foo"))))))
 => 3.14159
 
-(*str (caddr (plist->list* (list->plist* `(,(int 1) ,(float 3.14159) ,(str "foo"))))))
+(*str (caddr (plist->list* (list->plist* `(,(int 1) ,(flt 3.14159) ,(str "foo"))))))
 => "foo"
 ```
 
