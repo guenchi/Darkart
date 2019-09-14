@@ -334,15 +334,15 @@ procedure: (vector->ptuple type vector)
 
 vector -> func (int/flt/complex/str) -> *po
 
-procedure: (list->plist* listOf*Po)
+procedure: (list->plist* '(*po ...))
 
-procedure: (list->ptuple* listOf*Po)
+procedure: (list->ptuple* '(*po ...))
 
 list (*po) -> *po
 
-procedure: (vector->plist* vectorOf*Po)
+procedure: (vector->plist* #(*po ...))
 
-procedure: (vector->ptuple* vectorOf*Po)
+procedure: (vector->ptuple* #(*po ...))
 
 vector (*po) -> *po
 ```
@@ -432,35 +432,37 @@ Like:
 ### Numeric Operations
 
 ```scheme
-procedure: (py-add *po *po)
+procedure: (py-add pyNum pyNum)
 
-procedure: (py-sub *po *po)
+procedure: (py-sub pyNum pyNum)
 
-procedure: (py-mul *po *po)
+procedure: (py-mul pyNum pyNum)
 
-procedure: (py-div *po *po)
+procedure: (py-div pyNum pyNum)
 
-procedure: (py-fdiv *po *po)
+procedure: (py-fdiv pyNum pyNum)
 
-procedure: (py-mod *po *po)
+procedure: (py-mod pyNum pyNum)
 
-procedure: (py-lsh *po *po)
+procedure: (py-lsh pyNum pyNum)
 
-procedure: (py-rsh *po *po)
+procedure: (py-rsh pyNum pyNum)
 
-procedure: (py-and *po *po)
+procedure: (py-and pyNum pyNum)
 
-procedure: (py-or *po *po)
+procedure: (py-or pyNum pyNum)
 
-procedure: (py-xor *po *po)
+procedure: (py-xor pyNum pyNum)
 
-procedure: (py-inv *po)
+*po -> *po -> *po
 
-procedure: (py-abs *po)
+procedure: (py-inv pyNum)
 
-procedure: (py-neg *po)
+procedure: (py-abs pyNum)
 
-return: *po
+procedure: (py-neg pyNum)
+
+*po -> *po
 ```
 
 *po in here may be a number or a list, tuple, array(numpy) of number.
@@ -478,9 +480,9 @@ Exemple:
 ### Python's list
 
 ```scheme
-procedure: (plist? *po)
+procedure: (plist? object)
 
-return: boolean
+*po -> boolean
 
 procedure: (make-plist int<size>)
 
