@@ -30,32 +30,32 @@
 
 
     pint?
-    pfloat?
+    pflt?
     pcomplex?
     pstr?
     s->pint
-    s->pfloat
+    s->pflt
     s->pcomplex
     s->pstr
     s->ptype
     p->sint
-    p->sfloat
+    p->sflt
     p->scomplex
     p->sstr
     p->stype
 
 
     *int?
-    *float?
+    *flt?
     *complex?
     *str?
     int
-    float
+    flt
     complex
     str
     auto
     *int
-    *float
+    *flt
     *complex
     *str
     *auto
@@ -188,29 +188,29 @@
   (alias py-dec py-decref)
 
   (alias pint? py/long-check?)
-  (alias pfloat? py/float-check?)
+  (alias pflt? py/float-check?)
   (alias pcomplex? py/complex-check?)
   (alias pstr? py/bytes-check?)
 
   (alias *int? pint?)
-  (alias *float? pfloat?)
+  (alias *flt? pflt?)
   (alias *complex? pcomplex?)
   (alias *str? pstr?)
 
   (alias s->pint py/long-from-long)
-  (alias s->pfloat py/float-from-double)
+  (alias s->pflt py/float-from-double)
   (alias s->pstr py/bytes-from-string)
 
   (alias int s->pint)
-  (alias float s->pfloat)
+  (alias flt s->pflt)
   (alias str s->pstr)
 
   (alias p->sint py/long-as-long)
-  (alias p->sfloat py/float-as-double)
+  (alias p->sflt py/float-as-double)
   (alias p->sstr py/bytes-as-string)
 
   (alias *int p->sint)
-  (alias *float p->sfloat)
+  (alias *flt p->sflt)
   (alias *str p->sstr)
 
   (alias py-add py/number-add)
@@ -368,7 +368,7 @@
   (define s->ptype
     (lambda (x)
       (cond 
-        ((flonum? x) (float x))
+        ((flonum? x) (flt x))
         ((integer? x) (int x))
         ((cflonum? x) (complex x))
         ((string? x) (str x))
@@ -381,7 +381,7 @@
     (lambda (x)
       (cond 
         ((*int? x) (*int x))
-        ((*float? x) (*float x))
+        ((*flt? x) (*flt x))
         ((*complex? x) (*complex x))
         ((*str? x) (*str x))
         (else (error 'p->stype "illegal input" x)))))
