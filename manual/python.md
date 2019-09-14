@@ -231,7 +231,7 @@ Exemple:
 ```scheme
 (int 8)                       => *po{8}
 
-(flt 3.1415926)             => *po{3.1415926}
+(flt 3.1415926)               => *po{3.1415926}
 
 (str "foo")                   => *po{"foo"}
 ```
@@ -268,7 +268,7 @@ Exemple:
 ```scheme
 (*int (int 8))                => 8
 
-(*flt (flt 3.1415926))    => 3.1415926
+(*flt (flt 3.1415926))        => 3.1415926
 
 (*str (str "foo"))            => "foo"
 ```
@@ -293,7 +293,7 @@ Exemple:
 ```scheme
 (*auto (int 8))                 => 8
 
-(*auto (flt 3.1415926))       => 3.1415926
+(*auto (flt 3.1415926))         => 3.1415926
 
 (*auto (str "foo"))             => "foo"
 
