@@ -73,7 +73,7 @@ https://github.com/guenchi/numpy/blob/master/numpy.sc
 ### Point
 
 ```scheme
-procedure: (py-get Object Name)
+procedure: (py-get object object)
 
 *po -> symbol -> *po
 ```
