@@ -89,7 +89,7 @@ Like:
 ### Function
 
 ```scheme
-procedure: (py-call pyCallableObj args ...)
+procedure: (py-call callable args ...)
 
 *po -> any -> ... -> *po
 ```
@@ -110,7 +110,7 @@ Exemple:
 There is a helper to generate a procedure with *po<callable>:
 
 ```scheme
-procedure: (py-func pyCallableObj)
+procedure: (py-func callable)
 
 *po -> func
 ```
@@ -126,7 +126,7 @@ Exemple:
 Some python function need named arguments, use:
 
 ```scheme
-procedure: ((py-call* pyCallableObj args ...) namedArgs)
+procedure: ((py-call* callable args ...) namedArgs)
 
 *po -> any -> ... -> alist -> *po
 ```
@@ -155,7 +155,7 @@ Exemple:
 There is also a helper to generate a procedure which need named argument with *po<callable>:
 
 ```scheme
-procedure: (py-func* pyCallableObj)
+procedure: (py-func* callable)
 
 *po -> func
 ```
