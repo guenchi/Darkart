@@ -326,13 +326,13 @@ procedure: (list->plist type list)
 
 procedure: (list->ptuple type list)
 
-func (int/flt/cplx/str) -> list -> *po
+func -> list -> *po
 
 procedure: (vector->plist type vector)
 
 procedure: (vector->ptuple type vector)
 
-func (int/flt/cplx/str) -> vector -> *po
+func -> vector -> *po
 
 procedure: (list->plist* '(*po ...))
 
@@ -349,7 +349,7 @@ vector (*po) -> *po
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
 
-The type procedure will be: `int` `float` `cplx` or `str`.
+The type covert procedure will be: `int` `flt` `cplx` `str` or nothing.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
@@ -378,13 +378,13 @@ procedure: (plist->list type pyList)
 
 procedure: (ptuple->list type pyTuple)
 
-func (*int/*flt/*cplx/*str) -> *po -> list
+func -> *po -> list
 
 procedure: (plist->vector type pyList)
 
 procedure: (ptuple->vector type pyTuple)
 
-func (*int/*flt/*cplx/*str) -> *po -> vector
+func -> *po -> vector
 
 procedure: (plist->list* pyList)
 
@@ -399,7 +399,7 @@ procedure: (ptuple->vector* pyTuple)
 *po -> vector (*po)
 ```
 
-The type procedure will be: `*int` `*float` `*cplx` or `*str`.
+The type procedure will be: `*int` `*flt` `*cplx` `*str` or nothing.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
