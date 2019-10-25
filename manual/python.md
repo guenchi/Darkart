@@ -192,9 +192,9 @@ procedure: (pflt? pythonData)
 
 alias: (*flt?)
 
-procedure: (pcomplex? pythonData)
+procedure: (pcplx? pythonData)
 
-alias: (*complex?)
+alias: (*cplx?)
 
 procedure: (pstr? pythonData)
 
@@ -218,11 +218,11 @@ alias: (flt)
 
 float -> *po
 
-procedure: (s->pcomplex cflonum)
+procedure: (s->pcplx cflonum)
 
-alias: (complex)
+alias: (cplx)
 
-cflonum ->*po
+cflonum -> *po
 
 procedure: (s->pstr string)
 
@@ -256,9 +256,9 @@ alias: (*flt)
 
 *po -> number
 
-procedure: (p->scomplex pyComplex)
+procedure: (p->scplx pyComplex)
 
-alias: (*complex)
+alias: (*cplx)
 
 *po -> cflonum
 
@@ -281,13 +281,13 @@ Exemple:
 ```
 
 ```scheme
-procedure: (s->ptype int/float/cflonum/string>)
+procedure: (s->ptype schemeData)
 
 alias: (auto)
 
 any -> *po
 
-procedure: (p->stype *po<int/float/complex/string>)
+procedure: (p->stype pythonData)
 
 alias: (*auto)
 
@@ -326,13 +326,13 @@ procedure: (list->plist type list)
 
 procedure: (list->ptuple type list)
 
-func (int/flt/complex/str) -> list -> *po
+func (int/flt/cplx/str) -> list -> *po
 
 procedure: (vector->plist type vector)
 
 procedure: (vector->ptuple type vector)
 
-func (int/flt/complex/str) -> vector -> *po
+func (int/flt/cplx/str) -> vector -> *po
 
 procedure: (list->plist* '(*po ...))
 
@@ -349,7 +349,7 @@ vector (*po) -> *po
 
 Covert a Scheme's List and Vector to Python's List and Tuple.
 
-The type procedure will be: `int` `float` `complex` or `str`.
+The type procedure will be: `int` `float` `cplx` or `str`.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
@@ -378,13 +378,13 @@ procedure: (plist->list type pyList)
 
 procedure: (ptuple->list type pyTuple)
 
-func (*int/*flt/*complex/*str) -> *po -> list
+func (*int/*flt/*cplx/*str) -> *po -> list
 
 procedure: (plist->vector type pyList)
 
 procedure: (ptuple->vector type pyTuple)
 
-func (*int/*flt/*complex/*str) -> *po -> vector
+func (*int/*flt/*cplx/*str) -> *po -> vector
 
 procedure: (plist->list* pyList)
 
@@ -399,7 +399,7 @@ procedure: (ptuple->vector* pyTuple)
 *po -> vector (*po)
 ```
 
-The type procedure will be: `*int` `*float` `*complex` or `*str`.
+The type procedure will be: `*int` `*float` `*cplx` or `*str`.
 
 If there is no specific type transfer function, the program will automatically check the type, but it is more efficient when specifying the type.
 
