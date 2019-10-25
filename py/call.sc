@@ -31,32 +31,32 @@
 
     pint?
     pflt?
-    pcomplex?
+    pcplx?
     pstr?
     s->pint
     s->pflt
-    s->pcomplex
+    s->pcplx
     s->pstr
     s->ptype
     p->sint
     p->sflt
-    p->scomplex
+    p->scplx
     p->sstr
     p->stype
 
 
     *int?
     *flt?
-    *complex?
+    *cplx?
     *str?
     int
     flt
-    complex
+    cplx
     str
     auto
     *int
     *flt
-    *complex
+    *cplx
     *str
     *auto
 
@@ -189,12 +189,12 @@
 
   (alias pint? py/long-check?)
   (alias pflt? py/float-check?)
-  (alias pcomplex? py/complex-check?)
+  (alias pcplx? py/complex-check?)
   (alias pstr? py/bytes-check?)
 
   (alias *int? pint?)
   (alias *flt? pflt?)
-  (alias *complex? pcomplex?)
+  (alias *cplx? pcplx?)
   (alias *str? pstr?)
 
   (alias s->pint py/long-from-long)
@@ -370,7 +370,7 @@
       (cond 
         ((flonum? x) (flt x))
         ((integer? x) (int x))
-        ((cflonum? x) (complex x))
+        ((cflonum? x) (cplx x))
         ((string? x) (str x))
         (else (error 's->ptype "illegal input" x)))))
 
@@ -382,29 +382,29 @@
       (cond 
         ((*int? x) (*int x))
         ((*flt? x) (*flt x))
-        ((*complex? x) (*complex x))
+        ((*cplx? x) (*cplx x))
         ((*str? x) (*str x))
         (else (error 'p->stype "illegal input" x)))))
 
   (alias *auto p->stype)
 
 
-  (define s->pcomplex
+  (define s->pcplx
     (lambda (c)
       (py/complex-from-doubles
         (cfl-real-part c)
         (cfl-imag-part c))))
 
-  (alias complex s->pcomplex)      
+  (alias cplx s->pcplx)      
 
 
-  (define p->scomplex
+  (define p->scplx
     (lambda (*c)
       (fl-make-rectangular
         (py/complex-real-as-double *c)
         (py/complex-imag-as-double *c))))
 
-  (alias *complex p->scomplex)
+  (alias *cplx p->scplx)
 
 
   (define-syntax plist-ref
