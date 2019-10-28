@@ -26,9 +26,19 @@
 
 
 (library (darkart julia jl-ffi)
-    (export)
-    (import
-        (chezscheme))
+  (export
+    jl-init
+    jl-eval-string
+    jl-atexit-hook
+  )
+  (import
+    (chezscheme))
 
+  (define jl-init
+    (foreign-procedure "jl_init__threading" () void))
+  (define jl-eval-string
+    (foreign-procedure "jl_eval_string" (string) void))
+  (define jl-atexit-hook
+    (foreign-procedure "jl_atexit_hook" (int) void))
 
 )
