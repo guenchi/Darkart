@@ -1,6 +1,6 @@
 # Darkart: Chez Scheme's Forign Library Interface
 
-[https://guenchi.github.io/Darkart/](https://guenchi.github.io/Darkart/)
+# [Manual](https://guenchi.github.io/Darkart/)
 
 A binary interface let Chez Scheme use Python, Lua, Ruby etc's library
 
