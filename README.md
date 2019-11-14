@@ -1,7 +1,5 @@
 # Darkart: Chez Scheme's Forign Library Interface
 
-# [Manual](https://guenchi.github.io/Darkart/)
-
 A binary interface let Chez Scheme use Python, Lua, Ruby etc's library
 
 This project is inspired by the Julia language. The FFI interface provided by Chez is used to embed the interpreter or JIT compiler of other languages into the Scheme program (CPython, Luajit etc) or to link the compiled object code with the C binary interface. (OCaml, Golang etc).
@@ -11,7 +9,6 @@ This library can be ported to other Scheme implementations, with [r6rs-pffi](htt
 ***Priority***: Python ✅ > Julia ✅ > Javascript > OCaml > lua ✅ 
 
 ***Ecosystem***: [NumPy](https://github.com/guenchi/NumPy) ✅ [SciPy](https://github.com/guenchi/SciPy) :construction: [SymPy](https://github.com/guenchi/SymPy) :construction: [Matplotlib](https://github.com/guenchi/Matplotlib) ✅ [Pandas](https://github.com/guenchi/Pandas) :construction:
-
 
 ### Exemple
 
@@ -40,7 +37,7 @@ This library can be ported to other Scheme implementations, with [r6rs-pffi](htt
 (0.01745240643728351 0.03489949670250097 0.05233595624294383 0.0697564737441253 
 0.08715574274765817 0.10452846326765346 0.12186934340514748 0.13917310096006544)
 ```
-
+## [Manual](https://guenchi.github.io/Darkart/)
 
 ### The ecosystem which base on Darkart:
 
