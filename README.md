@@ -15,34 +15,6 @@ This library can be ported to other Scheme implementations, with [r6rs-pffi](htt
 
 [Darkart Python Interface User’s Guide](https://guenchi.github.io/Darkart/manual/python.html)
 
-### Exemple
-
-```
-(define np (py-import 'numpy))
-
-(define ndarray (py-get np 'ndarray))
-(define pi (py-get np 'pi))
-(define np-array (py-get np 'array))
-(define np-sin (py-get np 'sin))
-(define np-tolist (py-get ndarray 'tolist))
-
-(define get-sin
-    (lambda (lst)
-        (plist->list
-            (py-call np-tolist
-                (py-call np-sin
-                    (py-div
-                        (py-mul pi 
-                            (py-call np-array
-                                (list->plist lst)))
-                        (int 180)))))))
-
-(get-sin '(1 2 3 4 5 6 7 8))
-
-=>
-(0.01745240643728351 0.03489949670250097 0.05233595624294383 0.0697564737441253 
-0.08715574274765817 0.10452846326765346 0.12186934340514748 0.13917310096006544)
-```
 
 ### The ecosystem which base on Darkart:
 
