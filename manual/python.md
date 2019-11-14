@@ -110,14 +110,14 @@ Exemple:
 There is a helper to generate a procedure with *po<callable>:
 
 ```scheme
-procedure: (py-func callable)
+procedure: (py-func object method)
 
-*po -> func
+*po -> symbol -> func
 ```
 
 Exemple:
 ```scheme
-(define np-array (py-func array))
+(define np-array (py-func np 'array))
 
 (np-array (list->plist int '(1 2 3 4 5)))
 => *op{[1, 2, 3, 4, 5]}
@@ -155,14 +155,14 @@ Exemple:
 There is also a helper to generate a procedure which need named argument with *po<callable>:
 
 ```scheme
-procedure: (py-func* callable)
+procedure: (py-func* object method)
 
-*po -> func
+*po -> symbol -> func
 ```
 
 Exemple:
 ```scheme
-(define np-array (py-func* array))
+(define np-array (py-func* np 'array))
 
 ((np-array 
     (list->plist int '(1 2 3 4 5)))
