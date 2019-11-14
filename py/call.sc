@@ -326,19 +326,19 @@
 
 
   (define py-call
-    (lambda (f . args)
+    (lambda (*f . args)
       (define *k (py-args* args))
-      (define *r (py/object-call-object f *k))
+      (define *r (py/object-call-object *f *k))
       (py-dec *k)
       *r))
 
 
   (define py-call*
-    (lambda (f . args)
+    (lambda (*f . args)
       (lambda (lst)
         (define *k (py-args* args))
         (define *d (alist->pdict* lst))
-        (define *r (py/object-call f *k *d))
+        (define *r (py/object-call *f *k *d))
         (py-dec *k)
         (py-dec *d)
         *r)))
