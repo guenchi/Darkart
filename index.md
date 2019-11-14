@@ -9,6 +9,35 @@ Thanks to Chez Scheme's efficient binary interface, Darkart access to libraries 
 
 Darkart solves the  dilemmas of libraries of lisp community. I hope that with the help of this project, lisp can be used more widely.
 
+## Exemple
+
+```
+(define np (py-import 'numpy))
+(define ndarray (py-get np 'ndarray))
+(define pi (py-get np 'pi))
+(define np-array (py-func np 'array))
+(define np-sin (py-func np 'sin))
+(define np-tolist (py-func ndarray 'tolist))
+
+(define get-sin
+  (lambda (lst)
+    (plist->list
+      (np-tolist
+        (np-sin
+          (py-div
+            (py-mul pi 
+              (np-array
+                (list->plist lst)))
+            (int 180)))))))
+
+(get-sin '(1 2 3 4 5 6 7 8))
+
+=>
+(0.01745240643728351 0.03489949670250097 0.05233595624294383 0.0697564737441253 
+0.08715574274765817 0.10452846326765346 0.12186934340514748 0.13917310096006544)
+```
+
+
 ## Manual
 
 - [Python](manual/python.md)
