@@ -12,7 +12,7 @@ This library can be ported to other Scheme implementations, with [r6rs-pffi](htt
 
 ### Exemple
 
-```
+```scheme
 (define np (py-import 'numpy))
 (define ndarray (py-get np 'ndarray))
 (define pi (py-get np 'pi))
