@@ -34,7 +34,6 @@ jobs:
     - name: Testing
       run: |
            git clone https://github.com/guenchi/Darkart
-           cd darkart
            mkdir lib
            mv darkart lib/darkart
            cd lib/darkart/c
