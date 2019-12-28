@@ -27,7 +27,18 @@ jobs:
            cd /usr/local/bin
            cp chez scheme
            curl -L http://ravensc.com/install | scheme
-      
-    - name : test
+           
+    - name: install NumPy
       run: pip3 install numpy
+      
+    - name: Testing
+      run: |
+           git clone https://github.com/guenchi/Darkart
+           cd darkart
+           mkdir lib
+           mv darkart lib/darkart
+           cd lib/darkart/c
+           cc -fPIC -shared  -L/Library/Frameworks/Python.framework/Versions/3.7/lib/ -lpython3.7 -o ../py.so py.c
+           cd ../..
+           raven run test/test-pycall.sc
    
