@@ -1,7 +1,6 @@
 
 (import (darkart py ffi)
-        (darkart py call)
-        (darkart py eval))
+        (darkart py call))
 
 
 (py-init)
