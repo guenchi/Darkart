@@ -31,15 +31,13 @@ jobs:
     - name: install NumPy
       run: pip3 install numpy
       
-    - run: python3 -v 
-      
- #   - name: Testing
- #     run: |
- #          git clone https://github.com/guenchi/Darkart
- #          mkdir lib
- #          mv darkart lib/darkart
- #          cd lib/darkart/c
- #          cc -fPIC -shared  -L/Library/Frameworks/Python.framework/Versions/3.7/lib/ -lpython3.7 -o ../py.so py.c
- #          cd ../..
- #          raven run test/test-pycall.sc
+    - name: Testing
+      run: |
+           git clone https://github.com/guenchi/Darkart
+           mkdir lib
+           mv darkart lib/darkart
+           cd lib/darkart/c
+           cc -fPIC -shared  -L/Library/Frameworks/Python.framework/Versions/3.7.5/lib/ -lpython3.7 -o ../py.so py.c
+           cd ../..
+           raven run test/test-pycall.sc
    
