@@ -28,4 +28,6 @@ jobs:
            cp chez scheme
            curl -L http://ravensc.com/install | scheme
       
-    
+    - name : test
+      run: pip3 install numpy
+   
