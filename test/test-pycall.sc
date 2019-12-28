@@ -207,7 +207,25 @@
 (py-dec k)
 (newline)
 
+(define np (py-import 'numpy))
+(define ndarray (py-get np 'ndarray))
+(define pi (py-get np 'pi))
+(define np-array (py-func np 'array))
+(define np-sin (py-func np 'sin))
+(define np-tolist (py-func ndarray 'tolist))
 
+(define get-sin
+  (lambda (lst)
+    (plist->list
+      (np-tolist
+        (np-sin
+          (py-div
+            (py-mul pi 
+              (np-array
+                (list->plist lst)))
+            (int 180)))))))
+
+(get-sin '(1 2 3 4 5 6 7 8))
 
 (py-fin)
 
