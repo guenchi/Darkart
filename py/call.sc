@@ -466,10 +466,10 @@
           *p))))
 
 
-  (define list->plist
-    (case-lambda
-      ((x)(*list->plist auto x))
-      ((f x)(*list->plist f x))))
+  (define-syntax list->plist
+    (syntax-rules ()
+      ((_ x)(*list->plist auto x))
+      ((_ f x)(*list->plist f x))))
 
 
   (define list->plist*
@@ -494,10 +494,10 @@
           *p))))
 
 
-  (define list->ptuple
-    (case-lambda
-      ((x)(*list->ptuple auto x))
-      ((f x)(*list->ptuple f x))))
+  (define-syntax list->ptuple
+    (syntax-rules ()
+      ((_ x)(*list->ptuple auto x))
+      ((_ f x)(*list->ptuple f x))))
 
 
   (define list->ptuple*
@@ -519,10 +519,10 @@
           '()))))
 
 
-  (define plist->list
-    (case-lambda
-      ((x)(*plist->list *auto x))
-      ((f x)(*plist->list f x))))
+  (define-syntax plist->list
+    (syntax-rules ()
+      ((_ x)(*plist->list *auto x))
+      ((_ f x)(*plist->list f x))))
 
 
   (define plist->list*
@@ -544,10 +544,10 @@
           '()))))
 
 
-  (define ptuple->list
-    (case-lambda
-      ((x)(*ptuple->list *auto x))
-      ((f x)(*ptuple->list f x))))
+  (define-syntax ptuple->list
+    (syntax-rules ()
+      ((_ x)(*ptuple->list *auto x))
+      ((_ f x)(*ptuple->list f x))))
 
 
   (define ptuple->list*
@@ -572,10 +572,10 @@
           *p))))
 
 
-  (define vector->plist
-    (case-lambda
-      ((x)(*vector->plist auto x))
-      ((f x)(*vector->plist f x))))
+  (define-syntax vector->plist
+    (syntax-rules ()
+      ((_ x)(*vector->plist auto x))
+      ((_ f x)(*vector->plist f x))))
 
 
   (define vector->plist*
@@ -600,10 +600,10 @@
           *p))))
 
 
-  (define vector->ptuple
-    (case-lambda
-      ((x)(*vector->ptuple auto x))
-      ((f x)(*vector->ptuple f x))))
+  (define-syntax vector->ptuple
+    (syntax-rules ()
+      ((_ x)(*vector->ptuple auto x))
+      ((_ f x)(*vector->ptuple f x))))
 
 
   (define vector->ptuple*
@@ -628,10 +628,10 @@
           v))))
 
 
-  (define plist->vector
-    (case-lambda
-      ((x)(*plist->vector *auto x))
-      ((f x)(*plist->vector f x))))
+  (define-syntax plist->vector
+    (syntax-rules ()
+      ((_ x)(*plist->vector *auto x))
+      ((_ f x)(*plist->vector f x))))
 
 
   (define plist->vector*
@@ -656,10 +656,10 @@
           v))))
 
 
-  (define ptuple->vector
-    (case-lambda
-      ((x)(*ptuple->vector *auto x))
-      ((f x)(*ptuple->vector f x))))
+  (define-syntax ptuple->vector
+    (syntax-rules ()
+      ((_ x)(*ptuple->vector *auto x))
+      ((_ f x)(*ptuple->vector f x))))
 
 
   (define ptuple->vector*
@@ -678,10 +678,10 @@
           (error 'alist->pdict "error when set value" (symbol->string (car i)) (f (cdr i)))))))
 
 
-  (define alist->pdict
-    (case-lambda
-      ((x)(*alist->pdict auto x))
-      ((f x)(*alist->pdict f x))))
+  (define-syntax alist->pdict
+    (syntax-rules ()
+      ((_ x)(*alist->pdict auto x))
+      ((_ f x)(*alist->pdict f x))))
 
 
   (define alist->pdict*
@@ -701,10 +701,10 @@
           (cons (q i) (l (car r) (cdr r)))))))
 
 
-  (define pdict->alist
-    (case-lambda
-      ((x)(*pdict->alist *auto x))
-      ((f x)(*pdict->alist f x))))
+  (define-syntax pdict->alist
+    (syntax-rules ()
+      ((_ x)(*pdict->alist *auto x))
+      ((_ f x)(*pdict->alist f x))))
 
 
   (define pdict->alist*
@@ -722,11 +722,11 @@
 
   (define py-display
     (lambda (obj)
-      (let ([obj->str (lambda (obj)
+      (let ((obj->str (lambda (obj)
             (define *bytes (obj->bytes obj))
             (define string (*str *bytes))
             (py-dec *bytes)
-            string)])
+            string)))
         (display (if (*str? obj)
                (*str obj)
                (obj->str obj))))))
