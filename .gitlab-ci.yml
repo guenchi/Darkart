@@ -1,0 +1,31 @@
+image: node:10
+
+
+cache:
+  paths:
+    - node_modules/ 
+
+before_script:
+  - npm install gitbook-cli -g 
+  - gitbook fetch 3.2.3 
+  - gitbook install 
+
+test:
+  stage: test
+  script:
+    - gitbook build . public 
+  only:
+    - branches
+  except:
+    - pages
+    
+pages:
+  stage: deploy
+  script:
+    - gitbook build . public 
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 week
+  only:
+    - pages
