@@ -1,0 +1,16 @@
+name: 'Gitbook Action Build'
+on:
+  push:
+    branches:
+      - pages
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout action
+      uses: actions/checkout@v2
+    - name: Gitbook Action
+      uses: guenchi/gitbook-action@v1.2.2
+      with:
+        token: ${{ secrets.gitbook_action_token }}
+        source_branch: pages 
