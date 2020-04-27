@@ -13,7 +13,7 @@ cc -fPIC -shared  -L/Library/Frameworks/Python.framework/Versions/3.7/lib/ -lpyt
 Note that depending on the system, you may need to manually specify the path to `python.h`.
 
 
-## Definition:
+## Definition
 
 `*po` representing a pointer to a Python Object reference.
 
