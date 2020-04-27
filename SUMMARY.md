@@ -2,9 +2,7 @@
 
 * [Introduction](README.md)
 
-### Python
-
-* [Python Manual](manual/python.md)
+### Python Interface
   
 * [Build](manual/python.md#Build)
   
