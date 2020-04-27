@@ -6,7 +6,7 @@
 
 * [Python Manual](manual/python.md)
   
-* [Build]((manual/python.md#Build)
+* [Build](manual/python.md#Build)
   
 * [Definition](manual/python.md#Definition)
   
