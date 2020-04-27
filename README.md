@@ -3,7 +3,7 @@
 
 ## What is the Darkart
 
-Github: https://github.com/guenchi/Darkart/
+Github: https://github.com/guenchi/Darkart
 
 Darkart implements a set of interfaces to other language libraries that can be used to easily call other languages' libraries from Scheme.
 
