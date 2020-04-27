@@ -9,15 +9,6 @@ before_script:
   - npm install gitbook-cli -g 
   - gitbook fetch 3.2.3 
   - gitbook install 
-
-test:
-  stage: test
-  script:
-    - gitbook build . public 
-  only:
-    - branches
-  except:
-    - pages
     
 pages:
   stage: deploy
