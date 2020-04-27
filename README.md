@@ -38,15 +38,6 @@ Darkart solves the  dilemmas of libraries of lisp community. I hope that with th
 ```
 
 
-## Manual
-
-- [Python](manual/python.md)
-
-- [Lua](manual/lua.md)
-
-- [Julia](manual/julia.md)
-
-
 ## Darkart's ecosystem
 
 - [NumPy](https://github.com/guenchi/NumPy)
