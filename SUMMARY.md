@@ -12,7 +12,7 @@
   
 * [Library Py-call](manual/python.md#Py-call)
   
-  * [Python Library](manual/python.md#Python Library)
+  * [Python Library](manual/python.md#Python%20Library)
   
   * [Point](manual/python.md#Point)
   
