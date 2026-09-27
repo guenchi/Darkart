@@ -1,4 +1,18 @@
 #include <Python.h>
+#include <dlfcn.h>
+
+
+/* Chez loads this shim with RTLD_LOCAL, which keeps the libpython symbols
+   out of the global namespace. C extension modules (numpy etc.) expect to
+   resolve them from there, so re-open libpython with RTLD_GLOBAL. */
+__attribute__((constructor))
+static void _darkart_promote_libpython(void)
+{
+    Dl_info info;
+
+    if (dladdr((void *)&Py_Initialize, &info) && info.dli_fname)
+        dlopen(info.dli_fname, RTLD_NOW | RTLD_NOLOAD | RTLD_GLOBAL);
+}
 
 
 int _PyLong_Check(PyObject *p)
