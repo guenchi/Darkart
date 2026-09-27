@@ -44,6 +44,7 @@
     py/number-divide
     py/number-floor-divide
     py/number-divmod
+    py/number-remainder
     py/number-lshift
     py/number-rshift
     py/number-and
@@ -61,12 +62,18 @@
     py/long-from-double
     py/long-from-size_t
     py/long-from-ssize_t
+    py/long-from-string
     py/long-as-long
     py/long-as-unsigned-long
     py/long-as-longlong
     py/long-as-unsigned-longlong
     py/long-as-double
     py/long-as-ssize_t
+
+    py/bool-check?
+    py/bool-from-long
+    py/none-check?
+    py/none
 
     py/float-check?
     py/float-from-double
@@ -82,6 +89,9 @@
     py/bytes-as-string
     py/unicode-as-encoded-string
     py/unicode-as-from-string
+    py/unicode-check?
+    py/unicode-from-string
+    py/unicode-as-utf8
 
     py/list-check?
     py/list-new
@@ -177,6 +187,8 @@
     py/unicode-as-encoded-string
 
     py-compile-string
+    py/err-occurred
+    py/err-clear
     py/err-print
     py/err-print-ex
     )
@@ -235,6 +247,10 @@
 
   (define py/number-divmod
     (foreign-procedure "PyNumber_Divmod" (uptr uptr) 
+      uptr))
+
+  (define py/number-remainder
+    (foreign-procedure "PyNumber_Remainder" (uptr uptr) 
       uptr))
 
   (define py/number-lshift
@@ -301,6 +317,10 @@
     (foreign-procedure "PyLong_FromSsize_t" (ssize_t) 
       uptr))
 
+  (define py/long-from-string
+    (foreign-procedure "PyLong_FromString" (string uptr int) 
+      uptr))
+
   (define py/long-as-long
     (foreign-procedure "PyLong_AsLong" (uptr) 
       long))
@@ -324,6 +344,22 @@
   (define py/long-as-ssize_t
     (foreign-procedure "PyLong_AsSsize_t" (uptr) 
       ssize_t))
+
+  (define py/bool-check?
+    (foreign-procedure "_PyBool_Check" (uptr) 
+      boolean))
+
+  (define py/bool-from-long
+    (foreign-procedure "PyBool_FromLong" (long) 
+      uptr))
+
+  (define py/none-check?
+    (foreign-procedure "_PyNone_Check" (uptr) 
+      boolean))
+
+  (define py/none
+    (foreign-procedure "_Py_GetNone" () 
+      uptr))
 
   (define py/float-check?
     (foreign-procedure "_PyFloat_Check" (uptr) 
@@ -370,39 +406,51 @@
       uptr))
 
   (define py/unicode-as-from-string
-    (foreign-procedure "PyUnicode_FromString" (string) 
+    (foreign-procedure "PyUnicode_FromString" (utf-8) 
       uptr))
+
+  (define py/unicode-check?
+    (foreign-procedure "_PyUnicode_Check" (uptr) 
+      boolean))
+
+  (define py/unicode-from-string
+    (foreign-procedure "PyUnicode_FromString" (utf-8) 
+      uptr))
+
+  (define py/unicode-as-utf8
+    (foreign-procedure "PyUnicode_AsUTF8" (uptr) 
+      utf-8))
 
   (define py/list-check?
     (foreign-procedure "_PyList_Check" (uptr) 
       boolean))
 
   (define py/list-new
-    (foreign-procedure "PyList_New" (int) 
+    (foreign-procedure "PyList_New" (ssize_t) 
       uptr))
 
   (define py/list-size
     (foreign-procedure "PyList_Size" (uptr) 
-      int))
+      ssize_t))
 
   (define py/list-get-item
-    (foreign-procedure "PyList_GetItem" (uptr int) 
+    (foreign-procedure "PyList_GetItem" (uptr ssize_t) 
       uptr))
 
   (define py/list-set-item!
-    (foreign-procedure "PyList_SetItem" (uptr int uptr) 
+    (foreign-procedure "PyList_SetItem" (uptr ssize_t uptr) 
       int))
 
   (define py/list-get-slice
-    (foreign-procedure "PyList_GetSlice" (uptr int int) 
+    (foreign-procedure "PyList_GetSlice" (uptr ssize_t ssize_t) 
       uptr))
 
   (define py/list-set-slice!
-    (foreign-procedure "PyList_SetSlice" (uptr int int uptr) 
+    (foreign-procedure "PyList_SetSlice" (uptr ssize_t ssize_t uptr) 
       int))
 
   (define py/list-insert!
-    (foreign-procedure "PyList_Insert" (uptr int uptr) 
+    (foreign-procedure "PyList_Insert" (uptr ssize_t uptr) 
       int))
 
   (define py/list-append!
@@ -422,23 +470,23 @@
       boolean))
 
   (define py/tuple-new
-    (foreign-procedure "PyTuple_New" (int) 
+    (foreign-procedure "PyTuple_New" (ssize_t) 
       uptr))
 
   (define py/tuple-size
     (foreign-procedure "PyTuple_Size" (uptr) 
-      int))
+      ssize_t))
 
   (define py/tuple-get-item
-    (foreign-procedure "PyTuple_GetItem" (uptr int) 
+    (foreign-procedure "PyTuple_GetItem" (uptr ssize_t) 
       uptr))
 
   (define py/tuple-set-item!
-    (foreign-procedure "PyTuple_SetItem" (uptr int uptr) 
+    (foreign-procedure "PyTuple_SetItem" (uptr ssize_t uptr) 
       int))
 
   (define py/tuple-get-slice
-    (foreign-procedure "PyTuple_GetSlice" (uptr int int) 
+    (foreign-procedure "PyTuple_GetSlice" (uptr ssize_t ssize_t) 
       uptr))
 
   (define py/set-check?
@@ -451,7 +499,7 @@
 
   (define py/set-size
     (foreign-procedure "PySet_Size" (uptr) 
-      int))
+      ssize_t))
 
   (define py/set-contains?
     (foreign-procedure "PySet_Contains" (uptr uptr) 
@@ -467,7 +515,7 @@
 
   (define py/set-pop!
     (foreign-procedure "PySet_Pop" (uptr) 
-      int))
+      uptr))
 
   (define py/set-clear!
     (foreign-procedure "PySet_Clear" (uptr) 
@@ -479,43 +527,43 @@
 
   (define py/sequence-size
     (foreign-procedure "PySequence_Size" (uptr) 
-      int))
+      ssize_t))
 
   (define py/sequence-concat
     (foreign-procedure "PySequence_Concat" (uptr uptr) 
       uptr))
 
   (define py/sequence-repeat
-    (foreign-procedure "PySequence_Repeat" (uptr int) 
+    (foreign-procedure "PySequence_Repeat" (uptr ssize_t) 
       uptr))
 
   (define py/sequence-get-item
-    (foreign-procedure "PySequence_GetItem" (uptr int) 
+    (foreign-procedure "PySequence_GetItem" (uptr ssize_t) 
       uptr))
 
   (define py/sequence-get-slice
-    (foreign-procedure "PySequence_GetSlice" (uptr int int) 
+    (foreign-procedure "PySequence_GetSlice" (uptr ssize_t ssize_t) 
       uptr))
 
   (define py/sequence-set-item!
-    (foreign-procedure "PySequence_SetItem" (uptr int uptr) 
+    (foreign-procedure "PySequence_SetItem" (uptr ssize_t uptr) 
       int))
 
   (define py/sequence-del-item!
-    (foreign-procedure "PySequence_DelItem" (uptr int) 
+    (foreign-procedure "PySequence_DelItem" (uptr ssize_t) 
       int))
 
   (define py/sequence-set-slice!
-    (foreign-procedure "PySequence_SetSlice" (uptr int int uptr) 
+    (foreign-procedure "PySequence_SetSlice" (uptr ssize_t ssize_t uptr) 
       int))
 
   (define py/sequence-del-slice!
-    (foreign-procedure "PySequence_DelSlice" (uptr int int) 
+    (foreign-procedure "PySequence_DelSlice" (uptr ssize_t ssize_t) 
       int))
 
   (define py/sequence-count
     (foreign-procedure "PySequence_Count" (uptr uptr) 
-      int))
+      ssize_t))
 
   (define py/sequence-contains
     (foreign-procedure "PySequence_Contains" (uptr uptr) 
@@ -523,7 +571,7 @@
 
   (define py/sequence-index
     (foreign-procedure "PySequence_Index" (uptr uptr) 
-      int))
+      ssize_t))
 
   (define py/sequence-list
     (foreign-procedure "PySequence_List" (uptr) 
@@ -543,7 +591,7 @@
 
   (define py/dict-size
     (foreign-procedure "PyDict_Size" (uptr) 
-      int))
+      ssize_t))
 
   (define py/dict-get-item
     (foreign-procedure "PyDict_GetItem" (uptr uptr) 
@@ -595,7 +643,7 @@
 
   (define py/mapping-size
     (foreign-procedure "PyMapping_Size" (uptr) 
-      int))
+      ssize_t))
 
   (define py/mapping-has-key-string?
     (foreign-procedure "PyMapping_HasKeyString" (uptr string) 
@@ -716,6 +764,14 @@
   (define py/object-repr
     (foreign-procedure "PyObject_Repr" (uptr) 
       uptr))
+
+  (define py/err-occurred
+    (foreign-procedure "PyErr_Occurred" () 
+      uptr))
+
+  (define py/err-clear
+    (foreign-procedure "PyErr_Clear" () 
+      void))
 
   (define py/err-print-ex
     (foreign-procedure "PyErr_PrintEx" (int) 

@@ -33,15 +33,18 @@
     pflt?
     pcplx?
     pstr?
+    pbytes?
     s->pint
     s->pflt
     s->pcplx
     s->pstr
+    s->pbytes
     s->ptype
     p->sint
     p->sflt
     p->scplx
     p->sstr
+    p->sbytes
     p->stype
 
 
@@ -69,6 +72,7 @@
     py-div
     py-fdiv
     py-mod
+    py-divmod
     py-lsh
     py-rsh
     py-and
@@ -190,26 +194,25 @@
   (alias pint? py/long-check?)
   (alias pflt? py/float-check?)
   (alias pcplx? py/complex-check?)
-  (alias pstr? py/bytes-check?)
+  (alias pstr? py/unicode-check?)
+  (alias pbytes? py/bytes-check?)
 
   (alias *int? pint?)
   (alias *flt? pflt?)
   (alias *cplx? pcplx?)
   (alias *str? pstr?)
 
-  (alias s->pint py/long-from-long)
   (alias s->pflt py/float-from-double)
-  (alias s->pstr py/bytes-from-string)
+  (alias s->pstr py/unicode-from-string)
+  (alias s->pbytes py/bytes-from-string)
 
-  (alias int s->pint)
   (alias flt s->pflt)
   (alias str s->pstr)
 
-  (alias p->sint py/long-as-long)
   (alias p->sflt py/float-as-double)
-  (alias p->sstr py/bytes-as-string)
+  (alias p->sstr py/unicode-as-utf8)
+  (alias p->sbytes py/bytes-as-string)
 
-  (alias *int p->sint)
   (alias *flt p->sflt)
   (alias *str p->sstr)
 
@@ -218,7 +221,8 @@
   (alias py-mul py/number-multiply)
   (alias py-div py/number-divide)
   (alias py-fdiv py/number-floor-divide)
-  (alias py-mod py/number-divmod)
+  (alias py-mod py/number-remainder)
+  (alias py-divmod py/number-divmod)
   (alias py-lsh py/number-lshift)
   (alias py-rsh py/number-rshift)
   (alias py-and py/number-and)
@@ -367,13 +371,42 @@
           *r))))
 
 
+  ;; Fixnums take the fast path; bignums go through their decimal form.
+  (define s->pint
+    (lambda (x)
+      (if (fixnum? x)
+        (py/long-from-longlong x)
+        (py/long-from-string (number->string x) 0 10))))
+
+  (alias int s->pint)
+
+
+  ;; Values that do not fit in a long long are read back from their decimal form.
+  (define p->sint
+    (lambda (*p)
+      (define n (py/long-as-longlong *p))
+      (if (and (= n -1) (not (zero? (py/err-occurred))))
+        (begin
+          (py/err-clear)
+          (let* ((*s (py/object-str *p))
+                 (s (py/unicode-as-utf8 *s)))
+            (py-dec *s)
+            (string->number s)))
+        n)))
+
+  (alias *int p->sint)
+
+
   (define s->ptype
     (lambda (x)
       (cond 
+        ((boolean? x) (py/bool-from-long (if x 1 0)))
         ((flonum? x) (flt x))
-        ((integer? x) (int x))
-        ((cflonum? x) (cplx x))
+        ((and (integer? x) (exact? x)) (int x))
+        ((real? x) (flt (inexact x)))
+        ((number? x) (cplx x))
         ((string? x) (str x))
+        ((eq? x (void)) (py/none))
         (else (error 's->ptype "illegal input" x)))))
 
   (alias auto s->ptype)
@@ -382,10 +415,13 @@
   (define p->stype
     (lambda (x)
       (cond 
+        ((py/none-check? x) (void))
+        ((py/bool-check? x) (not (zero? (py/long-as-long x))))
         ((*int? x) (*int x))
         ((*flt? x) (*flt x))
         ((*cplx? x) (*cplx x))
         ((*str? x) (*str x))
+        ((pbytes? x) (p->sbytes x))
         (else (error 'p->stype "illegal input" x)))))
 
   (alias *auto p->stype)
@@ -394,8 +430,8 @@
   (define s->pcplx
     (lambda (c)
       (py/complex-from-doubles
-        (cfl-real-part c)
-        (cfl-imag-part c))))
+        (inexact (real-part c))
+        (inexact (imag-part c)))))
 
   (alias cplx s->pcplx)      
 
@@ -436,13 +472,13 @@
   (define-syntax ptuple-ref
     (syntax-rules ()
       ((_ *p k)(py/tuple-get-item *p k))
-      ((_ *p k* ... k)(plist-ref (ptuple-ref *p k* ...) k))))
+      ((_ *p k* ... k)(ptuple-ref (ptuple-ref *p k* ...) k))))
 
 
   (define-syntax ptuple-set!
     (syntax-rules ()
       ((_ *p k v)(py/tuple-set-item! *p k v))
-      ((_ *p k* ... k v)(ptuple-set! (ptulpe-ref *p k* ...) k v))))
+      ((_ *p k* ... k v)(ptuple-set! (ptuple-ref *p k* ...) k v))))
 
 
   (define-syntax ptuple-sref
@@ -672,12 +708,14 @@
   (define *alist->pdict
     (lambda (f lst)
       (define *p (py/dict-new))
-      (let l ((i (car lst))(r (cdr lst)))
-        (if (zero? (pdict-set! *p (symbol->string (car i)) (f (cdr i))))
-          (if (null? r)
-            *p
-            (l (car r)(cdr r)))
-          (error 'alist->pdict "error when set value" (symbol->string (car i)) (f (cdr i)))))))
+      (let l ((lst lst))
+        (if (null? lst)
+          *p
+          (let ((k (symbol->string (caar lst)))
+                (v (f (cdar lst))))
+            (if (zero? (pdict-set! *p k v))
+              (l (cdr lst))
+              (error 'alist->pdict "error when set value" k v)))))))
 
 
   (define-syntax alist->pdict
@@ -693,14 +731,13 @@
 
   (define *pdict->alist
     (lambda (f *p)
-      (define k (plist->list *str (pdict-keys *p)))
-      (define q
+      (define *k (pdict-keys *p))
+      (define k (plist->list *str *k))
+      (py-dec *k)
+      (map
         (lambda (x)
-          (cons (string->symbol x) (f (pdict-ref *p x)))))
-      (let l ((i (car k))(r (cdr k)))
-        (if (null? r)
-          (cons (q i) '())
-          (cons (q i) (l (car r) (cdr r)))))))
+          (cons (string->symbol x) (f (pdict-ref *p x))))
+        k)))
 
 
   (define-syntax pdict->alist
@@ -725,9 +762,9 @@
   (define py-display
     (lambda (obj)
       (let ((obj->str (lambda (obj)
-            (define *bytes (obj->bytes obj))
-            (define string (*str *bytes))
-            (py-dec *bytes)
+            (define *s (py/object-str obj))
+            (define string (*str *s))
+            (py-dec *s)
             string)))
         (display (if (*str? obj)
                (*str obj)
