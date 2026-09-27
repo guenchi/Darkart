@@ -126,6 +126,75 @@
       `((reverse . ,(auto #t))))))
 
 
+;; reference counting: calls and *-converters must not steal the caller's reference
+
+(define sys (py-import 'sys))
+(define getrefcount (py-get sys 'getrefcount))
+(define refcount
+  (lambda (*o)
+    (define *n (py-call getrefcount *o))
+    (define n (*int *n))
+    (py-dec *n)
+    n))
+
+(define-syntax check-refcount
+  (syntax-rules ()
+    ((_ name *o body ...)
+      (let ((before (refcount *o)))
+        body ...
+        (check name before (refcount *o))))))
+
+(define owned (list->plist '(1 2 3)))
+(define len (py-get builtins 'len))
+
+(check-refcount "py-call keeps argument" owned
+  (do ((i 0 (+ i 1))) ((= i 100)) (py-dec (py-call len owned))))
+(check-refcount "py-call* keeps argument" owned
+  (do ((i 0 (+ i 1))) ((= i 100)) (py-dec ((py-call* len owned) '()))))
+(check-refcount "py-func keeps argument" owned
+  (let ((f (py-func builtins 'len)))
+    (do ((i 0 (+ i 1))) ((= i 100)) (py-dec (f owned)))))
+(check-refcount "list->plist* keeps element" owned
+  (py-dec (list->plist* (list owned owned))))
+(check-refcount "list->ptuple* keeps element" owned
+  (py-dec (list->ptuple* (list owned owned))))
+(check-refcount "vector->plist* keeps element" owned
+  (py-dec (vector->plist* (vector owned owned))))
+(check-refcount "vector->ptuple* keeps element" owned
+  (py-dec (vector->ptuple* (vector owned owned))))
+(check-refcount "alist->pdict* keeps value" owned
+  (py-dec (alist->pdict* `((a . ,owned) (b . ,owned)))))
+(check-refcount "alist->pdict does not leak converted values" owned
+  (py-dec (alist->pdict (lambda (o) (py-inc o) o) `((a . ,owned)))))
+(check "owned object still usable" '(1 2 3) (plist->list owned))
+
+
+;; errors: a NULL result raises &python-error instead of crashing
+
+(define-syntax error-type
+  (syntax-rules ()
+    ((_ expr)
+      (guard (e ((python-error? e) (python-error-type e)))
+        expr
+        'no-error))))
+
+(check "import error" "ModuleNotFoundError" (error-type (py-import 'no_such_module_darkart)))
+(check "attribute error" "AttributeError" (error-type (py-get builtins 'no_such_attribute)))
+(check "zero division" "ZeroDivisionError" (error-type (py-div (int 1) (int 0))))
+(check "call error" "ValueError" (error-type (py-call (py-get builtins 'int) (str "abc"))))
+(check "error is an &error" #t
+  (guard (e ((error? e) #t)) (py-div (int 1) (int 0)) #f))
+(check "error who" 'py-div
+  (guard (e ((python-error? e) (condition-who e))) (py-div (int 1) (int 0))))
+(check "py-func error who" 'int
+  (guard (e ((python-error? e) (condition-who e))) ((py-func builtins 'int) (str "abc"))))
+(check "error message"
+  "invalid literal for int() with base 10: 'abc'"
+  (guard (e ((python-error? e) (cadr (condition-irritants e))))
+    (py-call (py-get builtins 'int) (str "abc"))))
+(check "error state cleared" 0 (py/err-occurred))
+
+
 ;; numpy
 
 (define np (py-import 'numpy))

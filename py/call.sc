@@ -179,6 +179,11 @@
     pmap-set!
 
     py-display
+
+    py-check
+    &python-error
+    python-error?
+    python-error-type
   )
   (import
     (chezscheme)
@@ -216,21 +221,6 @@
   (alias *flt p->sflt)
   (alias *str p->sstr)
 
-  (alias py-add py/number-add)
-  (alias py-sub py/number-subtract)
-  (alias py-mul py/number-multiply)
-  (alias py-div py/number-divide)
-  (alias py-fdiv py/number-floor-divide)
-  (alias py-mod py/number-remainder)
-  (alias py-divmod py/number-divmod)
-  (alias py-lsh py/number-lshift)
-  (alias py-rsh py/number-rshift)
-  (alias py-and py/number-and)
-  (alias py-or py/number-or)
-  (alias py-xor py/number-xor)
-  (alias py-inv py/number-invert)
-  (alias py-abs py/number-absolute)
-  (alias py-neg py/number-negative)
 
   (alias plist? py/list-check?)
   (alias make-plist py/list-new)
@@ -295,67 +285,166 @@
   (define self
     (lambda (x) x))
 
+
+  ;; Converters passed to list->plist, alist->pdict etc. must return a new
+  ;; reference, which the container then owns. borrow turns an object the
+  ;; caller keeps into a new reference, so the caller's handle stays valid.
+  (define borrow
+    (lambda (*x)
+      (py-inc *x)
+      *x))
+
+
+  ;; Python errors are raised as &python-error conditions carrying the
+  ;; exception type name, e.g. "ZeroDivisionError".
+  (define-condition-type &python-error &error
+    make-python-error python-error?
+    (type python-error-type))
+
+
+  (define obj->string
+    (lambda (*o)
+      (define *s (if (zero? *o) 0 (py/object-str *o)))
+      (if (zero? *s)
+        (begin (py/err-clear) "")
+        (let ((s (py/unicode-as-utf8 *s)))
+          (py-dec *s)
+          (or s "")))))
+
+
+  ;; Fetch and clear the pending Python exception as (type-name . message).
+  (define py-error-info
+    (lambda ()
+      (define size (foreign-sizeof 'uptr))
+      (define buf (foreign-alloc (* 3 size)))
+      (py/err-fetch buf (+ buf size) (+ buf (* 2 size)))
+      (let ((*type (foreign-ref 'uptr buf 0))
+            (*value (foreign-ref 'uptr buf size))
+            (*tb (foreign-ref 'uptr buf (* 2 size))))
+        (foreign-free buf)
+        (let* ((*name (if (zero? *type) 0 (py/object-get-attr-string *type "__name__")))
+               (name (obj->string *name))
+               (message (obj->string *value)))
+          (py-dec *name)
+          (py-dec *type)
+          (py-dec *value)
+          (py-dec *tb)
+          (cons name message)))))
+
+
+  (define py-raise
+    (lambda (who)
+      (define info
+        (if (zero? (py/err-occurred))
+          (cons "SystemError" "NULL result without an exception set")
+          (py-error-info)))
+      (raise
+        (condition
+          (make-python-error (car info))
+          (make-who-condition who)
+          (make-message-condition "~a: ~a")
+          (make-irritants-condition (list (car info) (cdr info)))))))
+
+
+  ;; Return *r, or raise the pending Python exception if *r is NULL.
+  (define py-check
+    (lambda (who *r)
+      (if (zero? *r)
+        (py-raise who)
+        *r)))
+
+
+  (define-syntax define-checked
+    (syntax-rules ()
+      ((_ name proc arg ...)
+        (define name
+          (lambda (arg ...)
+            (py-check 'name (proc arg ...)))))))
+
+  (define-checked py-add py/number-add a b)
+  (define-checked py-sub py/number-subtract a b)
+  (define-checked py-mul py/number-multiply a b)
+  (define-checked py-div py/number-divide a b)
+  (define-checked py-fdiv py/number-floor-divide a b)
+  (define-checked py-mod py/number-remainder a b)
+  (define-checked py-divmod py/number-divmod a b)
+  (define-checked py-lsh py/number-lshift a b)
+  (define-checked py-rsh py/number-rshift a b)
+  (define-checked py-and py/number-and a b)
+  (define-checked py-or py/number-or a b)
+  (define-checked py-xor py/number-xor a b)
+  (define-checked py-inv py/number-invert a)
+  (define-checked py-abs py/number-absolute a)
+  (define-checked py-neg py/number-negative a)
+
+
   (define py-import
     (lambda (x)
-      (py/import-import-module (symbol->string x))))
+      (py-check 'py-import (py/import-import-module (symbol->string x)))))
 
 
   (define py-get
     (lambda (x y)
-      (py/object-get-attr-string x (symbol->string y))))
+      (py-check 'py-get (py/object-get-attr-string x (symbol->string y)))))
+
+
+  ;; Build an argument tuple. The tuple takes its own reference to each
+  ;; argument, so the caller's objects remain valid after the call.
+  (define py-args*
+    (lambda (args)
+      (define len (length args))
+      (define *p (py-check 'py-args (make-ptuple len)))
+      (let loop ((n 0)(args args))
+        (if (< n len)
+          (begin
+            (py-inc (car args))
+            (if (zero? (ptuple-set! *p n (car args)))
+              (loop (+ n 1) (cdr args))
+              (begin
+                (py-dec *p)
+                (py-raise 'py-args))))
+          *p))))
 
 
   (define py-args
     (lambda args
-      (define len (length args))
-      (define *p (make-ptuple len))
-      (let loop ((n 0)(args args))
-        (if (< n len)
-          (if (zero? (ptuple-set! *p n (car args)))
-            (loop (+ n 1) (cdr args))
-            (error 'py-args "error when set args" (car args)))
-          *p))))
+      (py-args* args)))
 
 
-  (define py-args*
-    (lambda (args)
-      (define len (length args))
-      (define *p (make-ptuple len))
-      (let loop ((n 0)(args args))
-        (if (< n len)
-          (if (zero? (ptuple-set! *p n (car args)))
-            (loop (+ n 1) (cdr args))
-            (error 'py-args* "error when set args" (car args)))
-          *p))))
+  (define call-object
+    (lambda (who *f args)
+      (define *k (py-args* args))
+      (define *r (py/object-call-object *f *k))
+      (py-dec *k)
+      (py-check who *r)))
+
+
+  (define call-with-kwargs
+    (lambda (who *f args lst)
+      (define *k (py-args* args))
+      (define *d (alist->pdict* lst))
+      (define *r (py/object-call *f *k *d))
+      (py-dec *k)
+      (py-dec *d)
+      (py-check who *r)))
 
 
   (define py-call
     (lambda (*f . args)
-      (define *k (py-args* args))
-      (define *r (py/object-call-object *f *k))
-      (py-dec *k)
-      *r))
+      (call-object 'py-call *f args)))
 
 
   (define py-call*
     (lambda (*f . args)
       (lambda (lst)
-        (define *k (py-args* args))
-        (define *d (alist->pdict* lst))
-        (define *r (py/object-call *f *k *d))
-        (py-dec *k)
-        (py-dec *d)
-        *r)))
+        (call-with-kwargs 'py-call* *f args lst))))
 
 
   (define py-func
     (lambda (*p s)
       (define *f (py-get *p s))
       (lambda args
-        (define *k (py-args* args))
-        (define *r (py/object-call-object *f *k))
-        (py-dec *k)
-        *r)))
+        (call-object s *f args))))
 
 
   (define py-func*
@@ -363,12 +452,7 @@
       (define *f (py-get *p s))
       (lambda args
         (lambda (lst)
-          (define *k (py-args* args))
-          (define *d (alist->pdict* lst))
-          (define *r (py/object-call *f *k *d))
-          (py-dec *k)
-          (py-dec *d)
-          *r))))
+          (call-with-kwargs s *f args lst)))))
 
 
   ;; Fixnums take the fast path; bignums go through their decimal form.
@@ -500,7 +584,9 @@
         (if (< n len)
           (if (zero? (plist-set! *p n (i (car lst))))
             (l (+ n 1) (cdr lst))
-            (error 'list->plist "error when set value" n (i (car lst))))
+            (begin
+              (py-dec *p)
+              (py-raise 'list->plist)))
           *p))))
 
 
@@ -512,7 +598,7 @@
 
   (define list->plist*
     (lambda (x)
-      (*list->plist self x)))
+      (*list->plist borrow x)))
 
 
   (define *list->ptuple
@@ -528,7 +614,9 @@
         (if (< n len)
           (if (zero? (ptuple-set! *p n (i (car lst))))
             (l (+ n 1) (cdr lst))
-            (error 'list->ptuple "error when set value" n (i (car lst))))
+            (begin
+              (py-dec *p)
+              (py-raise 'list->ptuple)))
           *p))))
 
 
@@ -540,7 +628,7 @@
 
   (define list->ptuple*
     (lambda (x)
-      (*list->ptuple self x)))
+      (*list->ptuple borrow x)))
 
 
   (define *plist->list
@@ -606,7 +694,9 @@
         (if (< n len)
           (if (zero? (plist-set! *p n (i (vector-ref vct n))))
             (l (+ n 1))
-            (error 'vector->plist "error when set value" n (i (vector-ref vct n))))
+            (begin
+              (py-dec *p)
+              (py-raise 'vector->plist)))
           *p))))
 
 
@@ -618,7 +708,7 @@
 
   (define vector->plist*
     (lambda (x)
-      (*vector->plist self x)))
+      (*vector->plist borrow x)))
 
 
   (define *vector->ptuple
@@ -634,7 +724,9 @@
         (if (< n len)
           (if (zero? (ptuple-set! *p n (i (vector-ref vct n))))
             (l (+ n 1))
-            (error 'vector->ptuple "error when set value" n (i (vector-ref vct n))))
+            (begin
+              (py-dec *p)
+              (py-raise 'vector->ptuple)))
           *p))))
 
 
@@ -646,7 +738,7 @@
 
   (define vector->ptuple*
     (lambda (x)
-      (*vector->ptuple self x)))
+      (*vector->ptuple borrow x)))
 
 
   (define *plist->vector
@@ -713,9 +805,13 @@
           *p
           (let ((k (symbol->string (caar lst)))
                 (v (f (cdar lst))))
-            (if (zero? (pdict-set! *p k v))
+            (define r (pdict-set! *p k v))
+            (py-dec v)
+            (if (zero? r)
               (l (cdr lst))
-              (error 'alist->pdict "error when set value" k v)))))))
+              (begin
+                (py-dec *p)
+                (py-raise 'alist->pdict))))))))
 
 
   (define-syntax alist->pdict
@@ -726,7 +822,7 @@
 
   (define alist->pdict*
     (lambda (x)
-      (*alist->pdict self x)))
+      (*alist->pdict borrow x)))
 
 
   (define *pdict->alist

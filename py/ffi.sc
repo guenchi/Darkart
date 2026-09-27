@@ -189,6 +189,7 @@
     py-compile-string
     py/err-occurred
     py/err-clear
+    py/err-fetch
     py/err-print
     py/err-print-ex
     )
@@ -771,6 +772,10 @@
 
   (define py/err-clear
     (foreign-procedure "PyErr_Clear" () 
+      void))
+
+  (define py/err-fetch
+    (foreign-procedure "PyErr_Fetch" (uptr uptr uptr) 
       void))
 
   (define py/err-print-ex
