@@ -1,4 +1,4 @@
-#include "/Library/Frameworks/Python.framework/Versions/3.7/include/python3.7m/Python.h"
+#include <Python.h>
 
 
 int _PyLong_Check(PyObject *p)
@@ -19,6 +19,27 @@ int _PyComplex_Check(PyObject *p)
 int _PyBytes_Check(PyObject *p)
 {
     return PyBytes_Check(p);
+}
+
+int _PyUnicode_Check(PyObject *p)
+{
+    return PyUnicode_Check(p);
+}
+
+int _PyBool_Check(PyObject *p)
+{
+    return PyBool_Check(p);
+}
+
+int _PyNone_Check(PyObject *p)
+{
+    return p == Py_None;
+}
+
+PyObject *_Py_GetNone(void)
+{
+    Py_INCREF(Py_None);
+    return Py_None;
 }
 
 int _PyList_Check(PyObject *p)
@@ -50,8 +71,3 @@ int _PyMapping_Check(PyObject *p)
 {
     return PyMapping_Check(p);
 }
-
-
-
-
-
