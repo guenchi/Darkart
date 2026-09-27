@@ -7,6 +7,6 @@
    ("guenchi"))
  ("private" . #f)
  ("scripts"
-   ("build" . "cd ./lib/darkart/c && cc -fPIC -shared  -L/Library/Frameworks/Python.framework/Versions/3.7/lib/ -lpython3.7 -o ../py.so py.c"))
+   ("build" . "cd ./lib/darkart/c && cc -fPIC -shared $(python3-config --includes) -o ../py.so py.c $(python3-config --ldflags --embed)"))
  ("dependencies")
  ("devDependencies"))

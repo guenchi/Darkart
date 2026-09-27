@@ -1,211 +1,132 @@
 
-(import (darkart py ffi)
+(import (chezscheme)
+        (darkart py ffi)
         (darkart py call))
+
+
+(define failures 0)
+
+(define-syntax check
+  (syntax-rules ()
+    ((_ name expected expr)
+      (let ((v expr))
+        (if (equal? v expected)
+          (printf "ok   ~a~%" name)
+          (begin
+            (set! failures (+ failures 1))
+            (printf "FAIL ~a: expected ~s, got ~s~%" name expected v)))))))
+
+(define-syntax check-approx
+  (syntax-rules ()
+    ((_ name expected expr)
+      (let ((v expr))
+        (if (and (= (length v) (length expected))
+                 (andmap (lambda (a b) (< (abs (- a b)) 1e-12)) v expected))
+          (printf "ok   ~a~%" name)
+          (begin
+            (set! failures (+ failures 1))
+            (printf "FAIL ~a: expected ~s, got ~s~%" name expected v)))))))
 
 
 (py-init)
 
-;; test pass values
 
-(define x 9)
-(py-define 'x x)
-(define k (py/import-import-module "__main__"))
-(define dic (py/module-get-dict k))
-(define y (py/long-as-long (py/run-string "x * x" py-eval-input dic dic)))
-(display (+ y 8))
-(newline)
+;; numbers
 
-;; test list pass and operate
-
-(define x '(1 2 3 4 5))
-(define t (py/list->list x))
-(define a (py/list-get-item t 0))
-(define b (py/list-get-item t 1))
-(define c (py/list-get-item t 2))
-(define d (py/list-get-item t 3))
-(define e (py/list-get-item t 4))
-(display (py/long-as-long a))
-(newline)
-(display (py/long-as-long b))
-(newline)
-(display (py/long-as-long c))
-(newline)
-(display (py/long-as-long d))
-(newline)
-(display (py/long-as-long e))
-(newline)
+(check "int round trip" 42 (*int (int 42)))
+(check "negative int round trip" -7 (*int (int -7)))
+(check "bignum round trip" (expt 2 100) (*int (int (expt 2 100))))
+(check "negative bignum round trip" (- (expt 3 70)) (*int (int (- (expt 3 70)))))
+(check "float round trip" 2.5 (*flt (flt 2.5)))
+(check "rational becomes float" 0.5 (*auto (auto 1/2)))
+(check "inexact complex round trip" 1.0-2.0i (*cplx (cplx 1.0-2.0i)))
+(check "exact complex auto" 1.0+2.0i (*auto (auto 1+2i)))
+(check "complex add" 7.0+2.0i (*cplx (py-add (cplx 4.0-3.0i) (cplx 3.0+5.0i))))
+(check "py-mod is remainder" 1 (*int (py-mod (int 7) (int 3))))
+(check "py-divmod" '(2 1) (ptuple->list (py-divmod (int 7) (int 3))))
 
 
-(define x `#(1 2 3 4 5))
-(define t (py/vector->list x))
-(define a (py/list-get-item t 0))
-(define b (py/list-get-item t 1))
-(define c (py/list-get-item t 2))
-(define d (py/list-get-item t 3))
-(define e (py/list-get-item t 4))
-(display (py/long-as-long a))
-(newline)
-(display (py/long-as-long b))
-(newline)
-(display (py/long-as-long c))
-(newline)
-(display (py/long-as-long d))
-(newline)
-(display (py/long-as-long e))
-(newline)
+;; booleans and None
 
-;; test tuple pass and operate
-
-(define x '(1 2 3 4 5))
-(define t (list->*tuple x))
-(define a (py/tuple-get-item t 0))
-(define b (py/tuple-get-item t 1))
-(define c (py/tuple-get-item t 2))
-(define d (py/tuple-get-item t 3))
-(define e (py/tuple-get-item t 4))
-(display (py/long-as-long a))
-(newline)
-(display (py/long-as-long b))
-(newline)
-(display (py/long-as-long c))
-(newline)
-(display (py/long-as-long d))
-(newline)
-(display (py/long-as-long e))
-(newline)
+(check "true round trip" #t (*auto (auto #t)))
+(check "false round trip" #f (*auto (auto #f)))
+(check "bool is not int" #t (py/bool-check? (auto #t)))
+(check "None round trip" (void) (*auto (auto (void))))
 
 
-(define x `#(1 2 3 4 5))
-(define t (py/vector->tuple x))
-(define a (py/tuple-get-item t 0))
-(define b (py/tuple-get-item t 1))
-(define c (py/tuple-get-item t 2))
-(define d (py/tuple-get-item t 3))
-(define e (py/tuple-get-item t 4))
-(display (py/long-as-long a))
-(newline)
-(display (py/long-as-long b))
-(newline)
-(display (py/long-as-long c))
-(newline)
-(display (py/long-as-long d))
-(newline)
-(display (py/long-as-long e))
-(newline)
+;; strings and bytes
+
+(check "str is unicode" #t (pstr? (str "abc")))
+(check "str round trip" "abc" (*str (str "abc")))
+(check "non-ascii str round trip" "h\xe9;llo \x4e2d;\x6587;" (*str (str "h\xe9;llo \x4e2d;\x6587;")))
+(check "auto str" "xyz" (*auto (auto "xyz")))
+(check "bytes are not str" #f (pstr? (s->pbytes "abc")))
+(check "bytes round trip" "abc" (p->sbytes (s->pbytes "abc")))
+(check "py-display str"
+  "hello"
+  (with-output-to-string (lambda () (py-display (str "hello")))))
+(check "py-display list"
+  "[1, 'a']"
+  (with-output-to-string (lambda () (py-display (list->plist '(1 "a"))))))
 
 
-;test call numpy 
+;; lists
 
+(define nested '((((1 2 3 4) (1 2 3 4) (1 2 3 4)) ((1 2 3 4) (1 2 3 4) (1 2 3 4)))
+                 (((1 2 3 4) (1 2 3 4) (1 2 3 4)) ((1 2 3 4) (1 2 3 4) (1 2 3 4)))))
 
-(define x '(1 2 3 4 5 6 7 8))
-(define t (list->plist int x))
-(define np (py/import-import-module "numpy"))
-(define array (py/object-get-attr-string np "array"))
-(define cosin (py/object-get-attr-string np "cos"))
-(define ndarray (py/object-get-attr-string np "ndarray"))
-(define tolist (py/object-get-attr-string ndarray "tolist"))
-(define arr (py/object-call-object array (py-args t)))
-(define lst (py/object-call-object cosin (py-args arr)))
-(define pylst (py/object-call-object tolist (py-args lst)))
-(display (plist->list 'float pylst))
-(newline)
+(check "plist length" 5 (plist-length (list->plist '(1 2 3 4 5))))
+(check "nested plist round trip" nested (plist->list (list->plist nested)))
+(check "nested plist to vector" 4 (vector-length (vector-ref (plist->vector (list->plist '((1 2 3 4)))) 0)))
 
-;test type check
-
-(display (py/int-check? (py/int-from-long 7)))
-(newline)
-(display (py/int-check? (int 7)))
-(newline)
-(display (*int? (int 7)))
-(newline)
-(display (*int? (float 7.0)))
-(newline)
-(display (*float? (float 7.0)))
-(newline)
-(display (*float? (int 7)))
-(newline)
-(display (plist? (list->plist int '(1 2 3 4 5 6))))
-(newline)
-(display (plist? (list->ptuple int '(1 2 3 4 5 6))))
-(newline)
-(display (ptuple? (list->ptuple int '(1 2 3 4 5 6))))
-(newline)
-(display (ptuple? (list->plist int '(1 2 3 4 5 6))))
-(newline)
-(display (psequ? (list->plist int '(1 2 3 4 5 6))))
-(newline)
-(display (pdict? (alist->pdict int `((a . 1)(b . 2)))))
-(newline)
-(display (pdict? (list->plist int '(1 2 3 4 5 6))))
-(newline)
-(display (pmap? (alist->pdict int `((a . 1)(b . 2)))))
-(newline)
-(display (pmap? (list->plist int '(1 2 3 4 5 6))))
-
-
-; test nesting plist / ptuple
-
-(display (plist->list (list->plist int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (plist->list *int (list->plist int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (plist->list* (list->plist int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (ptuple->list (list->ptuple int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (ptuple->list *int (list->ptuple int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (ptuple->list* (list->ptuple int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (plist->vector (list->plist int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (plist->vector *int (list->plist int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (plist->vector* (list->plist int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (ptuple->vector (list->ptuple int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (ptuple->vector *int (list->ptuple int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-(display (ptuple->vector* (list->ptuple int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))))))
-(newline)
-
-; test alist dict pass
-
-(display (pdict->alist (alist->pdict '((a . 8)(b . 9.5)(c . "c")))))
-(newline)
-
-; test complex parser
-
-(display 
-    (*complex
-        (py-add 
-            (complex 4.0-3i)
-            (complex 3.0+5i))))
-(newline)
-
-; test plist-ref plist-set!
-
-(define x (list->plist int '((((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4)))(((1 2 3 4) (1 2 3 4) (1 2 3 4))((1 2 3 4) (1 2 3 4) (1 2 3 4))))))
-
-(plist-set! x 0 1 2 3 (int 100))
-(display (*int (plist-ref x 0 1 2 3)))
-(newline)
-(display (plist->list (plist-sref x 0 1 2 (0 4))))
-(newline)
+(define x (list->plist nested))
+(check "plist-set! nested" 0 (plist-set! x 0 1 2 3 (int 100)))
+(check "plist-ref nested" 100 (*int (plist-ref x 0 1 2 3)))
+(check "plist-sref nested" '(1 2 3 100) (plist->list (plist-sref x 0 1 2 (0 4))))
 (plist-sset! x 0 1 2 (0 4) (list->plist '(90 91 92 93)))
-(display (plist->list (plist-ref x 0 1 2 )))
-(newline)
+(check "plist-sset! nested" '(90 91 92 93) (plist->list (plist-ref x 0 1 2)))
 
-; test py-inc and py-dec
 
-(define k (list->plist '((1 2 3 4)(5 6 7 8)(9 8 7 6))))
-(py-inc k)
-(py-display (np-array k))
-(newline)
-(py-display k)
-(py-dec k)
-(newline)
+;; tuples
+
+(define t (list->ptuple '((1 2) (3 4))))
+(check "nested ptuple round trip" '((1 2) (3 4)) (ptuple->list t))
+(check "ptuple-ref nested" 3 (*int (ptuple-ref t 1 0)))
+(check "ptuple-set! nested" 0 (ptuple-set! t 1 0 (int 30)))
+(check "ptuple-ref after set" 30 (*int (ptuple-ref t 1 0)))
+(check "ptuple-sref" '((3 4)) (ptuple->list (ptuple-sref (list->ptuple '((1 2) (3 4))) 1 2)))
+
+
+;; sets
+
+(define s (make-pset (list->plist '(5))))
+(check "pset length" 1 (pset-length s))
+(check "pset-pop! returns the element" 5 (*int (pset-pop! s)))
+(check "pset empty after pop" 0 (pset-length s))
+
+
+;; dicts
+
+(check "empty alist to pdict" 0 (pdict-length (alist->pdict '())))
+(check "empty pdict to alist" '() (pdict->alist (make-pdict)))
+(check "alist pdict round trip"
+  '((a . 8) (b . 9.5) (c . "c"))
+  (pdict->alist (alist->pdict '((a . 8) (b . 9.5) (c . "c")))))
+
+
+;; calls
+
+(define builtins (py-import 'builtins))
+(check "py-call" 3 (*int (py-call (py-get builtins 'len) (list->plist '(1 2 3)))))
+(check "py-call* with no kwargs" 3 (*int ((py-call* (py-get builtins 'len) (list->plist '(1 2 3))) '())))
+(check "py-call* with kwargs"
+  '(3 2 1)
+  (plist->list
+    ((py-call* (py-get builtins 'sorted) (list->plist '(1 3 2)))
+      `((reverse . ,(auto #t))))))
+
+
+;; numpy
 
 (define np (py-import 'numpy))
 (define ndarray (py-get np 'ndarray))
@@ -220,14 +141,20 @@
       (np-tolist
         (np-sin
           (py-div
-            (py-mul pi 
+            (py-mul pi
               (np-array
                 (list->plist lst)))
             (int 180)))))))
 
-(get-sin '(1 2 3 4 5 6 7 8))
+(check-approx "numpy sin"
+  (map (lambda (d) (sin (/ (* 3.141592653589793 d) 180.0))) '(1 2 3 4 5 6 7 8))
+  (get-sin '(1 2 3 4 5 6 7 8)))
+
 
 (py-fin)
 
-
-
+(if (zero? failures)
+  (printf "~%all tests passed~%")
+  (begin
+    (printf "~%~a test(s) failed~%" failures)
+    (exit 1)))
